@@ -1,6 +1,7 @@
 ; Setup
 {
 CoordMode, Mouse, Window
+#Persistent
 SetKeyDelay, 30
 return
 
@@ -57,7 +58,7 @@ IfWinNotExist, Update
 }
 return
 
-; Preventive Update, Assumes in Documents.
+; Preventive Append. Assumes in Documents.
 #p::
 OpenAppendType("Clinical List Pr")
 return
@@ -233,30 +234,37 @@ return
 
 OrderSearch:
 Click, 254, 38
-WinWaitActive, Update Orders
-CitrixSleep()
-Click, 253, 287
-CitrixSleep()
-Click 400, 330
+WinWaitActive, Update Orders, , 3 ; Timeout
+if (ErrorLevel = 0) {
+    CitrixSleep()
+    Click, 253, 287
+    CitrixSleep()
+    Click 400, 330
+}
 return
 
 SignOrders:
 Click, 254, 38
-WinWaitActive, Update Orders
-CitrixSleep()
-Click, 550, 592
+WinWaitActive, Update Orders, , 3 ; Timeout
+if (ErrorLevel = 0) {
+	CitrixSleep()
+	Click, 550, 592
+}
 return
 
 
 MedSearch:
 Click, 320, 40
-WinWaitActive, New Medication
-Click, 706, 53
-WinWaitActive, Find Medication
+WinWaitActive, New Medication, , 3 ; Timeout
+if (ErrorLevel = 0) {
+	CitrixSleep()
+	Click, 706, 53
+	WinWaitActive, Find Medication
+}
 return
 
 UpdateMeds:
-FindTemplate("HPI-CCC.png")
+FindTemplate("HPI-CCC")
 Click, 931, 585
 return
 
@@ -267,48 +275,49 @@ Send !R
 return
 
 UpdateProblems:
-FindTemplate("HPI-CCC.png")
+FindTemplate("HPI-CCC")
 Click, 841, 584
 return
 
 
 HPI:
-FindTemplate("HPI-CCC.png")
+FindTemplate("HPI-CCC")
 Click, 767, 559
 return
 
 Preventive:
-FindTemplate("Preventive-Care-Screening.png")
+FindTemplate("Preventive-Care-Screening")
 return
 
 CommittoFlowsheet:
-FindTemplate("Preventive-Care-Screening.png")
+FindTemplate("Preventive-Care-Screening")
 Click, 599, 113
 return
 
 PMH-SH-CCC:
-FindTemplate("PMH-SH-CCC.png")
+FindTemplate("PMH-SH-CCC")
 return
 
 InserttoNote:
-FindTemplate("PMH-SH-CCC.png")
+FindTemplate("PMH-SH-CCC")
 Click, 921, 112
 return
 
 ROS:
-FindTemplate("ROS-CCC.png")
+FindTemplate("ROS-CCC")
 return
 
 ROS2:
-FindTemplate("ROS-CCC.png")
+FindTemplate("ROS-CCC")
 Click, 351, 80
 return
 
+; ###################### Broken PE second search
 PE:
-FindTemplate("PE-CCC.png")
+FindTemplate("PE-CCC")
 if (ErrorLevel = 1)
 {
-FindTemplate("Pediatric-PE-Age-Specific-CCC.png")
+FindTemplate("Pediatric-PE-Age-Specific-CCC")
 }
 Click, 522, 203
 return
@@ -317,49 +326,58 @@ PE-URI:
 FindTemplate("PE-CCC.png")
 if (ErrorLevel = 1)
 {
-FindTemplate("Pediatric-PE-Age-Specific-CCC.png")
+FindTemplate("Pediatric-PE-Age-Specific-CCC")
 }
 Click, 522, 203
 Send xu{return}
 return
 
 CPOE:
-FindTemplate("CPOE-A&P-CCC.png")
+FindTemplate("CPOE-A&P-CCC")
 return
 
 AssessmentsDue:
-FindTemplate("CPOE-A&P-CCC.png")
+FindTemplate("CPOE-A&P-CCC")
 Click, 561, 108
 return
 
 PatientInstructions:
-FindTemplate("Patient-Instructions-CCC.png")
+FindTemplate("Patient-Instructions-CCC")
 Click, 594, 341
 return
 
 PrintVisitSummary:
-FindTemplate("Patient-Instructions-CCC.png")
+FindTemplate("Patient-Instructions-CCC")
 Click, 891, 130
 Click, 
 return
 
 Prescriptions:
-FindTemplate("Prescriptions.png")
+FindTemplate("Prescriptions")
 return
 
 SendPrescriptions:
-FindTemplate("Prescriptions.png")
+FindTemplate("Prescriptions")
 Click, 946. 563
 return
 
-FindTemplate(imagefile) {
-ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %imagefile%
+FindTemplate(template) {
+ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %template%.png
 if (ErrorLevel = 0) {
-MouseMove, %FoundX%, %FoundY%
-Click 2
-CitrixSleep()
-CitrixSleep()
-CitrixSleep()
+	MouseMove, %FoundX%, %FoundY%
+	Click 2
+	CitrixSleep()
+	CitrixSleep()
+	CitrixSleep()
+}
+; if template not found, is it already selected?
+if (ErrorLevel = 1) {
+	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %template%-highlighted.png
+	; If found, errorlevel is now 0
+}
+if (ErrorLevel >= 1) {
+	; Template Not Found So skip rest of hotkey that called this. 
+	Exit
 }
 }
 return
