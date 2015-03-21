@@ -111,36 +111,6 @@ F1::PatternHotKey("..->SignOrders")
 ; End of Window Specific Hotkeys. 
 #IfWinActive
 
-/*
-Function Key Functions.
-
-F2::
-; Assumes in Patient Chart
-IfWinActive, Chart
-{
-Click, 62, 522
-CitrixSleep()
-MouseClickDrag, Left, 677, 374, 472, 374
-Send {Delete}
-CitrixSleep()
-MouseClickDrag, Left, 677, 491, 472, 491
-Send {Delete}
-CitrixSleep()
-Click, 635 678
-CitrixSleep()
-WinWaitActive, Centricity Practice,, 1
-if (ErrorLevel != 1) 
-{
- Send, n   
- WinWaitNotActive, Centricity
-}
-CitrixSleep()
-Send ^f
-}
-return
-*/
-
-
 +#L::
 ; Send a patient a blank letter
 {
