@@ -3,15 +3,11 @@
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
-return
-
-<#Esc::run taskmgr.exe
-<#Up::Send {PgUp}
-<#Down::Send {PgDn}
-<#Backspace::Send {Delete}
+; For novice users not used to using Windows Key. 
 RWin::return
 LWin::return
 #L::return
+return
 }
 
 #IfWinActive, Update
@@ -26,10 +22,7 @@ return
 \::
 Send ^e
 return
-Rwin::
-#Space::
-Run unfocus.exe
-return
+
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
