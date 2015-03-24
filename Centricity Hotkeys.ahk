@@ -355,7 +355,7 @@ Click, 946. 563
 return
 
 FindTemplate(template) {
-ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %template%.png
+ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/images/%template%.png
 if (ErrorLevel = 0) {
 	MouseMove, %FoundX%, %FoundY%
 	Click 2
@@ -365,7 +365,7 @@ if (ErrorLevel = 0) {
 }
 ; if template not found, is it already selected?
 if (ErrorLevel = 1) {
-	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %template%-highlighted.png
+	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/images/%template%-highlighted.png
 	; If found, errorlevel is now 0
 }
 if (ErrorLevel >= 1) {
