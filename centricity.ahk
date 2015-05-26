@@ -3,11 +3,16 @@
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
-; For novice users not used to using Windows Key. 
+return
+
+<#Esc::run taskmgr.exe
+<#Up::Send {PgUp}
+<#Down::Send {PgDn}
+<#Backspace::Send {Delete}
 RWin::return
 LWin::return
 #L::return
-return
+#D::return
 }
 
 #IfWinActive, Update
@@ -19,10 +24,11 @@ return
 ]::
 Send ^{PgDn}
 return
+!Space::
+#Space::
 \::
 Send ^e
 return
-
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
@@ -36,40 +42,125 @@ F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
 F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 
 #IfWinActive, End Update
+!Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
+#Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
 \::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
 return
+#s::
+Send !s
+return
 
-#IfWinActive, Chart
+#IfWinActive, Chart -
 `::
 IfWinExist, Update
 WinActivate, Update
 IfWinNotExist, Update
 {
 	WinGetPos,,,,winheight,A
-	ypos := winheight - 161
+	ypos := winheight - 217
 	Click, 13, %ypos%
 }
 return
+; Sign a chart docuemnt
+#s::
+Send ^s
+return
 
+#j::
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 append.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+}
+return
+
+#IfWinActive, Chart Desktop -
+`::
+IfWinExist, Update
+WinActivate, Update
+IfWinNotExist, Update
+{
+    WinGetPos,,,,winheight,A
+    ypos := winheight - 182
+    Click, 13, %ypos%
+}
+return
+; Append
+#j::
+Send ^j
+return
+; Open Attachment
+#o::
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 attach.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+}
+return
+
+; Open Patient Chart to the item
++#o::
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 open.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+}
+return
+
+; Sign
+#s::
+Send ^s
+return
 ; Preventive Append. Assumes in Documents.
 #p::
+Send ^j
 OpenAppendType("Clinical List Pr")
 return
 
 ; Replies with Web Message. Assumes in Documents.
 #r::
+Send ^j
 OpenAppendType("Web")
 return
 
-; CPOE Append. Assumes in Documents.
-#c::
-OpenAppendType("CPOE")
+; eRx Append. Assumes in Documents.
+#e::
+Send ^j
+OpenAppendType("* eSM")
 return
 
 
+; CPOE Append. Assumes in Documents.
+#c::
+Send ^j
+OpenAppendType("CPOE")
+return
+
 #IfWinActive, Centricity Practice Solution Browser:
+#Space::
 \::
 Send !{F4}
+return
+down::
+WinGetPos,,,winwidth,winheight,A
+winwidth := winwidth - 10
+winheight := winheight - 25
+Click %winwidth%, %winheight%
+return
+up::
+WinGetPos,,,winwidth,,A
+winwidth := winwidth - 10
+Click %winwidth%, 67
+return
+; Close and Sign
+#s::
+Send !{F4}
+WinWaitNotActive
+Citrixsleep()
+Send ^s
 return
 
 ; Add Arrow keys to make organizing problem lists quicker. 
@@ -95,6 +186,7 @@ Click, 694, 599
 return
 
 #IfWinActive, Append to Document
+#s::
 ^s::
 Send !s
 return
@@ -102,11 +194,47 @@ return
 #ifWinActive, Update Orders
 F1::PatternHotKey("..->SignOrders")
 
-; End of Window Specific Hotkeys. 
+#ifWinActive, Customize Letter
+#Space::
+Send !p
+WinWaitNotActive, Customize Letter
+WinWaitActive, Customize Letter
+Citrixsleep()
+Send !s
+WinWaitActive, Route Document
+Citrixsleep()
+Send !s
+WinWaitActive, Print
+Citrixsleep()
+Click 568, 355
+Soundplay, done.wav
+return
+
+; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 
-+#L::
-; Send a patient a blank letter
+#p::
+OpenAppendType("Clinical List Pr")
+return
+
+; Replies with Web Message. Assumes in Documents.
+#r::
+OpenAppendType("Web")
+return
+
+; eRx Append. Assumes in Documents.
+#e::
+OpenAppendType("* eSM")
+return
+
+
+; CPOE Append. Assumes in Documents.
+#c::
+OpenAppendType("CPOE")
+return
+
++#R::
+; Reply to a patient with a blank letter
 {
 Send ^p
 CitrixSleep()
@@ -127,35 +255,6 @@ Click, 392, 351
 return
 
 
-; Shift Ctrl-a: Open Append
-^+a::
-; Doesn't check location precisely yet, Assumes in Desktop:Documents
-; Used with Gesture: Three Finger TipTap Middle
-
-IfWinActive, Chart
-	{
-	; X position of control is defined from right boarder.
-	WinGetPos,,,winwidth,,A
-	xpos := winwidth - 205
-	Click, %xpos%, 129
-	}
-return
-
-
-; Shift Ctrl-O: Open Attachment
-^+o::
-; Doesn't check location precisely yet, Assumes in Desktop:Documents
-; Used with Gesture: Two Finger 'Right TipTap
-
-IfWinActive, Chart
-	{
-	; X position of control is defined from right boarder.
-	WinGetPos,,,winwidth,,A
-	xpos := winwidth - 70
-	Click, %xpos%, 385
-	}
-return
-
 ; Functions ####################################################################
 
 CitrixSleep(){
@@ -164,7 +263,19 @@ Sleep, 150
 return
 
 OpenAppendType(searchtext){
+    ifWinActive, Chart Desktop -
+    {
     Send ^j
+    }
+    ifWinActive, Chart -
+    {
+    WinGetPos,,,winwidth,winheight,A
+    ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 append.png
+    if (ErrorLevel = 0) {
+        MouseMove, %FoundX%, %FoundY%
+        Click
+    }
+    }
     ; Sometimes fails, use 3 second timeout
     WinWaitActive, Append to, , 3
     if (ErrorLevel = 0) {
@@ -568,3 +679,41 @@ KeyPressPattern(length = 2, period = 0.2)
         }
     }
 }
+
+::asscy::asymptomatically
+::rxvitd::Recommend Vitamin D supplementation (50K IU Once weekly for 12 weeks, recheck serum level in 3 months) Please send to pts pharmacy.
+::dnoabx::discussed reasoning behind no antibiotics for this.
+::dusptf::reviewed all appropriate USPTF recommendations in checklist format
+::dnytanxy::Recommended the patient read New York Times article 'Understanding the Anxious Mind'.
+::dmedad::Discussed  on medication adherence issues.
+::dpcl::Reviewed a personalized checklist of preventive recommendations based on USPTF.
+::cgm::continuous glucose monitor
+::nomedad::No significant medication adherence issues noted.
+::dcgm::Discussed continuous glucose monitoring.
+::pmprv::PMP reviewed, as expected.
+::lcmp::We checked your CMP.
+::+lcmp::We also checked your CMP.
+::3xbp:: Average of 3 automated readings with 60 second pause between readings.
+::3bp:: 3 blood pressures were measured 1 minute apart and averaged.
+::ujkp::
+text := "Upcoming Appointment. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
+clip(text)
+sleep 100
+Send !s
+return
+::sljkp::
+text := "Send Letter with Results. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
+clip(text)
+sleep 100
+Send !s
+return
+::cdn::
+Send Call Doctor Note:{Enter 2}SITUATION:{Enter 3}BACKGROUND:{Enter 3}ASSESSMENT:{Enter 3}RECOMENDATION:{Enter 2}{Up 10}
+return
+:r:sbar::
+Send SITUATION:{Enter 3}BACKGROUND:{Enter 3}ASSESSMENT:{Enter 3}RECOMENDATION:{Enter 2}{Up 10}
+return
+::sdjkp::
+text := "............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
+clip(text)
+return
