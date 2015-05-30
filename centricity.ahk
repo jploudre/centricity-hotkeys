@@ -116,17 +116,6 @@ return
 Send ^j
 return
 
-
-; Open Patient Chart to the item
-+#o::
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 open.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
-    Click
-}
-return
-
 ; Sign
 #s::
 Send ^s
@@ -236,6 +225,19 @@ if WinActive("Chart - \\Remote") or WinActive("Chart Desktop - \\Remote")
 {
 WinGetPos,,,winwidth,winheight,A
 ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 attach.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+}
+}
+return
+
+; Open Patient Chart to the item
++#o::
+if WinActive("Chart - \\Remote") or WinActive("Chart Desktop - \\Remote")
+{
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 open.png
 if (ErrorLevel = 0) {
     MouseMove, %FoundX%, %FoundY%
     Click
