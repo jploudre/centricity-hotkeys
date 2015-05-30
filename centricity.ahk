@@ -38,10 +38,26 @@ F5::PatternHotKey(".->HPI")
 F6::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
 F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
 F8::PatternHotKey(".->ROS", "..->ROS2")
-F9::PatternHotKey(".->PE", "..->PE-URI", "...->PE-XC")
+F9::PatternHotKey(".->PE", "..->PE-URI")
 F10::PatternHotKey(".->CPOE", "..->AssessmentsDue")
 F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
 F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
+
+#/::
+GoSub, GotoChart
+citrixsleep()
+citrixsleep()
+citrixsleep()
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 documents.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+    citrixsleep()
+    Click, 255, 212
+}
+
+return
 
 #IfWinActive, End Update
 !Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
@@ -99,15 +115,7 @@ return
 #j::
 Send ^j
 return
-; Open Attachment
-#o::
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 attach.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
-    Click
-}
-return
+
 
 ; Open Patient Chart to the item
 +#o::
@@ -221,6 +229,19 @@ return
 
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
+
+; Open Attachment
+#o::
+if WinActive("Chart - \\Remote") or WinActive("Chart Desktop - \\Remote")
+{
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 attach.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+}
+}
+return
 
 #p::
 OpenAppendType("Clinical List Pr")
