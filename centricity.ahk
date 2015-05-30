@@ -50,6 +50,13 @@ F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 return
 #s::
 Send !s
+WinWaitNotActive, End Update
+{
+	WinGetPos,,,,winheight,A
+	ypos := winheight - 217
+	Click, 13, %ypos%
+}
+
 return
 
 #IfWinActive, Chart -
@@ -438,7 +445,7 @@ Click, 522, 203
 Send xu{return}
 return
 
-PE-URI:
+PE-XC:
 FindTemplate("PE-CCC.png")
 if (ErrorLevel = 1)
 {
