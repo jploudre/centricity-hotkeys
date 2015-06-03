@@ -350,14 +350,20 @@ SendToBrandie:
 IfWinActive, End Update
 {
 	Click, 316, 351
-	WinWaitNotActive
-	CitrixSleep()
+	WinWaitActive, New Routing Information
+    CitrixSleep()
 	SendInput Gaylor{Enter}
 	CitrixSleep()
 	Click, 240, 345
-	WinWaitNotActive
+	WinWaitActive, End Update
 	CitrixSleep()
 	Send !o
+    WinWaitNotActive
+    CitrixSleep()
+    ; Go to Desktop
+	WinGetPos,,,,winheight,A
+	ypos := winheight - 217
+	Click, 13, %ypos%
 }
 else
 {
