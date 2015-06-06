@@ -16,7 +16,7 @@ LWin::return
 }
 
 
-#IfWinActive, Update -
+#IfWinActive, Update - ;###########################################################
 `::PatternHotKey(".->GotoChart","..->SwapTextView")
 return
 [::
@@ -60,7 +60,7 @@ if (ErrorLevel = 0) {
 return
 
 
-#IfWinActive, End Update
+#IfWinActive, End Update ;###########################################################
 !Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
 #Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
 \::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
@@ -83,7 +83,7 @@ if (ErrorLevel = 0) {
 return
 
 
-#IfWinActive, Chart -
+#IfWinActive, Chart - ;###########################################################
 `::
 IfWinExist, Update
 WinActivate, Update
@@ -109,7 +109,7 @@ if (ErrorLevel = 0) {
 return
 
 
-#IfWinActive, Chart Desktop -
+#IfWinActive, Chart Desktop - ;###########################################################
 `::
 IfWinExist, Update
 WinActivate, Update
@@ -154,7 +154,7 @@ OpenAppendType("CPOE")
 return
 
 
-#IfWinActive, Centricity Practice Solution Browser:
+#IfWinActive, Centricity Practice Solution Browser: ;###########################################################
 #Space::
 \::
 Send !{F4}
@@ -179,7 +179,7 @@ Send ^s
 return
 
 
-#IfWinActive, Update Problems -
+#IfWinActive, Update Problems - ;###########################################################
 ; Long Hold is Top/Bottom. Tap is Up/Down
 Up::PatternHotKey(".->UpdateProblemsUp","_->UpdateProblemsTop")
 Down::PatternHotKey(".->UpdateProblemsDown","_->UpdateProblemsBottom")
@@ -203,7 +203,7 @@ Click, 694, 599
 return
 
 
-#IfWinActive, Update Medications -
+#IfWinActive, Update Medications - ;###########################################################
 #Space::
 !Space::
 Enter::
@@ -223,7 +223,7 @@ Click 285, 311
 return
 
 
-#ifWinActive, Update Orders -
+#ifWinActive, Update Orders - ;###########################################################
 #Space::
 !Space::
 Click 679, 656
@@ -234,13 +234,13 @@ return
 F1::PatternHotKey("..->SignOrders")
 return
 
-#IfWinActive, Append to Document
+#IfWinActive, Append to Document ;###########################################################
 #s::
 ^s::
 Send !s
 return
 
-#ifWinActive, Customize Letter
+#ifWinActive, Customize Letter ;###########################################################
 #Space::
 Send !p
 WinWaitNotActive, Customize Letter
