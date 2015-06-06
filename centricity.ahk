@@ -15,7 +15,8 @@ LWin::return
 #D::return
 }
 
-#IfWinActive, Update
+
+#IfWinActive, Update -
 `::PatternHotKey(".->GotoChart","..->SwapTextView")
 return
 [::
@@ -56,8 +57,8 @@ if (ErrorLevel = 0) {
     citrixsleep()
     Click, 255, 212
 }
-
 return
+
 
 #IfWinActive, End Update
 !Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
@@ -68,12 +69,19 @@ return
 Send !s
 WinWaitNotActive, End Update
 {
+    Citrixsleep()
 	WinGetPos,,,,winheight,A
 	ypos := winheight - 217
 	Click, 13, %ypos%
 }
+WinWaitActive, Chart Desktop -,,5, ; Up to 5 seconds to complete
+if (ErrorLevel = 0) {
+    Soundplay, done.wav
+}
+
 
 return
+
 
 #IfWinActive, Chart -
 `::
@@ -99,6 +107,7 @@ if (ErrorLevel = 0) {
     Click
 }
 return
+
 
 #IfWinActive, Chart Desktop -
 `::
@@ -138,12 +147,12 @@ Send ^j
 OpenAppendType("* eSM")
 return
 
-
 ; CPOE Append. Assumes in Documents.
 #c::
 Send ^j
 OpenAppendType("CPOE")
 return
+
 
 #IfWinActive, Centricity Practice Solution Browser:
 #Space::
@@ -169,8 +178,8 @@ Citrixsleep()
 Send ^s
 return
 
-; Add Arrow keys to make organizing problem lists quicker. 
-#IfWinActive, Update Problems
+
+#IfWinActive, Update Problems -
 ; Long Hold is Top/Bottom. Tap is Up/Down
 Up::PatternHotKey(".->UpdateProblemsUp","_->UpdateProblemsTop")
 Down::PatternHotKey(".->UpdateProblemsDown","_->UpdateProblemsBottom")
@@ -193,19 +202,28 @@ Enter::
 Click, 694, 599
 return
 
-#IfWinActive, Update Medications
+
+#IfWinActive, Update Medications -
 #Space::
 !Space::
 Enter::
 click 559, 566
 return
+; Sends (intead of saves)
 #s::
-Click 401, 533
+Send !p
+citrixsleep()
+Click, 559, 566
 return
+BackSpace::
 Delete::
-Click 208, 536
+Send !r
+WinWaitActive, Remove Medication
+Click 285, 311
 return
-#ifWinActive, Update Orders
+
+
+#ifWinActive, Update Orders -
 #Space::
 !Space::
 Click 679, 656
@@ -214,6 +232,7 @@ return
 CLick 561, 656
 return
 F1::PatternHotKey("..->SignOrders")
+return
 
 #IfWinActive, Append to Document
 #s::
@@ -542,6 +561,7 @@ if (ErrorLevel = 0) {
 	CitrixSleep()
 	CitrixSleep()
 	CitrixSleep()
+    MouseMove, 500, 0, 0, R
 }
 ; if template not found, is it already selected?
 if (ErrorLevel = 1) {
