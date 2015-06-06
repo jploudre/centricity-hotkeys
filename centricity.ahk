@@ -187,18 +187,39 @@ Delete::PatternHotKey(".->UpdateProblemsRemove")
 Click, 694, 599
 return
 ; Enter should always do OK.
+#Space::
+!Space::
 Enter::
 Click, 694, 599
 return
+
+#IfWinActive, Update Medications
+#Space::
+!Space::
+Enter::
+click 559, 566
+return
+#s::
+Click 401, 533
+return
+Delete::
+Click 208, 536
+return
+#ifWinActive, Update Orders
+#Space::
+!Space::
+Click 679, 656
+return
+#s::
+CLick 561, 656
+return
+F1::PatternHotKey("..->SignOrders")
 
 #IfWinActive, Append to Document
 #s::
 ^s::
 Send !s
 return
-
-#ifWinActive, Update Orders
-F1::PatternHotKey("..->SignOrders")
 
 #ifWinActive, Customize Letter
 #Space::
