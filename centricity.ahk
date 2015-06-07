@@ -76,7 +76,7 @@ WinWaitNotActive, End Update
 }
 WinWaitActive, Chart Desktop -,,5, ; Up to 5 seconds to complete
 if (ErrorLevel = 0) {
-    Soundplay, done.wav, 2
+    Soundplay, done.wav, WAIT
 }
 
 
@@ -240,6 +240,19 @@ return
 Send !s
 return
 
+#IfWinActive, Assessments Due ;###########################################################
+#s::
+^s::
+#Space::
+!Space::
+Enter::
+WinGetPos,,,winwidth,winheight,A
+xpos := winwidth - 20
+ypos := winheight - 20
+Click, %xpos%, %ypos%
+return
+
+
 #ifWinActive, Customize Letter ;###########################################################
 #Space::
 Send !p
@@ -253,7 +266,7 @@ Send !s
 WinWaitActive, Print
 Citrixsleep()
 Click 568, 355
-Soundplay, done.wav
+Soundplay, done.wav, Wait
 return
 
 ; End of Window Specific Hotkeys.  #########################################
