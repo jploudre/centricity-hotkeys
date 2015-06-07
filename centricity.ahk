@@ -76,7 +76,7 @@ WinWaitNotActive, End Update
 }
 WinWaitActive, Chart Desktop -,,5, ; Up to 5 seconds to complete
 if (ErrorLevel = 0) {
-    Soundplay, done.wav
+    Soundplay, done.wav, 2
 }
 
 
@@ -268,6 +268,15 @@ ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 attach.png
 if (ErrorLevel = 0) {
     MouseMove, %FoundX%, %FoundY%
     Click
+    WinWaitNotActive, Chart,,3
+    ; If Open Attachment fails, try open chart
+    if (ErrorLevel = 1) {
+        ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 open.png
+        if (ErrorLevel = 0) {
+            MouseMove, %FoundX%, %FoundY%
+            Click
+        }
+    }
 }
 }
 return
