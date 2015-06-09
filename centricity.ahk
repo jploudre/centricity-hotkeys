@@ -68,12 +68,7 @@ return
 #s::
 Send !s
 WinWaitNotActive, End Update
-{
-    Citrixsleep()
-	WinGetPos,,,,winheight,A
-	ypos := winheight - 217
-	Click, 13, %ypos%
-}
+gosub, GoChartDesktop
 WinWaitActive, Chart Desktop -,,5, ; Up to 5 seconds to complete
 if (ErrorLevel = 0) {
     Soundplay, done.wav, WAIT
@@ -88,11 +83,7 @@ return
 IfWinExist, Update
 WinActivate, Update
 IfWinNotExist, Update
-{
-	WinGetPos,,,,winheight,A
-	ypos := winheight - 217
-	Click, 13, %ypos%
-}
+gosub, GoChartDesktop
 return
 ; Sign a chart docuemnt
 #s::
@@ -281,7 +272,7 @@ ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 attach.png
 if (ErrorLevel = 0) {
     MouseMove, %FoundX%, %FoundY%
     Click
-    WinWaitNotActive, Chart,,3
+    WinWaitNotActive, Chart,, 1.5
     ; If Open Attachment fails, try open chart
     if (ErrorLevel = 1) {
         ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 open.png
@@ -421,11 +412,7 @@ IfWinActive, End Update
 	CitrixSleep()
 	Send !o
     WinWaitNotActive
-    CitrixSleep()
-    ; Go to Desktop
-	WinGetPos,,,,winheight,A
-	ypos := winheight - 217
-	Click, 13, %ypos%
+    gosub, GoChartDesktop
 }
 else
 {
@@ -483,6 +470,12 @@ FindTemplate("HPI-CCC")
 Click, 841, 584
 return
 
+GoChartDesktop:
+CitrixSleep()
+WinGetPos,,,,winheight,A
+ypos := winheight - 217
+Click, 13, %ypos%
+return
 
 HPI:
 FindTemplate("HPI-CCC")
