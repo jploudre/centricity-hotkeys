@@ -449,7 +449,7 @@ Click, 320, 40
 WinWaitActive, New Medication, , 3 ; Timeout
 if (ErrorLevel = 0) {
 	CitrixSleep()
-	Click, 706, 53
+	Click, 711, 81
 	WinWaitActive, Find Medication
 }
 return
