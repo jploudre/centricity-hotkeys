@@ -575,6 +575,7 @@ if (ErrorLevel = 0) {
 	CitrixSleep()
 	CitrixSleep()
 	CitrixSleep()
+    Click 2
     MouseMove, 500, 0, 0, R
 }
 ; if template not found, is it already selected?
