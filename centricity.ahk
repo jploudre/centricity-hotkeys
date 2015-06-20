@@ -462,7 +462,6 @@ return
 ProblemSearch:
 Click, 407, 36
 WinWaitActive, New Problem
-Send !R
 return
 
 UpdateProblems:
