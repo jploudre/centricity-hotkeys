@@ -783,21 +783,6 @@ KeyPressPattern(length = 2, period = 0.2)
     }
 }
 
-::asscy::asymptomatically
-::rxvitd::Recommend Vitamin D supplementation (50K IU Once weekly for 12 weeks, recheck serum level in 3 months) Please send to pts pharmacy.
-::dnoabx::discussed reasoning behind no antibiotics for this.
-::dusptf::reviewed all appropriate USPTF recommendations in checklist format
-::dnytanxy::Recommended the patient read New York Times article 'Understanding the Anxious Mind'.
-::dmedad::Discussed  on medication adherence issues.
-::dpcl::Reviewed a personalized checklist of preventive recommendations based on USPTF.
-::cgm::continuous glucose monitor
-::nomedad::No significant medication adherence issues noted.
-::dcgm::Discussed continuous glucose monitoring.
-::pmprv::PMP reviewed, as expected.
-::lcmp::We checked your CMP.
-::+lcmp::We also checked your CMP.
-::3xbp:: Average of 3 automated readings with 60 second pause between readings.
-::3bp:: 3 blood pressures were measured 1 minute apart and averaged.
 ::ujkp::
 text := "Upcoming Appointment. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
