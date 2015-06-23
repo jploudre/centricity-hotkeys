@@ -439,7 +439,7 @@ Click, 254, 38
 WinWaitActive, Update Orders, , 3 ; Timeout
 if (ErrorLevel = 0) {
 	CitrixSleep()
-	Click, 550, 592
+	Click, 561, 653
 }
 return
 
