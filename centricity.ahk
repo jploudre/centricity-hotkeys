@@ -215,14 +215,27 @@ return
 
 
 #ifWinActive, Update Orders - ;###########################################################
+Enter::
 #Space::
 !Space::
+Click 561, 656
+Citrixsleep()
 Click 679, 656
 return
 #s::
 CLick 561, 656
 return
 F1::PatternHotKey("..->SignOrders")
+return
+LButton::
+MouseGetPos, xpos, ypos
+if ( (638 < xpos < 709) AND (647 < ypos < 667))
+    {
+    ; Click Sign, first
+    CLick 561, 656
+    Citrixsleep()
+    Click %xpos%, %ypos%
+    }
 return
 
 #IfWinActive, Append to Document ;###########################################################
