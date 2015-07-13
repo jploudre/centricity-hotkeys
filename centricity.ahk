@@ -281,6 +281,23 @@ Enter::
 Send !c
 return
 
+#ifWinActive, New Medication ;###########################################################
+
+LButton::
+MouseGetPos, xpos, ypos
+if ( (649 < xpos < 712) AND (643 < ypos < 669))
+    {
+    Click %xpos%, %ypos%
+    WinWaitNotActive, New Medication
+    CitrixSleep()
+    Gosub, Prescriptions
+    }
+else 
+{
+    Click %xpos%, %ypos%
+}
+return
+
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 
