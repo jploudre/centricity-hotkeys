@@ -260,6 +260,14 @@ Click 568, 355
 Soundplay, done.wav, Wait
 return
 
+#ifWinActive, Care Alert Warning ;###########################################################
+#Space::
+!Space::
+Enter::
+\::
+Send !c
+return
+
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 
