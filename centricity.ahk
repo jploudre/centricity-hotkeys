@@ -234,8 +234,8 @@ if ( (638 < xpos < 709) AND (647 < ypos < 667))
     ; Click Sign, first
     CLick 561, 656
     Citrixsleep()
-    Click %xpos%, %ypos%
     }
+    Click %xpos%, %ypos%
 return
 
 #IfWinActive, Append to Document ;###########################################################
