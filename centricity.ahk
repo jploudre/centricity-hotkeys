@@ -227,18 +227,23 @@ CLick 561, 656
 return
 F1::PatternHotKey("..->SignOrders")
 return
-/*
+
 LButton::
 MouseGetPos, xpos, ypos
-if ( (638 < xpos < 709) AND (647 < ypos < 667))
+if ( 638 < xpos AND xpos < 709 AND 647 < ypos AND ypos < 667)
     {
     ; Click Sign, first
-    CLick 561, 656
+    Click 561, 656
     Citrixsleep()
-    }
+    Soundplay *64
     Click %xpos%, %ypos%
+    }
+else
+    {
+    Click    
+    }
 return
-*/
+
 #IfWinActive, Append to Document ;###########################################################
 #s::
 ^s::
@@ -286,21 +291,23 @@ return
 
 LButton::
 MouseGetPos, xpos, ypos
-if ( (649 < xpos < 712) AND (643 < ypos < 669))
+if ( 649 < xpos AND xpos < 712 AND 643 < ypos AND ypos < 669)
     {
+    Soundplay *64
     Click %xpos%, %ypos%
-    WinWaitNotActive, New Medication
+    WinWaitActive, Update -
     CitrixSleep()
     Gosub, Prescriptions
     }
 else 
 {
-    Click %xpos%, %ypos%
+    Click
 }
 return
 
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
+
 
 ; Open Attachment
 #o::
