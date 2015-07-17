@@ -852,3 +852,5 @@ return
 text := "............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
 return
+
+::`;`;::-->
