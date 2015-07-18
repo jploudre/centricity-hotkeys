@@ -3,14 +3,20 @@
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
-; For novice users not used to using Windows Key. 
+return
+
+<#Esc::run taskmgr.exe
+<#Up::Send {PgUp}
+<#Down::Send {PgDn}
+<#Backspace::Send {Delete}
 RWin::return
 LWin::return
 #L::return
-return
+#D::return
 }
 
-#IfWinActive, Update
+
+#IfWinActive, Update - ;###########################################################
 `::PatternHotKey(".->GotoChart","..->SwapTextView")
 return
 [::
@@ -19,10 +25,13 @@ return
 ]::
 Send ^{PgDn}
 return
+!Space::
+#Space::
 \::
+Send ^{PgDn}
+citrixsleep()
 Send ^e
 return
-
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
@@ -35,45 +44,133 @@ F10::PatternHotKey(".->CPOE", "..->AssessmentsDue")
 F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
 F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 
-#IfWinActive, End Update
-\::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
+#/::
+GoSub, GotoChart
+citrixsleep()
+citrixsleep()
+citrixsleep()
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+    citrixsleep()
+    Click, 255, 212
+}
 return
 
-#IfWinActive, Chart
+
+#IfWinActive, End Update ;###########################################################
+!Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
+#Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
+\::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
+return
+#s::
+Send !s
+WinWaitNotActive, End Update
+gosub, GoChartDesktop
+WinWaitActive, Chart Desktop -,,5, ; Up to 5 seconds to complete
+if (ErrorLevel = 0) {
+    Soundplay, %A_ScriptDir%/files/done.wav, WAIT
+}
+
+
+return
+
+
+#IfWinActive, Chart - ;###########################################################
+`::
+IfWinExist, Update
+WinActivate, Update
+IfWinNotExist, Update
+gosub, GoChartDesktop
+return
+; Sign a chart docuemnt
+#s::
+Send ^s
+return
+
+#j::
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/append.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+}
+return
+
+
+#IfWinActive, Chart Desktop - ;###########################################################
 `::
 IfWinExist, Update
 WinActivate, Update
 IfWinNotExist, Update
 {
-	WinGetPos,,,,winheight,A
-	ypos := winheight - 161
-	Click, 13, %ypos%
+    WinGetPos,,,,winheight,A
+    ypos := winheight - 182
+    Click, 13, %ypos%
 }
 return
+; Append
+#j::
+Send ^j
+return
 
+; Sign
+#s::
+Send ^s
+return
 ; Preventive Append. Assumes in Documents.
 #p::
+Send ^j
 OpenAppendType("Clinical List Pr")
 return
 
 ; Replies with Web Message. Assumes in Documents.
 #r::
+Send ^j
 OpenAppendType("Web")
+return
+
+; eRx Append. Assumes in Documents.
+#e::
+Send ^j
+OpenAppendType("* eSM")
 return
 
 ; CPOE Append. Assumes in Documents.
 #c::
+Send ^j
 OpenAppendType("CPOE")
 return
 
 
-#IfWinActive, Centricity Practice Solution Browser:
+#IfWinActive, Centricity Practice Solution Browser: ;###########################################################
+#Space::
 \::
 Send !{F4}
 return
+down::
+WinGetPos,,,winwidth,winheight,A
+winwidth := winwidth - 10
+winheight := winheight - 25
+Click %winwidth%, %winheight%
+return
+up::
+WinGetPos,,,winwidth,,A
+winwidth := winwidth - 10
+Click %winwidth%, 67
+return
+; Close and Sign
+#s::
+Send !{F4}
+WinWaitNotActive
+Citrixsleep()
+Send ^s
+return
 
-; Add Arrow keys to make organizing problem lists quicker. 
-#IfWinActive, Update Problems
+
+#IfWinActive, Update Problems - ;###########################################################
 ; Long Hold is Top/Bottom. Tap is Up/Down
 Up::PatternHotKey(".->UpdateProblemsUp","_->UpdateProblemsTop")
 Down::PatternHotKey(".->UpdateProblemsDown","_->UpdateProblemsBottom")
@@ -90,23 +187,185 @@ Delete::PatternHotKey(".->UpdateProblemsRemove")
 Click, 694, 599
 return
 ; Enter should always do OK.
+#Space::
+!Space::
 Enter::
 Click, 694, 599
 return
 
-#IfWinActive, Append to Document
+
+#IfWinActive, Update Medications - ;###########################################################
+#Space::
+!Space::
+Enter::
+click 559, 566
+return
+; Sends (intead of saves)
+#s::
+Send !p
+citrixsleep()
+Click, 559, 566
+return
+BackSpace::
+Delete::
+Send !r
+WinWaitActive, Remove Medication
+Click 285, 311
+return
+
+
+#ifWinActive, Update Orders - ;###########################################################
+
+#Space::
+!Space::
+Click 561, 656
+Citrixsleep()
+Click 679, 656
+return
+#s::
+CLick 561, 656
+return
+F1::PatternHotKey("..->SignOrders")
+return
+
+LButton::
+MouseGetPos, xpos, ypos
+if ( 638 < xpos AND xpos < 709 AND 647 < ypos AND ypos < 667)
+    {
+    ; Click Sign, first
+    Click 561, 656
+    Citrixsleep()
+    Soundplay *64
+    Click %xpos%, %ypos%
+    }
+else
+    {
+    Click    
+    }
+return
+
+#IfWinActive, Append to Document ;###########################################################
+#s::
 ^s::
 Send !s
 return
 
-#ifWinActive, Update Orders
-F1::PatternHotKey("..->SignOrders")
+#IfWinActive, Assessments Due ;###########################################################
+#s::
+^s::
+#Space::
+!Space::
+Enter::
+WinGetPos,,,winwidth,winheight,A
+xpos := winwidth - 20
+ypos := winheight - 20
+Click, %xpos%, %ypos%
+return
 
-; End of Window Specific Hotkeys. 
+
+#ifWinActive, Customize Letter ;###########################################################
+#Space::
+Send !p
+WinWaitNotActive, Customize Letter
+WinWaitActive, Customize Letter
+Citrixsleep()
+Send !s
+WinWaitActive, Route Document
+Citrixsleep()
+Send !s
+WinWaitActive, Print
+Citrixsleep()
+Click 568, 355
+Soundplay, %A_ScriptDir%/files/done.wav, Wait
+return
+
+#ifWinActive, Care Alert Warning ;###########################################################
+#Space::
+!Space::
+Enter::
+\::
+Send !c
+return
+
+#ifWinActive, New Medication ;###########################################################
+
+LButton::
+MouseGetPos, xpos, ypos
+if ( 649 < xpos AND xpos < 712 AND 643 < ypos AND ypos < 669)
+    {
+    Soundplay *64
+    Click %xpos%, %ypos%
+    WinWaitActive, Update -
+    CitrixSleep()
+    Gosub, Prescriptions
+    }
+else 
+{
+    Click
+}
+return
+
+; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 
-+#L::
-; Send a patient a blank letter
+
+; Open Attachment
+#o::
+if WinActive("Chart - \\Remote") or WinActive("Chart Desktop - \\Remote")
+{
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/attach.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+    WinWaitNotActive, Chart,, 1.5
+    ; If Open Attachment fails, try open chart
+    if (ErrorLevel = 1) {
+        ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
+        if (ErrorLevel = 0) {
+            MouseMove, %FoundX%, %FoundY%
+            Click
+        }
+    }
+}
+}
+return
+
+; Open Patient Chart to the item
++#o::
+if WinActive("Chart - \\Remote") or WinActive("Chart Desktop - \\Remote")
+{
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+}
+}
+return
+
+#p::
+OpenAppendType("Clinical List Pr")
+return
+
+; Replies with Web Message. Assumes in Documents.
+#r::
+OpenAppendType("Web")
+return
+
+; eRx Append. Assumes in Documents.
+#e::
+OpenAppendType("* eSM")
+return
+
+
+; CPOE Append. Assumes in Documents.
+#c::
+OpenAppendType("CPOE")
+return
+
++#R::
+; Reply to a patient with a blank letter
 {
 Send ^p
 CitrixSleep()
@@ -127,35 +386,6 @@ Click, 392, 351
 return
 
 
-; Shift Ctrl-a: Open Append
-^+a::
-; Doesn't check location precisely yet, Assumes in Desktop:Documents
-; Used with Gesture: Three Finger TipTap Middle
-
-IfWinActive, Chart
-	{
-	; X position of control is defined from right boarder.
-	WinGetPos,,,winwidth,,A
-	xpos := winwidth - 205
-	Click, %xpos%, 129
-	}
-return
-
-
-; Shift Ctrl-O: Open Attachment
-^+o::
-; Doesn't check location precisely yet, Assumes in Desktop:Documents
-; Used with Gesture: Two Finger 'Right TipTap
-
-IfWinActive, Chart
-	{
-	; X position of control is defined from right boarder.
-	WinGetPos,,,winwidth,,A
-	xpos := winwidth - 70
-	Click, %xpos%, 385
-	}
-return
-
 ; Functions ####################################################################
 
 CitrixSleep(){
@@ -164,7 +394,19 @@ Sleep, 150
 return
 
 OpenAppendType(searchtext){
+    ifWinActive, Chart Desktop -
+    {
     Send ^j
+    }
+    ifWinActive, Chart -
+    {
+    WinGetPos,,,winwidth,winheight,A
+    ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/append.png
+    if (ErrorLevel = 0) {
+        MouseMove, %FoundX%, %FoundY%
+        Click
+    }
+    }
     ; Sometimes fails, use 3 second timeout
     WinWaitActive, Append to, , 3
     if (ErrorLevel = 0) {
@@ -207,14 +449,16 @@ SendToBrandie:
 IfWinActive, End Update
 {
 	Click, 316, 351
-	WinWaitNotActive
-	CitrixSleep()
+	WinWaitActive, New Routing Information
+    CitrixSleep()
 	SendInput Gaylor{Enter}
 	CitrixSleep()
 	Click, 240, 345
-	WinWaitNotActive
+	WinWaitActive, End Update
 	CitrixSleep()
 	Send !o
+    WinWaitNotActive
+    gosub, GoChartDesktop
 }
 else
 {
@@ -241,7 +485,7 @@ Click, 254, 38
 WinWaitActive, Update Orders, , 3 ; Timeout
 if (ErrorLevel = 0) {
 	CitrixSleep()
-	Click, 550, 592
+	Click, 561, 653
 }
 return
 
@@ -251,7 +495,7 @@ Click, 320, 40
 WinWaitActive, New Medication, , 3 ; Timeout
 if (ErrorLevel = 0) {
 	CitrixSleep()
-	Click, 706, 53
+	Click, 711, 81
 	WinWaitActive, Find Medication
 }
 return
@@ -264,7 +508,6 @@ return
 ProblemSearch:
 Click, 407, 36
 WinWaitActive, New Problem
-Send !R
 return
 
 UpdateProblems:
@@ -272,6 +515,12 @@ FindTemplate("HPI-CCC")
 Click, 841, 584
 return
 
+GoChartDesktop:
+CitrixSleep()
+WinGetPos,,,,winheight,A
+ypos := winheight - 217
+Click, 13, %ypos%
+return
 
 HPI:
 FindTemplate("HPI-CCC")
@@ -325,6 +574,16 @@ Click, 522, 203
 Send xu{return}
 return
 
+PE-XC:
+FindTemplate("PE-CCC.png")
+if (ErrorLevel = 1)
+{
+FindTemplate("Pediatric-PE-Age-Specific-CCC")
+}
+Click, 522, 203
+Send xc{return}
+return
+
 CPOE:
 FindTemplate("CPOE-A&P-CCC")
 return
@@ -355,17 +614,19 @@ Click, 946. 563
 return
 
 FindTemplate(template) {
-ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/images/%template%.png
+ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%.png
 if (ErrorLevel = 0) {
 	MouseMove, %FoundX%, %FoundY%
 	Click 2
 	CitrixSleep()
 	CitrixSleep()
 	CitrixSleep()
+    Click 2
+    MouseMove, 500, 0, 0, R
 }
 ; if template not found, is it already selected?
 if (ErrorLevel = 1) {
-	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/images/%template%-highlighted.png
+	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%-highlighted.png
 	; If found, errorlevel is now 0
 }
 if (ErrorLevel >= 1) {
@@ -568,3 +829,30 @@ KeyPressPattern(length = 2, period = 0.2)
         }
     }
 }
+
+::ujkp::
+text := "Upcoming Appointment. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
+clip(text)
+sleep 100
+Send !s
+return
+::sljkp::
+text := "Send Letter with Results. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
+clip(text)
+sleep 100
+Send !s
+return
+::cdn::
+Send Call Doctor Note:{Enter 2}SITUATION:{Enter 3}BACKGROUND:{Enter 3}ASSESSMENT:{Enter 3}RECOMENDATION:{Enter 2}{Up 10}
+return
+:r:sbar::
+Send SITUATION:{Enter 3}BACKGROUND:{Enter 3}ASSESSMENT:{Enter 3}RECOMENDATION:{Enter 2}{Up 10}
+return
+::sdjkp::
+text := "............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
+clip(text)
+return
+
+; Changes ";;" into "-->" to quickly type an arrow
+::`;`;::-->
+
