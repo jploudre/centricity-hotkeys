@@ -85,8 +85,10 @@ WinActivate, Update
 IfWinNotExist, Update
 gosub, GoChartDesktop
 return
-; Sign a chart docuemnt
+
+; Sign a chart document
 #s::
+FocusBlue()
 Send ^s
 return
 
@@ -97,6 +99,17 @@ if (ErrorLevel = 0) {
     MouseMove, %FoundX%, %FoundY%
     Click
 }
+return
+
+
+Up::
+FocusBlue()
+Send {Up}
+return
+
+Down::
+FocusBlue()
+Send {Down}
 return
 
 
@@ -427,6 +440,18 @@ OpenAppendType(searchtext){
     }
 }
 return
+
+; In Chart a selected item doesn't respond to arrows or hotkeys.
+; Click to set focus on the blue
+
+FocusBlue(){
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, %A_ScriptDir%/files/blue.png
+    if (ErrorLevel = 0) {
+        Click, %FoundX%, %FoundY%
+    }
+return
+}
 
 GotoChart:
 WinActivate, Chart
