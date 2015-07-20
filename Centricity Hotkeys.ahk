@@ -179,6 +179,7 @@ return
 Send !{F4}
 WinWaitNotActive
 Citrixsleep()
+Focusblue()
 Send ^s
 return
 
