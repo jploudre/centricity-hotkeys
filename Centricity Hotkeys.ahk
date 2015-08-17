@@ -592,7 +592,7 @@ Click, 522, 203
 return
 
 PE-URI:
-FindTemplate("PE-CCC.png")
+FindTemplate("PE-CCC")
 if (ErrorLevel = 1)
 {
 FindTemplate("Pediatric-PE-Age-Specific-CCC")
@@ -602,7 +602,7 @@ Send xu{return}
 return
 
 PE-XC:
-FindTemplate("PE-CCC.png")
+FindTemplate("PE-CCC")
 if (ErrorLevel = 1)
 {
 FindTemplate("Pediatric-PE-Age-Specific-CCC")
