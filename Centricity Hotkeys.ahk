@@ -30,6 +30,7 @@ return
 \::
 Send ^{PgDn}
 citrixsleep()
+citrixsleep()
 Send ^e
 return
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
