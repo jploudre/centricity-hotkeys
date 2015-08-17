@@ -470,6 +470,7 @@ EndUpdate:
 Send ^{PgDn}
 citrixsleep()
 citrixsleep()
+citrixsleep()
 Send ^e
 WinWaitActive, End Update
 return
