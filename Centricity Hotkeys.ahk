@@ -40,7 +40,7 @@ F5::PatternHotKey(".->HPI")
 F6::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
 F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
 F8::PatternHotKey(".->ROS", "..->ROS2")
-F9::PatternHotKey(".->PE", "..->PE-URI")
+F9::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
 F10::PatternHotKey(".->CPOE", "..->AssessmentsDue")
 F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
 F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
@@ -591,7 +591,7 @@ FindTemplate("Pediatric-PE-Age-Specific-CCC")
 Click, 522, 203
 return
 
-PE-URI:
+PE-XU:
 FindTemplate("PE-CCC")
 if (ErrorLevel = 1)
 {
@@ -609,6 +609,16 @@ FindTemplate("Pediatric-PE-Age-Specific-CCC")
 }
 Click, 522, 203
 Send xc{return}
+return
+
+PE-XP:
+FindTemplate("PE-CCC")
+if (ErrorLevel = 1)
+{
+FindTemplate("Pediatric-PE-Age-Specific-CCC")
+}
+Click, 522, 203
+Send xp{return}
 return
 
 CPOE:
