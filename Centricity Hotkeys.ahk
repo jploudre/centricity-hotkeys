@@ -25,14 +25,9 @@ return
 ]::
 Send ^{PgDn}
 return
-!Space::
-#Space::
-\::
-Send ^{PgDn}
-citrixsleep()
-citrixsleep()
-Send ^e
-return
+!Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToBrandie")
+#Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToBrandie")
+\::PatternHotKey(".->EndUpdate", "..->EndUpdateToBrandie")
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
@@ -469,6 +464,19 @@ return
 
 HoldUpdate:
 Send !o
+return
+
+EndUpdate:
+Send ^{PgDn}
+citrixsleep()
+citrixsleep()
+Send ^e
+WinWaitActive, End Update
+return
+
+EndUpdateToBrandie:
+Gosub, EndUpdate
+Gosub, SendToBrandie
 return
 
 SendToBrandie:
