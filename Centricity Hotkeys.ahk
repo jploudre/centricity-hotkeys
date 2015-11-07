@@ -330,6 +330,14 @@ if (ErrorLevel = 0) {
     Click
     WinWaitNotActive, Chart,, 1.5
     ; If Open Attachment fails, try open chart
+    if (ErrorLevel= 0) {
+    Sleep, 500
+    IfWinActive, Centricity Practice Solution
+        {
+        Click, 508, 10, 2   ; Minimizes
+        }
+    return
+    }
     if (ErrorLevel = 1) {
         ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
         if (ErrorLevel = 0) {
