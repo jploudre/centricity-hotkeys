@@ -40,6 +40,16 @@ F10::PatternHotKey(".->CPOE", "..->AssessmentsDue")
 F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
 F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 
+; Ends and signs an update. 
+#+s::
+Gosub, EndUpdate
+Gosub, SignUpdate
+return
+
+#+p::
+gosub, CommittoFlowsheetandSign
+return
+
 #/::
 GoSub, GotoChart
 citrixsleep()
@@ -62,15 +72,7 @@ return
 \::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
 return
 #s::
-Send !s
-WinWaitNotActive, End Update
-gosub, GoChartDesktop
-WinWaitActive, Chart Desktop -,,5, ; Up to 5 seconds to complete
-if (ErrorLevel = 0) {
-    Soundplay, %A_ScriptDir%/files/done.wav, WAIT
-}
-
-
+Gosub, SignUpdate
 return
 
 
@@ -97,6 +99,9 @@ if (ErrorLevel = 0) {
 }
 return
 
+#+p::
+OpenAppendType("Clinical List Pr")
+return
 
 Up::
 FocusBlue()
@@ -130,8 +135,8 @@ return
 Send ^s
 return
 ; Preventive Append. Assumes in Documents.
-#p::
-Send ^j
+
+#+p::
 OpenAppendType("Clinical List Pr")
 return
 
@@ -171,12 +176,18 @@ winwidth := winwidth - 10
 Click %winwidth%, 67
 return
 ; Close and Sign
-#s::
+#+s::
 Send !{F4}
 WinWaitNotActive
 Citrixsleep()
 Focusblue()
 Send ^s
+return
+
+#+p::
+Send Send !{F4}
+Sleep, 1000
+OpenAppendType("Clinical List Pr")
 return
 
 
@@ -362,9 +373,7 @@ if (ErrorLevel = 0) {
 }
 return
 
-#p::
-OpenAppendType("Clinical List Pr")
-return
+
 
 ; Replies with Web Message. Assumes in Documents.
 #r::
@@ -466,12 +475,18 @@ SwapTextView:
 Send +{F8}
 return
 
-SaveUpdate:
-Send !s
-return
-
 HoldUpdate:
 Send !o
+return
+
+SignUpdate:
+Send !s
+WinWaitNotActive, End Update
+gosub, GoChartDesktop
+WinWaitActive, Chart Desktop -,,5, ; Up to 5 seconds to complete
+if (ErrorLevel = 0) {
+    Soundplay, %A_ScriptDir%/files/done.wav, WAIT
+}
 return
 
 EndUpdate:
@@ -578,6 +593,12 @@ return
 CommittoFlowsheet:
 FindTemplate("Preventive-Care-Screening")
 Click, 599, 113
+return
+
+CommittoFlowsheetandSign:
+Gosub, CommittoFlowsheet
+Gosub, EndUpdate
+Gosub, SignUpdate
 return
 
 PMH-SH-CCC:
