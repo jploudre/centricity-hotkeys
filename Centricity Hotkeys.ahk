@@ -191,6 +191,22 @@ OpenAppendType("Clinical List Pr")
 return
 
 
+#IfWinActive, Blackbird Content ;###########################################################
+#Space::
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/Blackbird-OK.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+    Sleep, 500
+    Send !{F4}
+}
+return
+Enter::
+Send \
+return
+
+
 #IfWinActive, Update Problems - ;###########################################################
 ; Long Hold is Top/Bottom. Tap is Up/Down
 Up::PatternHotKey(".->UpdateProblemsUp","_->UpdateProblemsTop")
@@ -535,7 +551,7 @@ if (ErrorLevel = 0) {
     CitrixSleep()
     Click, 253, 287
     CitrixSleep()
-    Click 400, 330
+    Click 412, 337
 }
 return
 
@@ -550,28 +566,28 @@ return
 
 
 MedSearch:
-Click, 320, 40
+Click, 524, 38
 WinWaitActive, New Medication, , 3 ; Timeout
 if (ErrorLevel = 0) {
 	CitrixSleep()
-	Click, 711, 81
+	Click, 718, 81
 	WinWaitActive, Find Medication
 }
 return
 
 UpdateMeds:
-FindTemplate("HPI-CCC")
-Click, 931, 585
+Click, 350, 38
 return
 
 ProblemSearch:
-Click, 407, 36
-WinWaitActive, New Problem
+FindTemplate("Blackbird")
+Click, 771, 87
+WinWaitActive, Blackbird
+Sendraw =
 return
 
 UpdateProblems:
-FindTemplate("HPI-CCC")
-Click, 841, 584
+Click, 428, 38
 return
 
 GoChartDesktop:
