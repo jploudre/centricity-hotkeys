@@ -176,7 +176,7 @@ winwidth := winwidth - 10
 Click %winwidth%, 67
 return
 ; Close and Sign
-#+s::
+#s::
 Send !{F4}
 WinWaitNotActive
 Citrixsleep()
