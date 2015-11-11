@@ -362,6 +362,16 @@ if (ErrorLevel = 0) {
     IfWinActive, Centricity Practice Solution
         {
         Click, 508, 10, 2   ; Minimizes
+        Sleep, 1000
+        ImageSearch, FoundX, FoundY, 0, 0, %A_ScreenHeight%, %A_ScreenWidth%, *n10 %A_ScriptDir%/files/CPS-Browser-Top-Edge.png
+         if (ErrorLevel = 0) {
+            MouseMove, %FoundX%, %FoundY%
+            CoordMode, Mouse, Screen
+            MouseGetPos,, MouseY
+            MouseY := (MouseY - 20) * -1
+            CoordMode, Mouse, Relative
+            MouseClickDrag, Left, %FoundX%, %FoundY%, %FoundX%, %MouseY%,
+        }
         }
     return
     }
