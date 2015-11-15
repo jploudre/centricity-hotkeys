@@ -1,5 +1,6 @@
 ; Setup
 {
+ClinicalAssistantName = "Handy"
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
@@ -25,9 +26,9 @@ return
 ]::
 Send ^{PgDn}
 return
-!Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToBrandie")
-#Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToBrandie")
-\::PatternHotKey(".->EndUpdate", "..->EndUpdateToBrandie")
+!Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
+#Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
+\::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
@@ -67,9 +68,9 @@ return
 
 
 #IfWinActive, End Update ;###########################################################
-!Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
-#Space::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
-\::PatternHotKey(".->HoldUpdate", "..->SendToBrandie")
+!Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
+#Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
+\::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 return
 #s::
 Gosub, SignUpdate
@@ -524,19 +525,19 @@ Send ^e
 WinWaitActive, End Update
 return
 
-EndUpdateToBrandie:
+EndUpdateToClinicalAssistant:
 Gosub, EndUpdate
-Gosub, SendToBrandie
+Gosub, SendToClinicalAssistant
 return
 
-SendToBrandie:
+SendToClinicalAssistant:
 ; Assumes End Update
 IfWinActive, End Update
 {
 	Click, 316, 351
 	WinWaitActive, New Routing Information
     CitrixSleep()
-	SendInput Gaylor{Enter}
+	SendInput %ClinicalAssistantName%{Enter}
 	CitrixSleep()
 	Click, 240, 345
 	WinWaitActive, End Update
