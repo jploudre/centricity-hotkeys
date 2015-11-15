@@ -418,8 +418,8 @@ return
 OpenAppendType("CPOE")
 return
 
-+#R::
 ; Reply to a patient with a blank letter
++#R::
 {
 Send ^p
 CitrixSleep()
@@ -437,6 +437,20 @@ Send B
 CitrixSleep()
 Click, 392, 351
 }
+return
+
+; Quit All Windows
+#+q::
+WinGet, id, list,,, Program Manager
+Loop, %id%
+{
+ this_id := id%A_Index%
+ WinClose, ahk_id %this_id%
+}
+Sleep, 1000
+DllCall("LockWorkStation")
+Sleep, 200
+SendMessage,0x112,0xF170,2,,Program Manager
 return
 
 
