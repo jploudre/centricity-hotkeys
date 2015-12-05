@@ -972,3 +972,22 @@ return
 ; Changes ";;" into "-->" to quickly type an arrow
 ::`;`;::-->
 
+;-------------------------------------------------------------------------------
+; Auto-Reload AutoHotkey when .ahk file is saved
+; http://prxbx.com/forums/showthread.php?tid=1181
+; Modified 2009-12-09 11:32:17 by Luke Scammell - luke {at} scammell [dot] co (.) uk
+; Modified to match any window with .ahk in the title, meaning it will update other scripts as well and from other programs like Notepad++ :)
+~^s::
+SetTitleMatchMode, 2
+IfWinActive, .ahk
+{
+   Send, ^s
+   SplashTextOn,,,Updated script,
+   Sleep,500
+   SplashTextOff
+   Reload
+}
+else
+   Send, ^s
+return
+;------------------------------------------------------------------------------/
