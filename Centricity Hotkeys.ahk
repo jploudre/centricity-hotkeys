@@ -293,6 +293,7 @@ return
 ^s::
 #Space::
 !Space::
+Esc::
 Enter::
 WinGetPos,,,winwidth,winheight,A
 xpos := winwidth - 20
