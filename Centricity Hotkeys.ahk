@@ -4,7 +4,28 @@ ClinicalAssistantName = "Handy"
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
-return
+
+Gui +LastFound
+hWnd := WinExist()
+
+DllCall( "RegisterShellHookWindow", UInt,hWnd )
+MsgNum := DllCall( "RegisterWindowMessage", Str,"SHELLHOOK" )
+OnMessage( MsgNum, "ShellMessage" )
+Return
+
+ShellMessage( wParam,lParam )
+{
+    If ( wParam = 1 ) ;  HSHELL_WINDOWCREATED := 1
+    {
+        WinGetTitle, Title, ahk_id %lParam%
+        If  ( Title = "Outlook" ) {
+            WinClose, ahk_id %lParam% ; close it immideately
+            Progress, m2 b fs18 zh0, Outlook is disabled during work hours`n(Cancel Centricity Hotkeys, if you must...), , , Tahoma
+            Sleep, 1000
+            Progress, Off
+        }
+    }
+}
 
 <#Esc::run taskmgr.exe
 <#Up::Send {PgUp}
