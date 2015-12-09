@@ -4,29 +4,9 @@ ClinicalAssistantName = "Handy"
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
-
-Gui +LastFound
-hWnd := WinExist()
-
-DllCall( "RegisterShellHookWindow", UInt,hWnd )
-MsgNum := DllCall( "RegisterWindowMessage", Str,"SHELLHOOK" )
-OnMessage( MsgNum, "ShellMessage" )
-Return
-
-ShellMessage( wParam,lParam )
-{
-    If ( wParam = 1 ) ;  HSHELL_WINDOWCREATED := 1
-    {
-        WinGetTitle, Title, ahk_id %lParam%
-        If  ( Title = "Outlook" ) {
-            WinClose, ahk_id %lParam% ; close it immideately
-            Progress, m2 b fs18 zh0, Outlook is disabled during work hours`n(Cancel Centricity Hotkeys, if you must...), , , Tahoma
-            Sleep, 1000
-            Progress, Off
-        }
-    }
-}
-
+SetTimer, CloseOutlook, 5000 
+return
+ 
 <#Esc::run taskmgr.exe
 <#Up::Send {PgUp}
 <#Down::Send {PgDn}
@@ -1003,6 +983,9 @@ return
 text := "............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
 return
-
 ; Changes ";;" into "-->" to quickly type an arrow
 ::`;`;::-->
+
+CloseOutlook: 
+WinClose, Inbox - jkploudre 
+Return
