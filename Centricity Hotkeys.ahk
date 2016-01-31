@@ -80,6 +80,16 @@ return
 
 
 #IfWinActive, Chart - ;###########################################################
+Space::PatternHotKey(".->OpenAttachment", "..->OpenChartItem")
+
+#o::
+Gosub, OpenAttachment
+return
+
++#o::
+Gosub, OpenChartItem
+return
+
 `::
 IfWinExist, Update
 WinActivate, Update
@@ -118,6 +128,17 @@ return
 
 
 #IfWinActive, Chart Desktop - ;###########################################################
+
+Space::PatternHotKey(".->OpenAttachment", "..->OpenChartItem")
+
+#o::
+Gosub, OpenAttachment
+return
+
++#o::
+Gosub, OpenChartItem
+return
+
 `::
 IfWinExist, Update
 WinActivate, Update
@@ -349,62 +370,6 @@ return
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 
-
-; Open Attachment
-#o::
-if WinActive("Chart - \\Remote") or WinActive("Chart Desktop - \\Remote")
-{
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/attach.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
-    Click
-    WinWaitNotActive, Chart,, 1.5
-    ; If Open Attachment fails, try open chart
-    if (ErrorLevel= 0) {
-    Sleep, 500
-    IfWinActive, Centricity Practice Solution
-        {
-        Click, 508, 10, 2   ; Minimizes
-        Sleep, 1000
-        ImageSearch, FoundX, FoundY, 0, 0, %A_ScreenHeight%, %A_ScreenWidth%, *n10 %A_ScriptDir%/files/CPS-Browser-Top-Edge.png
-         if (ErrorLevel = 0) {
-            MouseMove, %FoundX%, %FoundY%
-            CoordMode, Mouse, Screen
-            MouseGetPos,, MouseY
-            MouseY := (MouseY - 20) * -1
-            CoordMode, Mouse, Relative
-            MouseClickDrag, Left, %FoundX%, %FoundY%, %FoundX%, %MouseY%,
-        }
-        }
-    return
-    }
-    if (ErrorLevel = 1) {
-        ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
-        if (ErrorLevel = 0) {
-            MouseMove, %FoundX%, %FoundY%
-            Click
-        }
-    }
-}
-}
-return
-
-; Open Patient Chart to the item
-+#o::
-if WinActive("Chart - \\Remote") or WinActive("Chart Desktop - \\Remote")
-{
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
-    Click
-}
-}
-return
-
-
-
 ; Replies with Web Message. Assumes in Documents.
 #r::
 OpenAppendType("Web")
@@ -580,6 +545,52 @@ else
 return	
 }
 return
+
+OpenAttachment:
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/attach.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+    WinWaitNotActive, Chart,, 1.5
+    ; If Open Attachment fails, try open chart
+    if (ErrorLevel= 0) {
+    Sleep, 500
+    IfWinActive, Centricity Practice Solution
+        {
+        Click, 508, 10, 2   ; Minimizes
+        Sleep, 1000
+        ImageSearch, FoundX, FoundY, 0, 0, %A_ScreenHeight%, %A_ScreenWidth%, *n10 %A_ScriptDir%/files/CPS-Browser-Top-Edge.png
+         if (ErrorLevel = 0) {
+            MouseMove, %FoundX%, %FoundY%
+            CoordMode, Mouse, Screen
+            MouseGetPos,, MouseY
+            MouseY := (MouseY - 20) * -1
+            CoordMode, Mouse, Relative
+            MouseClickDrag, Left, %FoundX%, %FoundY%, %FoundX%, %MouseY%,
+        }
+        }
+    return
+    }
+    if (ErrorLevel = 1) {
+        ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
+        if (ErrorLevel = 0) {
+            MouseMove, %FoundX%, %FoundY%
+            Click
+        }
+    }
+}
+return
+
+OpenChartItem:
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+	}
+return
+
 
 ; Centricity Update Hotkey Functions
 ;#############################################################################
