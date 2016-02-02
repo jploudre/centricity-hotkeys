@@ -184,16 +184,13 @@ return
 
 
 #IfWinActive, Centricity Practice Solution Browser: ;###########################################################
+Space::PatternHotKey(".->CloseDocumentViewer", "..->CloseDocumentViewerandSave")
+
 #Space::
 \::
-Send !{F4}
+gosub, CloseDocumentViewer
 return
-down::
-WinGetPos,,,winwidth,winheight,A
-winwidth := winwidth - 10
-winheight := winheight - 25
-Click %winwidth%, %winheight%
-return
+
 up::
 WinGetPos,,,winwidth,,A
 winwidth := winwidth - 10
@@ -201,11 +198,7 @@ Click %winwidth%, 67
 return
 ; Close and Sign
 #s::
-Send !{F4}
-WinWaitNotActive
-Citrixsleep()
-Focusblue()
-Send ^s
+Gosub, CloseDocumentViewerandSave
 return
 
 #+p::
@@ -776,6 +769,24 @@ if (ErrorLevel >= 1) {
 	Exit
 }
 }
+return
+
+CloseDocumentViewer:
+Send !{F4}
+return
+down::
+WinGetPos,,,winwidth,winheight,A
+winwidth := winwidth - 10
+winheight := winheight - 25
+Click %winwidth%, %winheight%
+return
+
+CloseDocumentViewerandSave:
+Send !{F4}
+WinWaitNotActive
+Citrixsleep()
+Focusblue()
+Send ^s
 return
 
 
