@@ -774,12 +774,6 @@ return
 CloseDocumentViewer:
 Send !{F4}
 return
-down::
-WinGetPos,,,winwidth,winheight,A
-winwidth := winwidth - 10
-winheight := winheight - 25
-Click %winwidth%, %winheight%
-return
 
 CloseDocumentViewerandSave:
 Send !{F4}
