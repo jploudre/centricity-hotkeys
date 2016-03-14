@@ -74,6 +74,7 @@ return
 #Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 \::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 return
+#+s::
 #s::
 Gosub, SignUpdate
 return
