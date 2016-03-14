@@ -624,10 +624,7 @@ Click, 350, 38
 return
 
 ProblemSearch:
-FindTemplate("Blackbird")
-Click, 771, 87
-WinWaitActive, Blackbird
-Sendraw =
+Click, 593, 37
 return
 
 UpdateProblems:
