@@ -5,6 +5,7 @@ CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
 SetTimer, CloseOutlook, 5000 
+SetTimer, AdjustMouse, 480000
 return
  
 <#Esc::run taskmgr.exe
@@ -975,6 +976,13 @@ KeyPressPattern(length = 2, period = 0.2)
     }
 }
 
+AdjustMouse:
+if (A_TimeIdlePhysical <= 1800000)
+{
+MouseMove,0,0,0,R
+}
+return
+
 ::ujkp::
 text := "Upcoming Appointment. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
@@ -1003,3 +1011,5 @@ return
 CloseOutlook: 
 WinClose, Inbox - jkploudre 
 Return
+
+
