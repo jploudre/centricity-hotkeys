@@ -979,7 +979,7 @@ KeyPressPattern(length = 2, period = 0.2)
 AdjustMouse:
 if (A_TimeIdlePhysical <= 1800000)
 {
-MouseMove,0,0,0,R
+MouseClick, WU
 }
 return
 
