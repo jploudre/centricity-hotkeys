@@ -1008,6 +1008,14 @@ return
 ; Changes ";;" into "-->" to quickly type an arrow
 ::`;`;::-->
 
+; Excel name switcher
+^{Insert}::
+Send ^+{Right}
+Send ^x
+Send ^{Right 3}
+Send ^v{Enter}
+return
+
 CloseOutlook: 
 WinClose, Inbox - jkploudre 
 Return
