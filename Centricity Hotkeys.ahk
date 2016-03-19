@@ -1013,7 +1013,7 @@ return
 Send ^+{Right}
 Send ^x
 Send ^{Right 3}
-Send ^v{Enter}
+Send \ ^v{Enter}
 return
 
 CloseOutlook: 
