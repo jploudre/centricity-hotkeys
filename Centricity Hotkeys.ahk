@@ -1009,7 +1009,7 @@ return
 ::`;`;::-->
 
 ; Excel name switcher
-^{Insert}::
+^Insert::
 Send ^+{Right}
 Send ^x
 Send ^{Right 3}
