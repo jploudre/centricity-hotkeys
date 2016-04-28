@@ -186,7 +186,7 @@ return
 
 
 #IfWinActive, Centricity Practice Solution Browser: ;###########################################################
-Space::PatternHotKey(".->CloseDocumentViewer", "..->CloseDocumentViewerandSave")
+Space::PatternHotKey(".->DownDocumentViewer", "..->CloseDocumentViewerandSave")
 
 #Space::
 \::
@@ -198,6 +198,11 @@ WinGetPos,,,winwidth,,A
 winwidth := winwidth - 10
 Click %winwidth%, 67
 return
+
+down::
+gosub, DownDocumentViewer
+return
+
 ; Close and Sign
 #s::
 Gosub, CloseDocumentViewerandSave
@@ -768,6 +773,13 @@ if (ErrorLevel >= 1) {
 	Exit
 }
 }
+return
+
+DownDocumentViewer:
+WinGetPos,,,winwidth, winheight,A
+xclick := winwidth - 10
+yclick := winheight - 24
+CLick, %xclick%, %yclick%
 return
 
 CloseDocumentViewer:
