@@ -516,6 +516,7 @@ if (ErrorLevel = 0) {
    Sleep, 1000
    Click, 406, 720
    Sleep, 1000
+   ; Needs to check for send
 }
 return
 
@@ -555,24 +556,19 @@ if (ErrorLevel = 0) {
     WinWaitNotActive, Chart,, 1.5
     ; If Open Attachment fails, try open chart
     if (ErrorLevel= 0) {
-    Sleep, 1000
+    Sleep, 1500
     IfWinActive, Centricity Practice Solution
         {
         Click, 508, 10, 2   ; Minimizes
         Sleep, 500
-        ImageSearch, FoundX, FoundY, 0, 0, %A_ScreenHeight%, %A_ScreenWidth%, *n10 %A_ScriptDir%/files/CPS-Browser-Top-Edge.png
-         if (ErrorLevel = 0) {
-            MouseMove, %FoundX%, %FoundY%
-            CoordMode, Mouse, Screen
-            MouseGetPos,, MouseY
-            MouseY := (MouseY - 20) * -1
-            CoordMode, Mouse, Relative
-            MouseClickDrag, Left, %FoundX%, %FoundY%, %FoundX%, %MouseY%,
-        }
+        WinGetPos, xpos, ypos, winwidth, winheight, A
+        CoordMode, mouse, screen
+        MouseClickDrag, Left, xpos + 200, ypos + 1, xpos + 200, 20
+        CoordMode, mouse, relative
+        
         WinGetPos, xpos, ypos, winwidth, winheight, A
         ychange := A_ScreenHeight - (winheight + 50)
-        MouseClickDrag, Left, xpos +200, ypos + winheight  - 18, xpos +200, ypos + winheight - 18 + ychange
- 
+        MouseClickDrag, Left, 200, ypos + winheight  - 20, 200, ypos + winheight - 20 + ychange
         }
     return
     }
