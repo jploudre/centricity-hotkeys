@@ -82,7 +82,7 @@ return
 
 
 #IfWinActive, Chart - ;###########################################################
-Space::PatternHotKey(".->OpenAttachment", "..->OpenChartItem")
+Space::PatternHotKey(".->FancyOpen")
 
 #o::
 Gosub, OpenAttachment
@@ -131,7 +131,7 @@ return
 
 #IfWinActive, Chart Desktop - ;###########################################################
 
-Space::PatternHotKey(".->OpenAttachment", "..->OpenChartItem")
+Space::PatternHotKey(".->FancyOpen")
 
 #o::
 Gosub, OpenAttachment
@@ -342,6 +342,7 @@ Soundplay, %A_ScriptDir%/files/done.wav, Wait
 return
 
 #ifWinActive, Care Alert Warning ;###########################################################
+Space::
 #Space::
 !Space::
 Enter::
@@ -544,6 +545,42 @@ IfWinActive, End Update
 else
 {
 return	
+}
+return
+
+; Combination of Open Chart Item and OpenAttachment
+FancyOpen:
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/attach.png
+if (ErrorLevel = 0) {
+    ImageSearch, FoundX1, FoundY1, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/paperclip.png
+    if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+    WinWaitNotActive, Chart,, 3
+    if (ErrorLevel= 0) {
+    Sleep, 1500
+    IfWinActive, Centricity Practice Solution
+        {
+        Click, 508, 10, 2   ; Minimizes
+        Sleep, 500
+        WinGetPos, xpos, ypos, winwidth, winheight, A
+        CoordMode, mouse, screen
+        MouseClickDrag, Left, xpos + 200, ypos + 1, xpos + 200, 20
+        CoordMode, mouse, relative
+        
+        WinGetPos, xpos, ypos, winwidth, winheight, A
+        ychange := A_ScreenHeight - (winheight + 50)
+        MouseClickDrag, Left, 200, ypos + winheight  - 20, 200, ypos + winheight - 20 + ychange
+        }
+    return
+    }
+    } ; end Paperclip
+}
+ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
 }
 return
 
