@@ -728,6 +728,7 @@ return
 
 Prescriptions:
 FindTemplate("Prescriptions")
+MouseMove, 946, 563
 return
 
 SendPrescriptions:
