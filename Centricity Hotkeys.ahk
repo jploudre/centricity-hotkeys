@@ -30,17 +30,39 @@ Send ^{PgDn}
 return
 !Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
 #Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
+
 \::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
+
+#o::PatternHotKey(".->OrderSearch", "..->SignOrders")
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
+
+#m::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
+
+#p::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
 F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
+
+#h::PatternHotKey(".->HPI")
 F5::PatternHotKey(".->HPI")
+
+#q::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
 F6::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
+
+#z::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
 F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
+
 F8::PatternHotKey(".->ROS", "..->ROS2")
+
+#x::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
 F9::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
+
+#c::PatternHotKey(".->CPOE", "..->AssessmentsDue")
 F10::PatternHotKey(".->CPOE", "..->AssessmentsDue")
+
+#v::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
 F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
+
+#r::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 
 ; Ends and signs an update. 
