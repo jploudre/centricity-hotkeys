@@ -368,6 +368,7 @@ return
 
 FancyCPOEAppend:
 OpenAppendType("CPOE")
+FindTemplate("CPOE-A&P-CCC")
 return
 
 FancySign:
@@ -522,8 +523,11 @@ if (ErrorLevel = 1) {
 	; If found, errorlevel is now 0
 }
 if (ErrorLevel >= 1) {
-	; Template Not Found So skip rest of hotkey that called this. 
-	Exit
+	; Template Not Found So skip rest of hotkey except on Peds PE which needs to run to find Age exam.
+	if (template != "PE-CCC")
+    {
+    exit
+    }
 }
 }
 return
