@@ -3,7 +3,12 @@ ClinicalAssistantName = "Handy"
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
+Menu, Tray, NoStandard
+Menu, Tray, Add, Exit, ExitScript
 return
+
+ExitScript:
+ExitApp
 
 #IfWinActive, Update - ;###########################################################
 
