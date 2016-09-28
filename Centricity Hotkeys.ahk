@@ -1,139 +1,56 @@
 ; Setup
-{
 ClinicalAssistantName = "Handy"
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
-SetTimer, CloseOutlook, 5000 
-SetTimer, AdjustMouse, 480000
 return
- 
-<#Esc::run taskmgr.exe
-<#Up::Send {PgUp}
-<#Down::Send {PgDn}
-<#Backspace::Send {Delete}
-RWin::return
-LWin::return
-#L::return
-#D::return
-}
-
 
 #IfWinActive, Update - ;###########################################################
+
 `::PatternHotKey(".->GotoChart","..->SwapTextView")
-return
+\::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
+F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
+F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
+F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
+F5::PatternHotKey(".->HPI")
+F6::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
+F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
+F8::PatternHotKey(".->ROS", "..->ROS2")
+F9::PatternHotKey(".->PE")
+F10::PatternHotKey(".->CPOE", "..->AssessmentsDue")
+F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
+F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
+
 [::
 Send ^{PgUp}
 return
+
 ]::
 Send ^{PgDn}
 return
-!Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
-#Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
 
-\::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
-
-#o::PatternHotKey(".->OrderSearch", "..->SignOrders")
-F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
-
-#m::PatternHotKey(".->MedSearch", "..->UpdateMeds")
-F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
-
-#p::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
-F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
-
-#h::PatternHotKey(".->HPI")
-F5::PatternHotKey(".->HPI")
-
-#q::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
-F6::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
-
-#z::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
-F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
-
-F8::PatternHotKey(".->ROS", "..->ROS2")
-
-#x::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
-F9::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
-
-#c::PatternHotKey(".->CPOE", "..->AssessmentsDue")
-F10::PatternHotKey(".->CPOE", "..->AssessmentsDue")
-
-#v::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
-F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
-
-#r::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
-F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
-
-; Ends and signs an update. 
 #+s::
-GoSub, SendPortal
 Gosub, EndUpdate
 Gosub, SignUpdate
 return
 
-#+p::
-gosub, CommittoFlowsheetandSign
-return
-
-#/::
-GoSub, GotoChart
-citrixsleep()
-citrixsleep()
-citrixsleep()
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
-    Click
-    citrixsleep()
-    Click, 255, 212
-}
-return
-
-
 #IfWinActive, End Update ;###########################################################
-!Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
-#Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
+
 \::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
-return
+
 #+s::
-#s::
 Gosub, SignUpdate
 return
 
-
 #IfWinActive, Chart - ;###########################################################
-Space::PatternHotKey(".->FancyOpen")
 
-#o::
-Gosub, FancyOpen
-return
+Space::PatternHotKey(".->FancyOpen","..->FancySign","_->FancyCPOEAppend")
 
 `::
 IfWinExist, Update
 WinActivate, Update
 IfWinNotExist, Update
 gosub, GoChartDesktop
-return
-
-; Sign a chart document
-#s::
-FocusBlue()
-Send ^s
-return
-
-#j::
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/append.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
-    Click
-}
-return
-
-#+p::
-OpenAppendType("Clinical List Pr")
 return
 
 Up::
@@ -146,15 +63,9 @@ FocusBlue()
 Send {Down}
 return
 
-
 #IfWinActive, Chart Desktop - ;###########################################################
 
-Space::PatternHotKey(".->FancyOpen")
-
-#o::
-Gosub, FancyOpen
-return
-
+Space::PatternHotKey(".->FancyOpen","..->FancySign","_->FancyCPOEAppend")
 `::
 IfWinExist, Update
 WinActivate, Update
@@ -165,44 +76,19 @@ IfWinNotExist, Update
     Click, 13, %ypos%
 }
 return
-; Append
-#j::
-Send ^j
-return
 
-; Sign
-#s::
-Send ^s
-return
-; Preventive Append. Assumes in Documents.
-
-#+p::
-OpenAppendType("Clinical List Pr")
-return
-
-; Replies with Web Message. Assumes in Documents.
 #r::
-Send ^j
 OpenAppendType("Web")
 return
 
-; eRx Append. Assumes in Documents.
-#e::
-Send ^j
-OpenAppendType("* eSM")
-return
-
-; CPOE Append. Assumes in Documents.
 #c::
-Send ^j
 OpenAppendType("CPOE")
 return
 
-
 #IfWinActive, Centricity Practice Solution Browser: ;###########################################################
-Space::PatternHotKey(".->DownDocumentViewer", "..->CloseDocumentViewerandSave")
 
-#Space::
+Space::PatternHotKey(".->DownDocumentViewer", "..->CloseDocumentViewerandSave", "_->CloseDocumentViewerandAppend")
+
 \::
 gosub, CloseDocumentViewer
 return
@@ -217,70 +103,39 @@ down::
 gosub, DownDocumentViewer
 return
 
-; Close and Sign
-#s::
+#+s::
 Gosub, CloseDocumentViewerandSave
 return
 
-#+p::
-Send Send !{F4}
-Sleep, 1000
-OpenAppendType("Clinical List Pr")
-return
-
-
-#IfWinActive, Blackbird Content ;###########################################################
-#Space::
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/Blackbird-OK.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
-    Click
-    Sleep, 500
-    Send !{F4}
-}
-return
-Enter::
-Send \
-return
-
-
 #IfWinActive, Update Problems - ;###########################################################
+
 ; Long Hold is Top/Bottom. Tap is Up/Down
 Up::PatternHotKey(".->UpdateProblemsUp","_->UpdateProblemsTop")
+
 Down::PatternHotKey(".->UpdateProblemsDown","_->UpdateProblemsBottom")
+
 Left::
 Click, 736, 146
 return
+
 Right::
 Click, 786, 146
 return
+
 BackSpace::
 Delete::PatternHotKey(".->UpdateProblemsRemove")
-; OK is 'Done'
+
 \::
-Click, 694, 599
-return
-; Enter should always do OK.
-#Space::
-!Space::
 Enter::
 Click, 694, 599
 return
 
-
 #IfWinActive, Update Medications - ;###########################################################
-#Space::
-!Space::
+
 Enter::
 click 559, 566
 return
-; Sends (intead of saves)
-#s::
-Send !p
-citrixsleep()
-Click, 559, 566
-return
+
 BackSpace::
 Delete::
 Send !r
@@ -288,18 +143,12 @@ WinWaitActive, Remove Medication
 Click 285, 311
 return
 
-
 #ifWinActive, Update Orders - ;###########################################################
 
-#Space::
-!Space::
-Click 561, 656
-Citrixsleep()
-Click 679, 656
-return
 #s::
 CLick 561, 656
 return
+
 F1::PatternHotKey("..->SignOrders")
 return
 
@@ -319,17 +168,8 @@ else
     }
 return
 
-#IfWinActive, Append to Document ;###########################################################
-#s::
-^s::
-Send !s
-return
-
 #IfWinActive, Assessments Due ;###########################################################
-#s::
-^s::
-#Space::
-!Space::
+
 Esc::
 Enter::
 WinGetPos,,,winwidth,winheight,A
@@ -338,8 +178,8 @@ ypos := winheight - 20
 Click, %xpos%, %ypos%
 return
 
-
 #ifWinActive, Customize Letter ;###########################################################
+
 #Space::
 Send !p
 WinWaitNotActive, Customize Letter
@@ -352,13 +192,12 @@ Send !s
 WinWaitActive, Print
 Citrixsleep()
 Click 568, 355
-Soundplay, %A_ScriptDir%/files/done.wav, Wait
+Soundplay *64
 return
 
 #ifWinActive, Care Alert Warning ;###########################################################
+
 Space::
-#Space::
-!Space::
 Enter::
 \::
 Send !c
@@ -384,60 +223,7 @@ return
 
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
-
-; Replies with Web Message. Assumes in Documents.
-#r::
-OpenAppendType("Web")
-return
-
-; eRx Append. Assumes in Documents.
-#e::
-OpenAppendType("* eSM")
-return
-
-
-; CPOE Append. Assumes in Documents.
-#c::
-OpenAppendType("CPOE")
-return
-
-; Reply to a patient with a blank letter
-+#R::
-{
-Send ^p
-CitrixSleep()
-Send l
-CitrixSleep()
-Send {Down 2}
-CitrixSleep()
-Send {Right 2}
-CitrixSleep()
-Send l
-CitrixSleep()
-Send {Down 2}
-Click, 241, 59
-Send B
-CitrixSleep()
-Click, 392, 351
-}
-return
-
-; Quit All Windows
-#+q::
-WinGet, id, list,,, Program Manager
-Loop, %id%
-{
- this_id := id%A_Index%
- WinClose, ahk_id %this_id%
-}
-Sleep, 1000
-DllCall("LockWorkStation")
-Sleep, 200
-SendMessage,0x112,0xF170,2,,Program Manager
-return
-
-
-; Functions ####################################################################
+; Miscellaneous Functions ##############################
 
 CitrixSleep(){
 Sleep, 150
@@ -479,9 +265,7 @@ OpenAppendType(searchtext){
 }
 return
 
-; In Chart a selected item doesn't respond to arrows or hotkeys.
-; Click to set focus on the blue
-
+; In Chart a selected item doesn't respond to arrows or hotkeys. Clicks to set focus
 FocusBlue(){
 WinGetPos,,,winwidth,winheight,A
 ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, %A_ScriptDir%/files/blue.png
@@ -490,6 +274,9 @@ ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, %A_ScriptDir%/fil
     }
 return
 }
+return
+
+; Update Functions ##############################
 
 GotoChart:
 WinActivate, Chart
@@ -507,10 +294,6 @@ SignUpdate:
 Send !s
 WinWaitNotActive, End Update
 gosub, GoChartDesktop
-WinWaitActive, Chart Desktop -,,5, ; Up to 5 seconds to complete
-if (ErrorLevel = 0) {
-    Soundplay, %A_ScriptDir%/files/done.wav, WAIT
-}
 return
 
 EndUpdate:
@@ -520,19 +303,6 @@ citrixsleep()
 citrixsleep()
 Send ^e
 WinWaitActive, End Update
-return
-
-SendPortal:
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/portal.png
-if (ErrorLevel = 0) {
-    
-   Click, 406, 690
-   Sleep, 1000
-   Click, 406, 720
-   Sleep, 1000
-   ; Needs to check for send
-}
 return
 
 EndUpdateToClinicalAssistant:
@@ -561,6 +331,8 @@ else
 return	
 }
 return
+
+; Fancy Spacebar Functions ##############################
 
 FancyOpen:
 WinGetPos,,,winwidth,winheight,A
@@ -630,9 +402,22 @@ if (ErrorLevel = 0) {
 }
 }
 return
+FancyCPOEAppend:
+OpenAppendType("CPOE")
+return
+FancySign:
+ifWinActive, Chart Desktop -
+    {
+    Send ^s
+    }
+ifWinActive, Chart -
+    {
+    FocusBlue()
+    Send ^s
+    }
+return
 
-; Centricity Update Hotkey Functions
-;#############################################################################
+; Centricity Update Hotkey Functions ##############################
 
 OrderSearch:
 Click, 254, 38
@@ -698,12 +483,6 @@ FindTemplate("Preventive-Care-Screening")
 Click, 599, 113
 return
 
-CommittoFlowsheetandSign:
-Gosub, CommittoFlowsheet
-Gosub, EndUpdate
-Gosub, SignUpdate
-return
-
 PMH-SH-CCC:
 FindTemplate("PMH-SH-CCC")
 return
@@ -722,7 +501,6 @@ FindTemplate("ROS-CCC")
 Click, 351, 80
 return
 
-; ###################### Broken PE second search
 PE:
 FindTemplate("PE-CCC")
 if (ErrorLevel = 1)
@@ -730,36 +508,6 @@ if (ErrorLevel = 1)
 FindTemplate("Pediatric-PE-Age-Specific-CCC")
 }
 Click, 522, 203
-return
-
-PE-XU:
-FindTemplate("PE-CCC")
-if (ErrorLevel = 1)
-{
-FindTemplate("Pediatric-PE-Age-Specific-CCC")
-}
-Click, 522, 203
-Send xu{return}
-return
-
-PE-XC:
-FindTemplate("PE-CCC")
-if (ErrorLevel = 1)
-{
-FindTemplate("Pediatric-PE-Age-Specific-CCC")
-}
-Click, 522, 203
-Send xc{return}
-return
-
-PE-XP:
-FindTemplate("PE-CCC")
-if (ErrorLevel = 1)
-{
-FindTemplate("Pediatric-PE-Age-Specific-CCC")
-}
-Click, 522, 203
-Send xp{return}
 return
 
 CPOE:
@@ -815,6 +563,8 @@ if (ErrorLevel >= 1) {
 }
 return
 
+; Centricty Browswer Functions ##############################
+
 DownDocumentViewer:
 WinGetPos,,,winwidth, winheight,A
 xclick := winwidth - 10
@@ -834,8 +584,15 @@ Focusblue()
 Send ^s
 return
 
+CloseDocumentViewerandAppend:
+Send !{F4}
+WinWaitNotActive
+Citrixsleep()
+Focusblue()
+Gosub, FancyCPOEAppend
+return
 
-; Update Problems Functions
+; Update Problems Functions ##############################
 
 UpdateProblemsTop:
 Click, 762, 100
@@ -854,45 +611,6 @@ Click, 508, 572
 WinWaitNotActive
 Send {Enter}
 return
-
-
-; Downloaded Functions ----------------------------------------------------------------------------------
-
-Clip(Text="", Reselect="") ; http://www.autohotkey.com/forum/viewtopic.php?p=467710 , modified August 2012
-{
-	Static BackUpClip, Stored, LastClip
-	If (A_ThisLabel = A_ThisFunc) {
-		If (Clipboard == LastClip)
-			Clipboard := BackUpClip
-		BackUpClip := LastClip := Stored := ""
-	} Else {
-		If !Stored {
-			Stored := True
-			BackUpClip := ClipboardAll
-		} Else
-			SetTimer, %A_ThisFunc%, Off
-		LongCopy := A_TickCount, Clipboard := "", LongCopy -= A_TickCount
-		If (Text = "") {
-			Send, ^c
-			ClipWait, LongCopy ? 0.5 : 0.25
-		} Else {
-			Clipboard := LastClip := Text
-			ClipWait, 10
-			Send, ^v
-		}
-		SetTimer, %A_ThisFunc%, -700
-		If (Text = "")
-			Return LastClip := Clipboard
-		Else If (ReSelect = True) or (Reselect and (StrLen(Text) < 3000)) {
-			Sleep 30
-			StringReplace, Text, Text, `r, , All
-			SendInput, % "{Shift Down}{Left " StrLen(Text) "}{Shift Up}"
-		}
-	}
-	Return
-	Clip:
-	Return Clip()
-}
 
 ; http://www.autohotkey.com/board/topic/66855-patternhotkey-map-shortlong-keypress-patterns-to-anything/?hl=%2Bpatternhotkey
 ; Usage : hotkey::PatternHotKey("command1", ["command2", "command3", length(integer), period(float)])
@@ -1027,49 +745,3 @@ KeyPressPattern(length = 2, period = 0.2)
         }
     }
 }
-
-AdjustMouse:
-if (A_TimeIdlePhysical <= 1800000)
-{
-MouseClick, WU
-}
-return
-
-::ujkp::
-text := "Upcoming Appointment. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
-clip(text)
-sleep 100
-Send !s
-return
-::sljkp::
-text := "Send Letter with Results. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
-clip(text)
-sleep 100
-Send !s
-return
-::cdn::
-Send Call Doctor Note:{Enter 2}SITUATION:{Enter 3}BACKGROUND:{Enter 3}ASSESSMENT:{Enter 3}RECOMENDATION:{Enter 2}{Up 10}
-return
-:r:sbar::
-Send SITUATION:{Enter 3}BACKGROUND:{Enter 3}ASSESSMENT:{Enter 3}RECOMENDATION:{Enter 2}{Up 10}
-return
-::sdjkp::
-text := "............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
-clip(text)
-return
-; Changes ";;" into "-->" to quickly type an arrow
-::`;`;::-->
-
-; Excel name switcher
-^Insert::
-Send ^+{Right}
-Send ^x
-Send ^{Right 3}
-Send %A_Space%^v{Enter}
-return
-
-CloseOutlook: 
-WinClose, Inbox - jkploudre 
-Return
-
-
