@@ -112,29 +112,6 @@ return
 Gosub, CloseDocumentViewerandSave
 return
 
-#IfWinActive, Update Problems - ;###########################################################
-
-; Long Hold is Top/Bottom. Tap is Up/Down
-Up::PatternHotKey(".->UpdateProblemsUp","_->UpdateProblemsTop")
-
-Down::PatternHotKey(".->UpdateProblemsDown","_->UpdateProblemsBottom")
-
-Left::
-Click, 736, 146
-return
-
-Right::
-Click, 786, 146
-return
-
-BackSpace::
-Delete::PatternHotKey(".->UpdateProblemsRemove")
-
-\::
-Enter::
-Click, 694, 599
-return
-
 #IfWinActive, Update Medications - ;###########################################################
 
 Enter::
@@ -564,26 +541,6 @@ WinWaitNotActive
 Citrixsleep()
 Focusblue()
 Gosub, FancyCPOEAppend
-return
-
-; Update Problems Functions ##############################
-
-UpdateProblemsTop:
-Click, 762, 100
-return
-UpdateProblemsBottom:
-Click, 762, 189
-return
-UpdateProblemsUp:
-Click, 762, 122
-return
-UpdateProblemsDown:
-Click, 762, 170
-return
-UpdateProblemsRemove:
-Click, 508, 572
-WinWaitNotActive
-Send {Enter}
 return
 
 ; http://www.autohotkey.com/board/topic/66855-patternhotkey-map-shortlong-keypress-patterns-to-anything/?hl=%2Bpatternhotkey
