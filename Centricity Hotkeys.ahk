@@ -112,19 +112,6 @@ return
 Gosub, CloseDocumentViewerandSave
 return
 
-#IfWinActive, Update Medications - ;###########################################################
-
-Enter::
-click 559, 566
-return
-
-BackSpace::
-Delete::
-Send !r
-WinWaitActive, Remove Medication
-Click 285, 311
-return
-
 #ifWinActive, Update Orders - ;###########################################################
 
 #s::
