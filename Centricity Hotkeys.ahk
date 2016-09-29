@@ -122,23 +122,6 @@ ypos := winheight - 20
 Click, %xpos%, %ypos%
 return
 
-#ifWinActive, Customize Letter ;###########################################################
-
-#Space::
-Send !p
-WinWaitNotActive, Customize Letter
-WinWaitActive, Customize Letter
-Citrixsleep()
-Send !s
-WinWaitActive, Route Document
-Citrixsleep()
-Send !s
-WinWaitActive, Print
-Citrixsleep()
-Click 568, 355
-Soundplay *64
-return
-
 #ifWinActive, Care Alert Warning ;###########################################################
 
 Space::
