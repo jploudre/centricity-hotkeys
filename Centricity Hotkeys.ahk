@@ -14,7 +14,7 @@ ExitApp
 
 `::PatternHotKey(".->GotoChart","..->SwapTextView")
 \::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
-F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
+F1::PatternHotKey(".->OrderSearch")
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
 F5::PatternHotKey(".->HPI")
@@ -110,31 +110,6 @@ return
 
 #+s::
 Gosub, CloseDocumentViewerandSave
-return
-
-#ifWinActive, Update Orders - ;###########################################################
-
-#s::
-CLick 561, 656
-return
-
-F1::PatternHotKey("..->SignOrders")
-return
-
-LButton::
-MouseGetPos, xpos, ypos
-if ( 638 < xpos AND xpos < 709 AND 647 < ypos AND ypos < 667)
-    {
-    ; Click Sign, first
-    Click 561, 656
-    Citrixsleep()
-    Soundplay *64
-    Click %xpos%, %ypos%
-    }
-else
-    {
-    Click    
-    }
 return
 
 #IfWinActive, Assessments Due ;###########################################################
@@ -364,16 +339,6 @@ if (ErrorLevel = 0) {
     Click 412, 337
 }
 return
-
-SignOrders:
-Click, 254, 38
-WinWaitActive, Update Orders, , 3 ; Timeout
-if (ErrorLevel = 0) {
-	CitrixSleep()
-	Click, 561, 653
-}
-return
-
 
 MedSearch:
 Click, 524, 38
