@@ -1,14 +1,46 @@
 ; Setup
-ClinicalAssistantName = "Handy"
+FirstRun()
+IniRead, Buddy, Settings.ini, Preferences, Buddy
+ClinicalAssistantName = %Buddy%
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
 Menu, Tray, NoStandard
 Menu, Tray, Add, Exit, ExitScript
+
+
 return
 
 ExitScript:
 ExitApp
+
+; Check if this is original time opened after a download
+FirstRun(){
+IfNotExist, Settings.ini
+{
+InputBox, BuddyName, Who's your Buddy?,
+(
+
+Who do you 'hold' things to most frequently
+in Centricity?
+
+Typically this might be your CAs last name...
+), , 300, , , , , , 
+if (Errorlevel= 0) {
+IniWrite, %BuddyName%, Settings.ini, Preferences, Buddy
+MsgBox, 64, Thanks,
+(
+If this is your first time:
+   - you may want keyboard stickers
+   - you may want to print the help cheatsheet
+   - you may need to set your windows theme
+
+)
+
+}
+}
+}
+return
 
 #IfWinActive, Update - ;###########################################################
 
