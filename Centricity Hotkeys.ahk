@@ -312,7 +312,7 @@ if (ErrorLevel = 0) {
     {
     Send !c
     }
-    Sleep, 500
+    Sleep, 1000
     WinGetPos,,,winwidth,winheight,A
     ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/attach.png
     if (ErrorLevel = 0) {
