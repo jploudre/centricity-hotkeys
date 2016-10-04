@@ -7,8 +7,6 @@ CoordMode, Mouse, Window
 SetKeyDelay, 30
 Menu, Tray, NoStandard
 Menu, Tray, Add, Exit, ExitScript
-
-
 return
 
 ExitScript:
@@ -90,6 +88,11 @@ IfWinNotExist, Update
 gosub, GoChartDesktop
 return
 
+#+s::
+Gosub, FancySign
+return
+
+
 Up::
 FocusBlue()
 Send {Up}
@@ -114,12 +117,8 @@ IfWinNotExist, Update
 }
 return
 
-#r::
-OpenAppendType("Web")
-return
-
-#c::
-OpenAppendType("CPOE")
+#+s::
+Gosub, FancySign
 return
 
 #IfWinActive, Centricity Practice Solution Browser: ;###########################################################
