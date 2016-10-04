@@ -251,13 +251,24 @@ if (ErrorLevel = 0) {
             MouseClick, left, %FoundX%, %FoundY%
         } ; end Paperclip
 }
+WinWaitActive, Update, , 5
+if (ErrorLevel = 0)
+{
+    Send, {WheelDown}
+    Send, {WheelDown}
+    Send, {WheelDown}
+    Send, {WheelDown}
+    Send, {WheelDown}
+
+}
 }
 return
 
 FancyCPOEAppend:
-Progress, P0 b1 fm18 zh15 W400 cbGray, , Opening CPOE... , , Tahoma Bold
 searchtext = "CPOE"
-
+if winactive "Chart Desktop" or winactive "Chart" 
+{
+Progress, P0 b1 fm18 zh15 W400 cbGray, , Opening CPOE... , , Tahoma Bold
     ifWinActive, Chart Desktop -
     {
     Send ^j
@@ -328,7 +339,7 @@ searchtext = "CPOE"
     MouseMove, 561, 108
     Progress, 100
     Progress, Off
-    
+}
 }
 return
 
@@ -380,10 +391,15 @@ Click, 428, 38
 return
 
 GoChartDesktop:
-CitrixSleep()
-WinGetPos,,,,winheight,A
-ypos := winheight - 217
-Click, 13, %ypos%
+WinWaitActive, Chart -, , 4
+if (ErrorLevel = 0) 
+{
+    ImageSearch, FoundX, FoundY, 0, 0, 200, %A_ScreenHeight%, *n10 %A_ScriptDir%/files/chart-desktop.png
+    if (ErrorLevel = 0) {
+        Mouseclick, Left, %FoundX%, %FoundY%, 
+    WinWaitActive, Chart Desktop -, 3
+    }
+}
 return
 
 HPI:
