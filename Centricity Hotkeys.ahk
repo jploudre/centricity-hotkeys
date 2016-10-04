@@ -143,42 +143,6 @@ return
 Gosub, CloseDocumentViewerandSave
 return
 
-#IfWinActive, Assessments Due ;###########################################################
-
-Esc::
-Enter::
-WinGetPos,,,winwidth,winheight,A
-xpos := winwidth - 20
-ypos := winheight - 20
-Click, %xpos%, %ypos%
-return
-
-#ifWinActive, Care Alert Warning ;###########################################################
-
-Space::
-Enter::
-\::
-Send !c
-return
-
-#ifWinActive, New Medication ;###########################################################
-
-LButton::
-MouseGetPos, xpos, ypos
-if ( 649 < xpos AND xpos < 712 AND 643 < ypos AND ypos < 669)
-    {
-    Soundplay *64
-    Click %xpos%, %ypos%
-    WinWaitActive, Update -
-    CitrixSleep()
-    Gosub, Prescriptions
-    }
-else 
-{
-    Click
-}
-return
-
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 ; Miscellaneous Functions ##############################
