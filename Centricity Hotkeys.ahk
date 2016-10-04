@@ -155,41 +155,6 @@ Sleep, 150
 }
 return
 
-OpenAppendType(searchtext){
-    ifWinActive, Chart Desktop -
-    {
-    Send ^j
-    }
-    ifWinActive, Chart -
-    {
-    WinGetPos,,,winwidth,winheight,A
-    ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/append.png
-    if (ErrorLevel = 0) {
-        MouseMove, %FoundX%, %FoundY%
-        Click
-    }
-    }
-    ; Sometimes fails, use 3 second timeout
-    WinWaitActive, Append to, , 3
-    if (ErrorLevel = 0) {
-        CitrixSleep()
-        Send !F
-        WinWaitActive, Append Document ; no timeout needed
-        if (ErrorLevel = 0) {
-            CitrixSleep()
-            Send %searchtext%
-            Send {Enter}
-            WinWaitActive, Update ; no timeout needed
-            if (ErrorLevel = 0) {
-            CitrixSleep()
-            Send +{F8}
-            CitrixSleep()
-            }
-        }
-    }
-}
-return
-
 ; In Chart a selected item doesn't respond to arrows or hotkeys. Clicks to set focus
 FocusBlue(){
 WinGetPos,,,winwidth,winheight,A
@@ -292,10 +257,81 @@ if (ErrorLevel = 0) {
 return
 
 FancyCPOEAppend:
-Progress, b1 fs24 zh0 W400 ZX30 ZY30, Opening CPOE, , , Tahoma Bold
-OpenAppendType("CPOE")
-Progress, Off
-FindTemplate("CPOE-A&P-CCC")
+Progress, P0 b1 fm18 zh15 W400 cbGray, , Opening CPOE... , , Tahoma Bold
+searchtext = "CPOE"
+
+    ifWinActive, Chart Desktop -
+    {
+    Send ^j
+    }
+    ifWinActive, Chart -
+    {
+    WinGetPos,,,winwidth,winheight,A
+    ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/append.png
+    if (ErrorLevel = 0) {
+        Click %FoundX%, %FoundY%
+    }
+    }
+    ; Sometimes fails, use 3 second timeout
+    WinWaitActive, Append to, , 3
+    if (ErrorLevel = 0) {
+        CitrixSleep()
+        Progress, 5
+        Send !F
+        WinWaitActive, Append Document ; no timeout needed
+        if (ErrorLevel = 0) {
+            CitrixSleep()
+            Progress, 10
+            Send %searchtext%
+            Progress, 15
+            Send {Enter}
+            ; Takes a while to open Append. Many progress updates.....
+            Progress, 20
+            CitrixSleep()
+            Progress, 25
+            CitrixSleep()
+            Progress, 30
+            CitrixSleep()
+            Progress, 35
+            CitrixSleep()
+            Progress, 45
+            CitrixSleep()
+            Progress, 50
+            CitrixSleep()
+            Progress, 55
+            CitrixSleep()
+            Progress, 60
+            CitrixSleep()
+            Progress, 65
+            CitrixSleep()
+            Progress, 70
+            WinWaitActive, Update ; no timeout needed
+            if (ErrorLevel = 0) {
+            CitrixSleep()
+            Progress, 75
+            Send +{F8}
+            CitrixSleep()
+            Progress, 80
+            }
+        }
+    }
+    template = ""
+    ; From Generic FindTemplate but with progess updates
+    ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/CPOE-A&P-CCC.png
+    if (ErrorLevel = 0) {
+	Mouseclick, Left, %FoundX%, %FoundY%, 2
+	CitrixSleep()
+	Progress, 85
+    CitrixSleep()
+    Progress, 90
+	CitrixSleep()
+    Progress, 95
+    ; Assessments Due
+    MouseMove, 561, 108
+    Progress, 100
+    Progress, Off
+    
+}
 return
 
 FancySign:
