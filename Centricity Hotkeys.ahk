@@ -145,6 +145,7 @@ return
 
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
+
 ; Miscellaneous Functions ##############################
 
 CitrixSleep(){
@@ -289,7 +290,18 @@ if (ErrorLevel = 0) {
 return
 
 FancyCPOEAppend:
+CustomColor = EEAA99
+Gui +LastFound +AlwaysOnTop -Caption +ToolWindow 
+Gui, Color, %CustomColor%
+Gui, Font, s64  ; Set a large font size (32-point).
+Gui, Add, Text, cLime, CPOE Append
+WinSet, TransColor, %CustomColor% 150
+Gui, Show, x0 y400 NoActivate  ; NoActivate avoids deactivating the currently active window.
+
 OpenAppendType("CPOE")
+
+Gui Destroy
+
 FindTemplate("CPOE-A&P-CCC")
 return
 
