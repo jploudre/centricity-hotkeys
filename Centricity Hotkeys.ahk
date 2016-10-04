@@ -229,15 +229,13 @@ ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir
 if (ErrorLevel = 0) {
     ImageSearch, FoundX1, FoundY1, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/paperclip.png
     if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
-    Click  
+    MouseClick, left, %FoundX%, %FoundY%
     } ; end Paperclip
 }
 ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
 if (ErrorLevel = 0) {
     ; if over 200 pixels y, we're in Chart Summary, might need to open attachment.
-    MouseMove, %FoundX%, %FoundY%
-    Click
+    MouseClick, left, %FoundX%, %FoundY%
     Sleep, 1000
     IfWinActive, Care Alert Warning - 
     {
@@ -249,8 +247,7 @@ if (ErrorLevel = 0) {
     if (ErrorLevel = 0) {
         ImageSearch, FoundX1, FoundY1, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/paperclip.png
         if (ErrorLevel = 0) {
-            MouseMove, %FoundX%, %FoundY%
-            Click
+            MouseClick, left, %FoundX%, %FoundY%
         } ; end Paperclip
 }
 }
@@ -445,8 +442,7 @@ return
 
 PrintVisitSummary:
 FindTemplate("Patient-Instructions-CCC")
-Click, 891, 130
-Click, 
+Click, 891, 130 
 return
 
 Prescriptions:
