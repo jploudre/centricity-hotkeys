@@ -29,9 +29,9 @@ IniWrite, %BuddyName%, Settings.ini, Preferences, Buddy
 MsgBox, 64, Thanks,
 (
 If this is your first time:
-   - you may want keyboard stickers
-   - you may want to print the help cheatsheet
-   - you may need to set your windows theme
+    
+   - Want keyboard stickers?
+   - Print the help cheatsheet?
 
 )
 
