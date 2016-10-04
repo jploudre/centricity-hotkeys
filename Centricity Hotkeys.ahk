@@ -30,8 +30,10 @@ MsgBox, 64, Thanks,
 (
 If this is your first time:
     
+
    - Want keyboard stickers?
    - Print the help cheatsheet?
+
 
 )
 
@@ -290,9 +292,9 @@ if (ErrorLevel = 0) {
 return
 
 FancyCPOEAppend:
-SplashTextOn, ,,One Moment, Opening CPOE Append
+Progress, b1 fs24 zh0 W400 ZX30 ZY30, Opening CPOE, , , Tahoma Bold
 OpenAppendType("CPOE")
-SplashTextOff
+Progress, Off
 FindTemplate("CPOE-A&P-CCC")
 return
 
