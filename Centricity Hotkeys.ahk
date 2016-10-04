@@ -5,6 +5,7 @@ ClinicalAssistantName = %Buddy%
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
+SendMode Input
 Menu, Tray, NoStandard
 Menu, Tray, Add, Exit, ExitScript
 return
