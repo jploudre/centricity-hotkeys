@@ -528,6 +528,18 @@ Gosub, FancyCPOEAppend
 return
 
 ; http://www.autohotkey.com/board/topic/66855-patternhotkey-map-shortlong-keypress-patterns-to-anything/?hl=%2Bpatternhotkey
+; Usage : hotkey::PatternHotKey("command1", ["command2", "command3", length(integer), period(float)])
+;     where commands match one of the following formats:
+;         "pattern:keys"                  ; Maps pattern to send keys
+;         "pattern->label"                ; Maps pattern to label (GoSub)
+;         "pattern->function()"           ; Maps pattern to function myfunction with
+;                                           no parameter
+;         "pattern->function(value)"      ; Maps pattern to function myfunction with
+;                                           the first parameter equal to 'value'
+;         and patterns match the following formats:
+;             '.' or '0' represents a short press
+;             '-' or '_' represents a long press of any length
+;             '?' represents any press
 PatternHotKey(arguments*)
 {
     period = 0.2
