@@ -482,7 +482,7 @@ if (ErrorLevel = 0) {
 	CitrixSleep()
     Click 2
     MouseMove, 500, 0, 0, R
-}
+    }
 ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%-aero.png
 if (ErrorLevel = 0) {
 	MouseMove, %FoundX%, %FoundY%
@@ -492,22 +492,23 @@ if (ErrorLevel = 0) {
 	CitrixSleep()
     Click 2
     MouseMove, 500, 0, 0, R
-}
+    }
 ; if template not found, is it already selected?
 if (ErrorLevel = 1) {
 	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%-highlighted.png
 	; If found, errorlevel is now 0
+    }
 if (ErrorLevel = 1) {
 	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%-aero-highlighted.png
 	; If found, errorlevel is now 0
-}
+    }
 if (ErrorLevel >= 1) {
 	; Template Not Found So skip rest of hotkey except on Peds PE which needs to run to find Age exam.
 	if (template != "PE-CCC")
-    {
-    exit
+        {
+        exit
+        }
     }
-}
 }
 return
 
