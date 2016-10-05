@@ -12,6 +12,7 @@ return
 
 ExitScript:
 ExitApp
+return
 
 ; Check if this is original time opened after a download
 FirstRun(){
