@@ -91,6 +91,15 @@ if (ErrorLevel = 0) {
 }
 return
 
+;Process Clipboard, Paste back
+#+x::
+clipboard =
+Send ^x
+ClipWait  
+Clipboard := RegExReplace(Clipboard, ";", "`r`n") 
+Send ^v
+return
+
 
 #IfWinActive, End Update ;###########################################################
 !Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
