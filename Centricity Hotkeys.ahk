@@ -48,8 +48,8 @@ F5::PatternHotKey(".->HPI")
 #q::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
 F6::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
 
-#z::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
-F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
+#z::PatternHotKey(".->PMH-SH-CCC")
+F7::PatternHotKey(".->PMH-SH-CCC")
 
 F8::PatternHotKey(".->ROS", "..->ROS2")
 
