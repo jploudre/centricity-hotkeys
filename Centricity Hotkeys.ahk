@@ -98,6 +98,28 @@ Send ^x
 ClipWait  
 Clipboard := RegExReplace(Clipboard, "; ", "`r`n") 
 Clipboard := RegExReplace(Clipboard, ";", "`r`n") 
+Clipboard := RegexReplace(Clipboard, "m)^Cancer History:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Dermatology:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Endocrine:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Hematology:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Cardiovascular:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Pulmonary:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Other Problems:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Musculoskeletal:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Neurology/Genetic Dz.:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Mental Health History:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Renal/Genital/Urinary:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^GI:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Procedures:(.*)$","$1")
+
+; Remove Current Medical Providers -- I have not been maintaining for years. 
+Clipboard := RegexReplace(Clipboard, "m)^CURRENT MEDICAL PROVIDERS:(.*)$","")
+
+; Any whitespace at beginning of lines?
+Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
+; Remove Blank Lines
 Loop
 {
     StringReplace, Clipboard, Clipboard, `r`n`r`n, `r`n, UseErrorLevel
