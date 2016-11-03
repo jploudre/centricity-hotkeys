@@ -109,6 +109,8 @@ Clipboard := RegexReplace(Clipboard, "m)^Musculoskeletal:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Neurology/Genetic Dz.:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Mental Health History:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Renal/Genital/Urinary:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Infectious Disease History:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Substance Abuse History:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^GI:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Procedures:(.*)$","$1")
 
