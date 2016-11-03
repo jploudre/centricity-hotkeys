@@ -96,7 +96,14 @@ return
 clipboard =
 Send ^x
 ClipWait  
+Clipboard := RegExReplace(Clipboard, "; ", "`r`n") 
 Clipboard := RegExReplace(Clipboard, ";", "`r`n") 
+Loop
+{
+    StringReplace, Clipboard, Clipboard, `r`n`r`n, `r`n, UseErrorLevel
+    if ErrorLevel = 0  ; No more replacements needed.
+        break
+}
 Send ^v
 return
 
