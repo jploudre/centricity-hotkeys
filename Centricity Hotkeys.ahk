@@ -112,6 +112,7 @@ Clipboard := RegexReplace(Clipboard, "m)^Renal/Genital/Urinary:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Infectious Disease History:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Substance Abuse History:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^GI:(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^Gastrointestinal:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Procedures:(.*)$","$1")
 
 ; Remove Current Medical Providers -- I have not been maintaining for years. 
