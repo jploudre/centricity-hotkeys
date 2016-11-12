@@ -125,6 +125,9 @@ Clipboard := RegexReplace(Clipboard, "m)^Procedures:(.*)$","$1")
 ; Remove Current Medical Providers -- I have not been maintaining for years. 
 Clipboard := RegexReplace(Clipboard, "m)^CURRENT MEDICAL PROVIDERS:(.*)$","")
 
+Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
+
 ; Remove Blank Lines
 Loop
 {
