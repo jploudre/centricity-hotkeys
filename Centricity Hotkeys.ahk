@@ -98,6 +98,12 @@ Send ^x
 ClipWait  
 Clipboard := RegExReplace(Clipboard, "; ", "`r`n") 
 Clipboard := RegExReplace(Clipboard, ";", "`r`n") 
+
+; Any whitespace at beginning of lines?
+Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
+Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
+
 Clipboard := RegexReplace(Clipboard, "m)^Cancer History:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Dermatology:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Endocrine:(.*)$","$1")
@@ -116,14 +122,9 @@ Clipboard := RegexReplace(Clipboard, "m)^Gastrointestinal:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Allergy/Immunology:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Procedures:(.*)$","$1")
 
-
 ; Remove Current Medical Providers -- I have not been maintaining for years. 
 Clipboard := RegexReplace(Clipboard, "m)^CURRENT MEDICAL PROVIDERS:(.*)$","")
 
-; Any whitespace at beginning of lines?
-Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
-Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
-Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
 ; Remove Blank Lines
 Loop
 {
