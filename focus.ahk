@@ -3,7 +3,7 @@ SetTimer, Focus, 100
 return
 
 Focus:
-if WinActive("focus.ahk") or WinActive("Update Problems -") or WinActive("Update Medications -") or WinActive("Update Orders -") or WinActive("Update Orders -") or WinActive("Append to Document") or WinActive("Assessments Due") or WinActive("Customize Letter") or WinActive("End Update") or WinActive("Care Alert Warning -") or WinActive("New Medication")or WinActive("New Problem")
+if WinActive("focus.ahk") or WinActive("Update Problems -") or WinActive("Update Medications -") or WinActive("Update Orders -") or WinActive("Update Orders -") or WinActive("Append to Document") or WinActive("Assessments Due") or WinActive("Customize Letter") or WinActive("End Update") or WinActive("Care Alert Warning -") or WinActive("New Medication") or WinActive("New Problem") or WinActive("Find Problem") or WinActive("Find Medication")
 {
 active_window := WinExist("A")
 WinGetPos, Xpos, Ypos, winwidth , winheight , A
