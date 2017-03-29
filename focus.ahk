@@ -1,6 +1,3 @@
-; JKP Focus
-; Doesn't really work with Citrix
-
 #Persistent
 SetTimer, Focus, 100
 return
