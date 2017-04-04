@@ -267,17 +267,13 @@ If Position
     MatchList := SubStr(MatchList,1,Position - 1)
 
 ;find the longest text width and add numbers
-MaxWidth := 0
+MaxWidth := 265
 DisplayList := ""
 Loop, Parse, MatchList, `n
 {
     Entry := (A_Index < 10 ? A_Index . ". " : "   ") . A_LoopField
-    Width := TextWidth(Entry)
-    If (Width > MaxWidth)
-        MaxWidth := Width
     DisplayList .= Entry . "`n"
 }
-MaxWidth += 30 ;add room for the scrollbar
 DisplayList := SubStr(DisplayList,1,-1)
 
 ;update the interface
@@ -423,23 +419,6 @@ SendWord(CurrentWord,NewWord,CorrectCase = False)
     ;send the word
     Send, % "{BS " . StrLen(CurrentWord) . "}" ;clear the typed word
     SendRaw, %NewWord%
-}
-
-TextWidth(String)
-{
-    static Typeface := "Courier New"
-    static Size := 10
-    static hDC, hFont := 0, Extent
-    If !hFont
-    {
-        hDC := DllCall("GetDC","UPtr",0,"UPtr")
-        Height := -DllCall("MulDiv","Int",Size,"Int",DllCall("GetDeviceCaps","UPtr",hDC,"Int",90),"Int",72)
-        hFont := DllCall("CreateFont","Int",Height,"Int",0,"Int",0,"Int",0,"Int",400,"UInt",False,"UInt",False,"UInt",False,"UInt",0,"UInt",0,"UInt",0,"UInt",0,"UInt",0,"Str",Typeface)
-        hOriginalFont := DllCall("SelectObject","UPtr",hDC,"UPtr",hFont,"UPtr")
-        VarSetCapacity(Extent,8)
-    }
-    DllCall("GetTextExtentPoint32","UPtr",hDC,"Str",String,"Int",StrLen(String),"UPtr",&Extent)
-    Return, NumGet(Extent,0,"UInt")
 }
 
 URLEncode(Text)
