@@ -9,21 +9,21 @@ active_window := WinExist("A")
 WinGetPos, Xpos, Ypos, winwidth , winheight , A
 
 Gui,1: +LastFound -Caption +ToolWindow +E0x20 +AlwaysOnTop
-Gui,1: Color,b8b8b8
+Gui,1: Color,008080
 gui1h := Ypos + winheight 
 Gui,1: Show, noactivate w%Xpos% h%gui1h% x0 y0,FocusWindow1
 WinGet,windowID1,ID
 WinSet, Transparent, 150, ahk_id %windowID1%
 
 Gui,2: +LastFound -Caption +ToolWindow +E0x20 +AlwaysOnTop
-Gui,2: Color,b8b8b8
+Gui,2: Color,008080
 gui2w := A_Screenwidth - Xpos
 Gui,2: Show, noactivate w%gui2w% h%Ypos% x%Xpos% y0,FocusWindow2
 WinGet,windowID2,ID
 WinSet, Transparent, 150, ahk_id %windowID2%
 
 Gui,3: +LastFound -Caption +ToolWindow +E0x20 +AlwaysOnTop
-Gui,3: Color,b8b8b8
+Gui,3: Color,008080
 gui3w := A_Screenwidth - Xpos - winwidth
 gui3x := Xpos + winwidth
 gui3h := A_Screenheight - Ypos - 30
@@ -32,7 +32,7 @@ WinGet,windowID3,ID
 WinSet, Transparent, 150, ahk_id %windowID3%
 
 Gui,4: +LastFound -Caption +ToolWindow +E0x20 +AlwaysOnTop
-Gui,4: Color,b8b8b8
+Gui,4: Color,008080
 gui4y := Ypos + winheight
 gui4h := A_Screenheight - Ypos - winheight -30
 gui4w := Xpos + winwidth
