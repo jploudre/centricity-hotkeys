@@ -280,7 +280,7 @@ DisplayList := SubStr(DisplayList,1,-1)
 GuiControl,, Matched, `n%DisplayList%
 GuiControl, Choose, Matched, 1
 GuiControl, Move, Matched, w%MaxWidth% ;set the control width
-PosY := ScreenHeight - BoxHeight
+PosY := ScreenHeight - BoxHeight - 40
 Gui, Show, xCenter y%PosY% w%MaxWidth% NoActivate ;show window
 Return
 
