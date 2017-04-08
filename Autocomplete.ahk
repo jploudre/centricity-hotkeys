@@ -7,8 +7,8 @@
 
 SetBatchLines, -1
 
-WordListFile := A_ScriptDir . "\WordList.txt" ;path of the wordlist file
-SettingsFile := A_ScriptDir . "\Autocomplete-Settings.ini" ;path of the settings file
+WordListFile := A_ScriptDir . "\files\WordList.txt" ;path of the wordlist file
+SettingsFile := A_ScriptDir . "\files\Autocomplete-Settings.ini" ;path of the settings file
 
 MaxResults := 20 ;maximum number of results to display
 OffsetX := 0 ;offset in caret position in X axis
