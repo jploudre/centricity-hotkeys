@@ -497,6 +497,22 @@ else
 }
 return
 
+/*
+In Process
+
+Move to where problems are
+108, 341
+
+If Blue Area (problem selected
+
+18 351
+188 531
+
+Click OK
+677 653
+
+*/
+
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 
