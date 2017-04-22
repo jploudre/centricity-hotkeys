@@ -477,6 +477,10 @@ return
 
 #ifWinActive, New Medication ;###########################################################
 
+F3::
+Click, 153, 573
+return
+
 LButton::
 MouseGetPos, xpos, ypos
 if ( 649 < xpos AND xpos < 712 AND 643 < ypos AND ypos < 669)
