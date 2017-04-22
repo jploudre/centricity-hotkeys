@@ -533,7 +533,7 @@ OpenAppendType("CPOE")
 return
 
 ; Reply to a patient with a blank letter
-+#R::
++#R Up::
 {
 Send ^p
 CitrixSleep()
