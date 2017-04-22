@@ -360,19 +360,70 @@ return
 #s::
 CLick 561, 656
 return
+
+; Order Details
+#d::
+Click, 341, 290
+return
+
+BackSpace::
+gosub, OrdersDeleteOrder
+return
+
 F1::PatternHotKey("..->SignOrders")
+F3::PatternHotKey(".->OrdersNewProblem","..->OrdersEditProblem")
+
+SignOrders:
+Click, 254, 38
+WinWaitActive, Update Orders, , 3 ; Timeout
+if (ErrorLevel = 0) {
+	CitrixSleep()
+	Click, 561, 653
+}
+return
+
+OrdersNewProblem:
+Click, 641, 261
+return
+
+OrdersEditProblem:
+Click, 726, 263
+return
+
+OrdersDeleteOrder:
+Click 51, 261
 return
 
 LButton::
 MouseGetPos, xpos, ypos
 if ( 638 < xpos AND xpos < 709 AND 647 < ypos AND ypos < 667)
     {
-    ; Click Sign, first
+    ; Click Sign first
     Click 561, 656
     Citrixsleep()
-    Soundplay *64
     Click %xpos%, %ypos%
     }
+else
+    {
+    Click    
+    }
+return
+
+RButton::
+MouseGetPos, xpos, ypos
+if ( 619 < xpos AND xpos < 771 AND 81 < ypos AND ypos < 238)
+    {
+    ; Click then Edit
+    Click %xpos%, %ypos%
+    Citrixsleep()
+    GoSub, OrdersEditProblem
+    }
+else if ( 16 < xpos AND xpos < 587 AND 117 < ypos AND ypos < 239)
+    {
+    Click %xpos%, %ypos%
+    Citrixsleep()
+    gosub, OrdersDeleteOrder
+    }    
 else
     {
     Click    
@@ -705,14 +756,7 @@ if (ErrorLevel = 0) {
 }
 return
 
-SignOrders:
-Click, 254, 38
-WinWaitActive, Update Orders, , 3 ; Timeout
-if (ErrorLevel = 0) {
-	CitrixSleep()
-	Click, 561, 653
-}
-return
+
 
 
 MedSearch:
