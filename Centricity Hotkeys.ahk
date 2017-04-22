@@ -292,6 +292,18 @@ Enter::
 Send \
 return
 
+#IfWinActive, New Problem - ;###########################################################
+#Enter::
+#Space::
+Click, 434, 532
+return
+F3::
+#3::
+Click, 135, 403
+CitrixSleep()
+Send 30
+Click, 434, 532
+return
 
 #IfWinActive, Update Problems - ;###########################################################
 ; Long Hold is Top/Bottom. Tap is Up/Down
