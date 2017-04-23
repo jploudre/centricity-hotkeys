@@ -483,35 +483,39 @@ return
 
 LButton::
 MouseGetPos, xpos, ypos
+; If Done, did diagnosis get associated?
 if ( 649 < xpos AND xpos < 712 AND 643 < ypos AND ypos < 669)
     {
-    Soundplay *64
-    Click %xpos%, %ypos%
-    WinWaitActive, Update -
-    CitrixSleep()
-    Gosub, Prescriptions
+    WinGetPos,WinX,WinY,,,A
+    DiagnosisControlX := WinX + 18
+    DiagnosisControlY := WinY + 351
+    ; Check if Diagnosis is Highlighted. If Not, Error.
+    ImageSearch,,, 18, 351, 188, 531, *n10 %A_ScriptDir%/files/blue-little.png
+    if (ErrorLevel = 0) {
+        Click %xpos%, %ypos%
+        WinWaitActive, Update -
+        CitrixSleep()
+        Gosub, Prescriptions
+        }
+    if (ErrorLevel > 0) { 
+        Gui,5: +LastFound -Caption +ToolWindow +E0x20 +AlwaysOnTop
+        Gui,5: Color,008080 
+        Gui,5: Show, noactivate x%DiagnosisControlX% y%DiagnosisControlY% w188 h180, AssociateMeds
+        WinGet,windowID1,ID
+        WinSet, Transparent, 150, ahk_id %windowID1%
+        CitrixSleep()
+        Gui,5: Hide
+        CitrixSleep()
+        Gui,5: Show, noactivate x%DiagnosisControlX% y%DiagnosisControlY% w188 h180, AssociateMeds
+        CitrixSleep()
+        Gui,5: Destroy
+        }
     }
 else 
 {
     Click
 }
 return
-
-/*
-In Process
-
-Move to where problems are
-108, 341
-
-If Blue Area (problem selected
-
-18 351
-188 531
-
-Click OK
-677 653
-
-*/
 
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
