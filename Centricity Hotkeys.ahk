@@ -366,10 +366,6 @@ return
 Click, 341, 290
 return
 
-BackSpace::
-gosub, OrdersDeleteOrder
-return
-
 F1::PatternHotKey("..->SignOrders")
 F3::PatternHotKey(".->OrdersNewProblem","..->OrdersEditProblem")
 
