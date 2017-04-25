@@ -67,7 +67,6 @@ F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 
 ; Ends and signs an update. 
 #+s::
-GoSub, SendPortal
 Gosub, EndUpdate
 Gosub, SignUpdate
 return
@@ -651,19 +650,6 @@ citrixsleep()
 citrixsleep()
 Send ^e
 WinWaitActive, End Update
-return
-
-SendPortal:
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/portal.png
-if (ErrorLevel = 0) {
-    
-   Click, 406, 690
-   Sleep, 1000
-   Click, 406, 720
-   Sleep, 1000
-   ; Needs to check for send
-}
 return
 
 EndUpdateToClinicalAssistant:
