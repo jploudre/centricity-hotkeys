@@ -306,26 +306,42 @@ Click, 434, 532
 return
 
 #IfWinActive, Update Problems - ;###########################################################
-; Long Hold is Top/Bottom. Tap is Up/Down
-Up::PatternHotKey(".->UpdateProblemsUp","_->UpdateProblemsTop")
-Down::PatternHotKey(".->UpdateProblemsDown","_->UpdateProblemsBottom")
-Left::
-Click, 736, 146
-return
-Right::
-Click, 786, 146
-return
+Up::PatternHotKey(".->UpdateProblemsUp","_->UpdateProblemsTop","..->UpdateProblemsTop")
+Down::PatternHotKey(".->UpdateProblemsDown","_->UpdateProblemsBottom","..->UpdateProblemsBottom")
+Left::PatternHotKey(".->UpdateProblemsLeft")
+Right::PatternHotKey(".->UpdateProblemsRight")
+
 BackSpace::
 Delete::PatternHotKey(".->UpdateProblemsRemove")
-; OK is 'Done'
 \::
-Click, 694, 599
-return
-; Enter should always do OK.
 #Space::
 !Space::
 Enter::
-Click, 694, 599
+Gosub, UpdateProblemsOK
+return
+
+; Control Locations are relative for width/height
+RButton::
+MouseGetPos, xpos, ypos
+; Problems
+if ( 19 < xpos AND xpos < 995 AND 102 < ypos AND ypos < 251)
+    {
+    ; Click then Edit
+    Click %xpos%, %ypos%
+    Citrixsleep()
+    GoSub, UpdateProblemsRemove
+    }
+; Effect of Update
+else if ( 19 < xpos AND xpos < 998 AND 412 < ypos AND ypos < 546)
+    {
+    Click %xpos%, %ypos%
+    Citrixsleep()
+    Send !k
+    }    
+else
+    {
+    Click    
+    }
 return
 
 
@@ -949,25 +965,48 @@ return
 ; Update Problems Functions
 
 UpdateProblemsTop:
-Click, 762, 100
+ClickFromRightTop(55, 102)
 return
 UpdateProblemsBottom:
-Click, 762, 189
+ClickFromRightTop(55, 189)
 return
 UpdateProblemsUp:
-Click, 762, 122
+ClickFromRightTop(55, 122)
 return
 UpdateProblemsDown:
-Click, 762, 170
+ClickFromRightTop(55, 166)
+return
+UpdateProblemsLeft:
+ClickFromRightTop(79, 143)
+return
+UpdateProblemsRight:
+ClickFromRightTop(28, 143)
+return
+UpdateProblemsOK:
+ClickFromRightBottom(212, 27)
 return
 UpdateProblemsRemove:
 Click, 508, 572
 WinWaitNotActive
+CitrixSleep()
 Send {Enter}
 return
 
+; For Buttons Positioned on Window Size
+ClickFromRightTop(RelativeX, RelativeY) {
+WinGetPos, , , winwidth, winheight
+xpos := winwidth - RelativeX
+Click, %xpos%, %RelativeY%
+}
+return
 
-; Downloaded Functions ----------------------------------------------------------------------------------
+ClickFromRightBottom(RelativeX, RelativeY) {
+WinGetPos, , , winwidth, winheight
+xpos := winwidth - RelativeX
+ypos := winheight - RelativeY
+Click, %xpos%, %ypos%
+}
+return
 
 Clip(Text="", Reselect="") ; http://www.autohotkey.com/forum/viewtopic.php?p=467710 , modified August 2012
 {
