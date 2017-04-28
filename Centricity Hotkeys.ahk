@@ -141,6 +141,26 @@ return
 
 
 #IfWinActive, End Update ;###########################################################
+
+RButton::
+MouseGetPos, xpos, ypos
+; remove routing name
+if ( 28 < xpos AND xpos < 515 AND 250 < ypos AND ypos < 331) { ; Routing Names area, right click
+    Mouseclick, Left, %xpos%, %ypos%
+    Citrixsleep()
+    Send !m
+}
+; I'm Done
+if ( 354 < xpos AND xpos < 444 AND 499 < ypos AND ypos < 520) { ; 'Route' button, right click
+    Mouseclick, Left, %xpos%, %ypos%
+    WinWaitNotActive
+    Gosub, GoChartDesktop
+}
+else {
+    Click right
+}
+return
+
 !Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 #Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 \::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
@@ -527,6 +547,27 @@ if ( 649 < xpos AND xpos < 712 AND 643 < ypos AND ypos < 669)
 else 
 {
     Click
+}
+return
+
+#IfWinActive, Route Document - ;###########################################################
+
+RButton::
+MouseGetPos, xpos, ypos
+; remove routing name
+if ( 28 < xpos AND xpos < 515 AND 171 < ypos AND ypos < 255) { ; Routing Names area, right click
+    Mouseclick, Left, %xpos%, %ypos%
+    Citrixsleep()
+    Send !m
+}
+; I'm Done
+if ( 373 < xpos AND xpos < 445 AND 310 < ypos AND ypos < 331) { ; 'Route' button, right click
+    Mouseclick, Left, %xpos%, %ypos%
+    WinWaitNotActive
+    GoSub, GoChartDesktop
+}
+else {
+    Click right
 }
 return
 
