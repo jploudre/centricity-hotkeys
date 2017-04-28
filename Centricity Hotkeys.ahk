@@ -330,6 +330,7 @@ if ( 19 < xpos AND xpos < 995 AND 102 < ypos AND ypos < 251)
     Click %xpos%, %ypos%
     Citrixsleep()
     GoSub, UpdateProblemsRemove
+    MouseMove, %xpos%, %ypos%
     }
 ; Effect of Update
 else if ( 19 < xpos AND xpos < 998 AND 412 < ypos AND ypos < 546)
