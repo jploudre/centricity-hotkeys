@@ -68,8 +68,10 @@ F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 
 ; Ends and signs an update. 
 #+s::
+SetTimer, Focus, Off ; prevent strobing.
 Gosub, EndUpdate
 Gosub, SignUpdate
+SetTimer, Focus, On
 return
 
 #+p::
@@ -684,6 +686,7 @@ Sleep, 150
 return
 
 OpenAppendType(searchtext){
+    SetTimer, Focus, Off
     ifWinActive, Chart Desktop -
     {
     Send ^j
@@ -715,6 +718,7 @@ OpenAppendType(searchtext){
             }
         }
     }
+    SetTimer, Focus, On
 }
 return
 
