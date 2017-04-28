@@ -703,12 +703,9 @@ if (ErrorLevel = 0) {
 return
 
 EndUpdate:
-Send ^{PgDn}
-citrixsleep()
-citrixsleep()
-citrixsleep()
 Send ^e
 WinWaitActive, End Update
+CitrixSleep()
 return
 
 EndUpdateToClinicalAssistant:
