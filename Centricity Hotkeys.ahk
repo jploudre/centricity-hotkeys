@@ -367,6 +367,31 @@ return
 
 
 #IfWinActive, Update Medications - ;###########################################################
+#n::
+F2::
+Send !n
+return
+Up::PatternHotKey(".->UpdateMedsUp","_->UpdateMedsTop","..->UpdateMedsTop")
+Down::PatternHotKey(".->UpdateMedsDown","_->UpdateMedsBottom","..->UpdateMedsBottom")
+UpdateMedsUp:
+Click, 827, 84
+return
+UpdateMedsTop:
+Click, 827, 202
+return
+UpdateMedsDown:
+Click, 827, 114
+return
+UpdateMedsBottom:
+Click, 827, 232
+return
+Left::
+Click, 827, 147
+return
+Right::
+Click, 827, 171
+return
+
 #Space::
 !Space::
 Enter::
@@ -380,11 +405,36 @@ Click, 559, 566
 return
 BackSpace::
 Delete::
-Send !r
-WinWaitActive, Remove Medication
-Click 285, 311
+Gosub, UpdateMedicationsRemoveMedication
 return
 
+RButton::
+MouseGetPos, xpos, ypos
+if ( 19 < xpos AND xpos < 790 AND 94 < ypos AND ypos < 285)
+    {
+    Click %xpos%, %ypos%
+    Citrixsleep()
+    GoSub, UpdateMedicationsRemoveMedication
+    }
+else if ( 19 < xpos AND xpos < 859 AND 375 < ypos AND ypos < 516)
+    {
+    Click %xpos%, %ypos%
+    Citrixsleep()
+    Send !k
+    }
+else    
+    {
+    Click    
+    }
+return
+
+UpdateMedicationsRemoveMedication:
+Send !r
+WinWaitActive, Remove Medication
+CitrixSleep()
+Send {Enter}
+WinWaitNotActive
+return
 
 #ifWinActive, Update Orders - ;###########################################################
 
