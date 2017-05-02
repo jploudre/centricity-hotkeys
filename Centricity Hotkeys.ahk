@@ -293,7 +293,7 @@ Gosub, CloseDocumentViewerandSave
 return
 
 #+p::
-Send Send !{F4}
+Send !{F4}
 Sleep, 1000
 OpenAppendType("Clinical List Pr")
 return
@@ -919,9 +919,11 @@ Click, 599, 113
 return
 
 CommittoFlowsheetandSign:
+SetTimer, Focus, Off ; prevent strobing.
 Gosub, CommittoFlowsheet
 Gosub, EndUpdate
 Gosub, SignUpdate
+SetTimer, Focus, On
 return
 
 PMH-SH-CCC:
