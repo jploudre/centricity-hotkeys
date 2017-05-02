@@ -708,7 +708,7 @@ OpenAppendType(searchtext){
         WinWaitActive, Append Document ; no timeout needed
         if (ErrorLevel = 0) {
             CitrixSleep()
-            Send %searchtext%
+            clip(searchtext)
             Send {Enter}
             WinWaitActive, Update ; no timeout needed
             if (ErrorLevel = 0) {
