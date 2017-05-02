@@ -1284,11 +1284,13 @@ return
 text := "Upcoming Appointment. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
 CitrixSleep()
+CitrixSleep()
 Send !s
 return
 ::sljkp::
 text := "Send Letter with Results. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
+CitrixSleep()
 CitrixSleep()
 Send !s
 return
