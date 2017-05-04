@@ -445,9 +445,11 @@ return
 Click 561, 656
 Citrixsleep()
 Click 679, 656
+gosub, OrdersFixBug
 return
 #s::
 CLick 561, 656
+gosub, OrdersFixBug
 return
 
 ; Order Details
@@ -464,6 +466,15 @@ WinWaitActive, Update Orders, , 3 ; Timeout
 if (ErrorLevel = 0) {
 	CitrixSleep()
 	Click, 561, 653
+}
+return
+
+; After 'Ok' CPS goes to 'Chart' not back to 'Update'
+OrdersFixBug:
+WinWaitActive, Chart, , 4
+if (ErrorLevel = 0) {
+IfWinExist, Update
+WinActivate, Update
 }
 return
 
@@ -487,6 +498,7 @@ if ( 638 < xpos AND xpos < 709 AND 647 < ypos AND ypos < 667)
     Click 561, 656
     Citrixsleep()
     Click %xpos%, %ypos%
+    gosub, OrdersFixBug
     }
 else
     {
