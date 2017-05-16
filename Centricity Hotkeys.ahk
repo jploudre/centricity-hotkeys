@@ -172,6 +172,9 @@ return
 Gosub, SignUpdate
 return
 
+#n::
+Send !n
+return
 
 #IfWinActive, Chart - ;###########################################################
 Space::PatternHotKey(".->FancyOpen")
@@ -438,6 +441,11 @@ Send {Enter}
 WinWaitNotActive
 return
 
+#n::
+Send !n
+return
+
+
 #ifWinActive, Update Orders - ;###########################################################
 
 #Space::
@@ -619,6 +627,11 @@ return
 \::
 Send !R
 return
+
+#n::
+Send !n
+return
+
 
 RButton::
 MouseGetPos, xpos, ypos
