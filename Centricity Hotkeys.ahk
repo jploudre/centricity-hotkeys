@@ -616,6 +616,10 @@ return
 
 #IfWinActive, Route Document - ;###########################################################
 
+\::
+Send !R
+return
+
 RButton::
 MouseGetPos, xpos, ypos
 ; remove routing name
