@@ -441,11 +441,6 @@ Send {Enter}
 WinWaitNotActive
 return
 
-#n::
-Send !n
-return
-
-
 #ifWinActive, Update Orders - ;###########################################################
 
 #Space::
