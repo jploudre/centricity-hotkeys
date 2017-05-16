@@ -647,6 +647,23 @@ else {
 }
 return
 
+#IfWinActive, New Routing Information - ;###########################################################
+
+#Space::
+!Space::
+Click, 239, 352
+WinWaitNotActive
+CitrixSleep()
+If WinActive("End Update")
+    {
+    Send !o
+    gosub, GoChartDesktop
+    return
+    }
+
+
+return
+
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 
