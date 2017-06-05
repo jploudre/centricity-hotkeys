@@ -37,11 +37,11 @@ return
 #o::PatternHotKey(".->OrderSearch", "..->SignOrders")
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
 
-#m::PatternHotKey("..->MedSearch", ".->UpdateMeds")
-F2::PatternHotKey("..->MedSearch", ".->UpdateMeds")
+#m::PatternHotKey(".->MedSearch", "..->UpdateMeds")
+F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 
-#p::PatternHotKey("..->ProblemSearch", ".->UpdateProblems")
-F3::PatternHotKey("..->ProblemSearch", ".->UpdateProblems")
+#p::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
+F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
 
 #h::PatternHotKey(".->HPI")
 F5::PatternHotKey(".->HPI")
@@ -981,8 +981,11 @@ return
 CommittoFlowsheetandSign:
 SetTimer, Focus, Off ; prevent strobing.
 Gosub, CommittoFlowsheet
+CitrixSleep()
 Gosub, EndUpdate
+CitrixSleep()
 Gosub, SignUpdate
+CitrixSleep()
 SetTimer, Focus, On
 return
 
