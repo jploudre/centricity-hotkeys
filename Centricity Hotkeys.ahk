@@ -219,6 +219,17 @@ FocusBlue()
 Send {Down}
 return
 
+#/::
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+    citrixsleep()
+    Click, 255, 212
+}
+return
+
 
 #IfWinActive, Chart Desktop - ;###########################################################
 
@@ -271,6 +282,14 @@ Send ^j
 OpenAppendType("CPOE")
 return
 
+#/::
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+}
+return
 
 #IfWinActive, Centricity Practice Solution Browser: ;###########################################################
 Space::PatternHotKey(".->DownDocumentViewer", "..->CloseDocumentViewerandSave")
