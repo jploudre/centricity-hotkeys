@@ -474,6 +474,12 @@ CLick 561, 656
 gosub, OrdersFixBug
 return
 
+/::
+Click, 253, 287
+CitrixSleep()
+Click 412, 337
+return
+
 ; Order Details
 #d::
 Click, 341, 290
