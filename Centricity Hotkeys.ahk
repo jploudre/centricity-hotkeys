@@ -824,7 +824,11 @@ return
 
 EndUpdate:
 Send ^e
-WinWaitActive, End Update
+WinWaitActive, End Update, , 2
+; Sometimes Fails
+if (ErrorLevel = 1) {
+    Send ^e
+}
 CitrixSleep()
 return
 
