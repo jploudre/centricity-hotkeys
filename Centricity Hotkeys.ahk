@@ -1399,7 +1399,7 @@ active_window := WinExist("A")
 WinGetPos, Xpos, Ypos, winwidth , winheight , A
 Ypos := Ypos + 23
 winheight := winheight - 23
-}
+
 Gui,1: +LastFound -Caption +ToolWindow +E0x20 +AlwaysOnTop
 Gui,1: Color,008080
 gui1h := Ypos + winheight 
