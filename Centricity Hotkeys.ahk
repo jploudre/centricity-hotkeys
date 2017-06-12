@@ -1393,13 +1393,16 @@ WinClose, Inbox - jkploudre
 Return
 
 Focus:
-if WinActive("Care Alert Warning -")
+if WinActive("Append to Document") or WinActive("Assessments Due") or WinActive("Customize Letter") or WinActive("End Update") or WinActive("Care Alert Warning -") or WinActive("New Medication") or WinActive("Find Medication") or WinActive("Change Medication") or WinActive("New Problem") or WinActive("Find Problem")  or WinActive("Edit Problem")   or WinActive("Edit Routing")   or WinActive("New Routing")  or WinActive("Centricity Practice Solution Browser") or WinActive("Route Document")
 {
 active_window := WinExist("A")
 WinGetPos, Xpos, Ypos, winwidth , winheight , A
+
+; Citrix treats some windows differently
+if WinActive("Append to Document")  or WinActive("Customize Letter") or WinActive("End Update") or WinActive("Care Alert Warning -") or WinActive("New Medication") or WinActive("Find Medication")  or WinActive("Change Medication")  or WinActive("Edit Problem") or WinActive("Edit Routing") or WinActive("New Routing") or WinActive("Route Document") {
 Ypos := Ypos + 23
 winheight := winheight - 23
-
+}
 Gui,1: +LastFound -Caption +ToolWindow +E0x20 +AlwaysOnTop
 Gui,1: Color,008080
 gui1h := Ypos + winheight 
@@ -1441,5 +1444,3 @@ Gui,3: Destroy
 Gui,4: Destroy	
 }
 return
-
-
