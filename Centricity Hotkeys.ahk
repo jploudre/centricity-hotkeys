@@ -235,6 +235,16 @@ return
 
 Space::PatternHotKey(".->FancyOpen")
 
++Space::
+WinGetPos,,,winwidth,winheight,A
+ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/open.png
+if (ErrorLevel = 0) {
+    MouseMove, %FoundX%, %FoundY%
+    Click
+    WinWaitNotActive, Chart Desktop
+}
+return
+
 #o::
 Gosub, FancyOpen
 return
