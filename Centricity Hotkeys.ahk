@@ -933,8 +933,15 @@ if (ErrorLevel = 0) {
             }
         return
         }
-        } ; end Paperclip
+        } ; End open.png
 }
+}
+ImageSearch, , , 0, 0, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/pencil.png
+if (ErrorLevel = 0) {
+    xpos := winwidth -30
+    ypos := winheight -76
+    MouseMove, %xpos%, %ypos%
+    Click
 }
 return
 
