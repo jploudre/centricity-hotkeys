@@ -177,7 +177,7 @@ Send !n
 return
 
 #IfWinActive, Chart - ;###########################################################
-Space::PatternHotKey(".->FancyOpen")
+Space::PatternHotKey(".->FancyOpen", "..->ChartDocumentSign")
 
 #o::
 Gosub, FancyOpen
@@ -192,6 +192,10 @@ return
 
 ; Sign a chart document
 #s::
+Gosub, ChartDocumentSign
+return
+
+ChartDocumentSign:
 FocusBlue()
 Send ^s
 return
