@@ -237,7 +237,7 @@ Space::PatternHotKey(".->FancyOpen")
 
 +Space::
 WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/open.png
+ImageSearch, FoundX, FoundY, 0, 0, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/open.png
 if (ErrorLevel = 0) {
     MouseMove, %FoundX%, %FoundY%
     Click
