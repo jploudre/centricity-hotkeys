@@ -282,14 +282,6 @@ return
 Gosub, FancyOpen
 return
 
-#c::
-OpenAppendType("CPOE")
-return
-
-#r::
-OpenAppendType("Web")
-return
-
 `::
 IfWinExist, Update
 WinActivate, Update
