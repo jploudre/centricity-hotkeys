@@ -183,6 +183,35 @@ Space::PatternHotKey(".->FancyOpen", "..->ChartDocumentSign")
 Gosub, FancyOpen
 return
 
+#r::
+OpenAppendType("Web")
+return
+
+; Reply to a patient with a blank letter
++#R Up::
+{
+Send ^p
+CitrixSleep()
+Send l
+CitrixSleep()
+Send {Down 2}
+CitrixSleep()
+Send {Right 2}
+CitrixSleep()
+Send l
+CitrixSleep()
+Send {Down 2}
+Click, 241, 59
+Send B
+CitrixSleep()
+Click, 392, 351
+}
+return
+
+#c::
+OpenAppendType("CPOE")
+return
+
 `::
 IfWinExist, Update
 WinActivate, Update
@@ -251,6 +280,14 @@ return
 
 #o::
 Gosub, FancyOpen
+return
+
+#c::
+OpenAppendType("CPOE")
+return
+
+#r::
+OpenAppendType("Web")
 return
 
 `::
@@ -706,42 +743,7 @@ return
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 
-; Replies with Web Message. Assumes in Documents.
-#r::
-OpenAppendType("Web")
-return
 
-; eRx Append. Assumes in Documents.
-#e::
-OpenAppendType("* eSM")
-return
-
-
-; CPOE Append. Assumes in Documents.
-#c::
-OpenAppendType("CPOE")
-return
-
-; Reply to a patient with a blank letter
-+#R Up::
-{
-Send ^p
-CitrixSleep()
-Send l
-CitrixSleep()
-Send {Down 2}
-CitrixSleep()
-Send {Right 2}
-CitrixSleep()
-Send l
-CitrixSleep()
-Send {Down 2}
-Click, 241, 59
-Send B
-CitrixSleep()
-Click, 392, 351
-}
-return
 
 ; Quit All Windows
 #+q::
