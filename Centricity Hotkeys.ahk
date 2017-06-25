@@ -1,12 +1,21 @@
 ; Setup
 {
-ClinicalAssistantName = "Handy"
+FirstRun()
+IniRead, Buddy, Settings.ini, Preferences, Buddy
+ClinicalAssistantName = %Buddy%
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
 SetTimer, CloseOutlook, 5000 
 SetTimer, Focus, 100
 SetTimer, AdjustMouse, 480000
+SendMode Input
+Menu, Tray, NoStandard
+Menu, Tray, Add, Exit, ExitScript
+return
+
+ExitScript:
+ExitApp
 return
  
 <#Esc::run taskmgr.exe
@@ -19,6 +28,35 @@ LWin::return
 #D::return
 }
 
+; Check if this is original time opened after a download
+FirstRun(){
+IfNotExist, Settings.ini
+{
+InputBox, BuddyName, Who's your Buddy?,
+(
+
+Who do you 'hold' things to most frequently
+in Centricity?
+
+Typically this might be your CAs last name...
+), , 300, , , , , , 
+if (Errorlevel= 0) {
+IniWrite, %BuddyName%, Settings.ini, Preferences, Buddy
+MsgBox, 64, Thanks,
+(
+If this is your first time:
+    
+
+   - Want keyboard stickers?
+   - Print the help cheatsheet?
+
+
+)
+
+}
+}
+}
+return
 
 #IfWinActive, Update - ;###########################################################
 `::PatternHotKey(".->GotoChart","..->SwapTextView")
