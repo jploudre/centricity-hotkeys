@@ -759,6 +759,28 @@ Sleep, 150
 }
 return
 
+; Exits if image not found
+ImageClick(imagename){
+    CoordMode, Pixel, Screen
+    CoordMode, Mouse, Screen
+    ImagePathandName := A_ScriptDir . "\files\" . imagename . ".PNG"
+    ImageSearch, FoundX, FoundY, -2000, -2000, %A_ScreenWidth%, %A_ScreenHeight%, *n10 %ImagePathandName%
+    if (ErrorLevel = 0) {
+        Click, %FoundX%, %FoundY%
+        CoordMode, Pixel, Window
+        CoordMode, Mouse, Window
+        return
+    }
+    
+    CoordMode, Pixel, Window
+    CoordMode, Mouse, Window
+    ; If image is not found, do not continue Hotkey that called. 
+    if (ErrorLevel = 1) {
+    exit
+    }
+}
+
+
 OpenAppendType(searchtext){
     SetTimer, Focus, Off
     ifWinActive, Chart Desktop -
@@ -984,9 +1006,7 @@ return
 
 GoChartDesktop:
 CitrixSleep()
-WinGetPos,,,,winheight,A
-ypos := winheight - 217
-Click, 13, %ypos%
+imageclick("chart-desktop")
 return
 
 HPI:
