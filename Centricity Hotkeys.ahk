@@ -49,8 +49,8 @@ F5::PatternHotKey(".->HPI")
 #q::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
 F6::PatternHotKey(".->Preventive", "..->CommittoFlowsheet", "...->CommittoFlowsheetandSign")
 
-#z::PatternHotKey(".->PMH-SH-CCC")
-F7::PatternHotKey(".->PMH-SH-CCC")
+#z::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
+F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
 
 F8::PatternHotKey(".->ROS", "..->ROS2")
 
@@ -1040,6 +1040,7 @@ return
 
 InserttoNote:
 FindTemplate("PMH-SH-CCC")
+CitrixSleep()
 Click, 921, 112
 return
 
@@ -1049,6 +1050,7 @@ return
 
 ROS2:
 FindTemplate("ROS-CCC")
+CitrixSleep()
 Click, 351, 80
 return
 
