@@ -11,11 +11,33 @@ SetTimer, Focus, 100
 SetTimer, AdjustMouse, 480000
 SendMode Input
 Menu, Tray, NoStandard
+Menu, Tray, Add, Problems?, SendEmailToJKP
+Menu, Tray, Add, Reload, ReloadScript
 Menu, Tray, Add, Exit, ExitScript
 return
 
 ExitScript:
 ExitApp
+return
+
+ReloadScript:
+Reload
+Return
+
+SendEmailToJKP:
+IfExist, Files\Microsoft Office\Office12\outlook.exe
+run, C:\Program Files\Microsoft Office\Office12\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
+IfNotExist, Files\Microsoft Office\Office12\outlook.exe
+MsgBox, 32, Issues?,
+(
+Would you mind sending me an e-mail?
+    
+
+   - jploudre@gmail.com
+   - (Not my work e-mail, thanks!
+
+
+)
 return
  
 <#Esc::run taskmgr.exe
