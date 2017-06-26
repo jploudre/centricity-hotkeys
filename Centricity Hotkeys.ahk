@@ -59,52 +59,84 @@ If this is your first time:
 return
 
 #IfWinActive, Update - ;###########################################################
+;; ## Update Hotkeys
+;; 
+
+;; * **`:** go back to chart (single), Swap between Text and Form views.
 `::PatternHotKey(".->GotoChart","..->SwapTextView")
 return
+
+;; * **[:** go to previous form
 [::
 Send ^{PgUp}
 return
+
+;; * **]:** go to next form
 ]::
 Send ^{PgDn}
 return
+
+
+
 !Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
 #Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
 
+;; * **'End' \:** End Update (single), *End to your CA* (double) 
+;; 
+;; ---
+;; 
 \::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
 
+;; * **F1:** Order Search (single), Sign Orders (double)
 #o::PatternHotKey(".->OrderSearch", "..->SignOrders")
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
 
+;; * **F2:** New Medication Search (single), Update Med List (double) 
 #m::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
+
+;; * **F3:** New Problem Search (single), Update Problem List (double) 
 
 #p::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
 F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
 
+;; * **F5:** Go to HPI form 
 #h::PatternHotKey(".->HPI")
 F5::PatternHotKey(".->HPI")
 
+;; * **F6:** Go to Preventive form (single), Commit Preventive Flowsheet (double) 
 #q::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
 F6::PatternHotKey(".->Preventive", "..->CommittoFlowsheet", "...->CommittoFlowsheetandSign")
 
+;; * **F7:** Go to Medical Hx form (single), Insert Medical Hx into Note (double) 
 #z::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
 F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
 
+;; * **F8:** Go to ROS form (single), Go t ROS-2 form (double) 
 F8::PatternHotKey(".->ROS", "..->ROS2")
 
+;; * **F9:** Go to PE form (single) 
 #x::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
 F9::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
 
+;; * **F10:** Go to CPEO form (single), Go CPOE, 'Assessments Due' (double) 
 #c::PatternHotKey(".->CPOE", "..->AssessmentsDue")
 F10::PatternHotKey(".->CPOE", "..->AssessmentsDue")
 
+;; * **F11:** Go to Patient Instructions form (single), Print the Visit Summary(double) 
 #v::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
 F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
+
+;; * **F12:** Go to Prescriptions form (single), Send Prescriptions(double) 
+;; 
+;; ---
+;; 
+
 
 #r::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 
-; Ends and signs an update. 
+;; * **Window-Shift-S:** Ends update, Signs, (No Routing to anyone) and back to Chart Desktop.
 #+s::
 SetTimer, Focus, Off ; prevent strobing.
 Gosub, EndUpdate
@@ -116,6 +148,7 @@ return
 gosub, CommittoFlowsheetandSign
 return
 
+;; * **Window-/:** Go to Chart, Documents Section (to, say, review a scan, test result, consultation.)
 #/::
 GoSub, GotoChart
 citrixsleep()
@@ -181,6 +214,8 @@ return
 
 
 #IfWinActive, End Update ;###########################################################
+;; ## End Update Hotkeys
+;; 
 
 RButton::
 MouseGetPos, xpos, ypos
@@ -201,10 +236,13 @@ else {
 }
 return
 
+;; * **'End' \:** Hold Update (single), *End to your CA* (double) 
 !Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 #Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 \::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 return
+
+;; * **Window-Shift-S:** Signs, (No Routing to anyone) and back to Chart Desktop.
 #+s::
 #s::
 Gosub, SignUpdate
@@ -215,17 +253,22 @@ Send !n
 return
 
 #IfWinActive, Chart - ;###########################################################
+;; ## Chart Hotkeys
+;; 
+
+;; * **Space:** Opens item (Single), Signs Document (Double).
 Space::PatternHotKey(".->FancyOpen", "..->ChartDocumentSign")
 
 #o::
 Gosub, FancyOpen
 return
 
+;; * **Window-R:** Reply to a patient with a Web Append.
 #r::
 OpenAppendType("Web")
 return
 
-; Reply to a patient with a blank letter
+;; * **Window-Shift-R:** Reply to a patient blank letter
 +#R Up::
 {
 Send ^p
@@ -246,10 +289,12 @@ Click, 392, 351
 }
 return
 
+;; * **Window-C:** CPOE Append.
 #c::
 OpenAppendType("CPOE")
 return
 
+;; * **`:** Swap between Chart/Chart Desktop/Update
 `::
 IfWinExist, Update
 WinActivate, Update
@@ -267,6 +312,7 @@ FocusBlue()
 Send ^s
 return
 
+;; * **Window-J:** Append document (makes this consistent between Chart, Chart Desktop.)
 #j::
 WinGetPos,,,winwidth,winheight,A
 ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/append.png
@@ -276,6 +322,7 @@ if (ErrorLevel = 0) {
 }
 return
 
+;; * **Window-Shift-P:** Preventative Append
 #+p::
 OpenAppendType("Clinical List Pr")
 return
@@ -290,6 +337,7 @@ FocusBlue()
 Send {Down}
 return
 
+;; * **Window-/:** Go to Documents Section 
 #/::
 WinGetPos,,,winwidth,winheight,A
 ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
@@ -303,7 +351,10 @@ return
 
 
 #IfWinActive, Chart Desktop - ;###########################################################
+;; ## Chart Desktop Hotkeys
+;; 
 
+;; * **Space:** Open Item
 Space::PatternHotKey(".->FancyOpen")
 
 +Space::
@@ -320,6 +371,7 @@ return
 Gosub, FancyOpen
 return
 
+;; * **`:** Swap between Chart/Chart Desktop/Update
 `::
 IfWinExist, Update
 WinActivate, Update
@@ -330,39 +382,41 @@ IfWinNotExist, Update
     Click, 13, %ypos%
 }
 return
-; Append
+
+;; * **Window-J:** Append document (makes this consistent between Chart, Chart Desktop.)
 #j::
 Send ^j
 return
 
-; Sign
+;; * **Window-S:** Signs Docuemnt
 #s::
 Send ^s
 return
-; Preventive Append. Assumes in Documents.
 
+;; * **Window-Shift-P:** Preventative Append
 #+p::
 OpenAppendType("Clinical List Pr")
 return
 
-; Replies with Web Message. Assumes in Documents.
+;; * **Window-R:** Reply to a patient with a Web Append.
 #r::
 Send ^j
 OpenAppendType("Web")
 return
 
-; eRx Append. Assumes in Documents.
+;; * **Window-E:** E-Rx Append.
 #e::
 Send ^j
 OpenAppendType("* eSM")
 return
 
-; CPOE Append. Assumes in Documents.
+;; * **Window-C:** CPOE Append.
 #c::
 Send ^j
 OpenAppendType("CPOE")
 return
 
+;; * **Window-/:** Go to Documents Section 
 #/::
 WinGetPos,,,winwidth,winheight,A
 ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
@@ -373,13 +427,19 @@ if (ErrorLevel = 0) {
 return
 
 #IfWinActive, Centricity Practice Solution Browser: ;###########################################################
+;; ## Centricity Practice Solution Browser (Scans)
+;; 
+
+;; * **Space:** Page Down (Single), Close Document, Sign (Double)
 Space::PatternHotKey(".->DownDocumentViewer", "..->CloseDocumentViewerandSave")
 
+;; * **End \:** Close Document
 #Space::
 \::
 gosub, CloseDocumentViewer
 return
 
+;; * **Up/Down Arrows:** Page Up and Down
 up::
 WinGetPos,,,winwidth,,A
 winwidth := winwidth - 10
@@ -390,11 +450,12 @@ down::
 gosub, DownDocumentViewer
 return
 
-; Close and Sign
+;; * **Window-S:** Close Document, Sign
 #s::
 Gosub, CloseDocumentViewerandSave
 return
 
+;; * **Window-Shift-P:** Close Document, Preventative Append
 #+p::
 Send !{F4}
 Sleep, 1000
@@ -403,6 +464,10 @@ return
 
 
 #IfWinActive, Blackbird Content ;###########################################################
+;; ## Blackbird Hotkeys
+;; 
+
+;; * **Window-Space:** Done
 #Space::
 WinGetPos,,,winwidth,winheight,A
 ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/Blackbird-OK.png
@@ -413,15 +478,22 @@ if (ErrorLevel = 0) {
     Send !{F4}
 }
 return
+
 Enter::
 Send \
 return
 
 #IfWinActive, New Problem - ;###########################################################
+;; ## New Problem Hotkeys
+;; 
+
+;; * **Window-Space:** Done
 #Enter::
 #Space::
 Click, 434, 532
 return
+
+;; * **F3:** Make 30 day Problem, Done.
 F3::
 #3::
 Click, 135, 403
@@ -431,13 +503,20 @@ Click, 434, 532
 return
 
 #IfWinActive, Update Problems - ;###########################################################
+;; ## Update Problems Hotkeys
+;; 
+
+;; * **Arrows:** Moves items up/down/right/left (single). Top/Bottom (double)
 Up::PatternHotKey(".->UpdateProblemsUp","_->UpdateProblemsTop","..->UpdateProblemsTop")
 Down::PatternHotKey(".->UpdateProblemsDown","_->UpdateProblemsBottom","..->UpdateProblemsBottom")
 Left::PatternHotKey(".->UpdateProblemsLeft")
 Right::PatternHotKey(".->UpdateProblemsRight")
 
+;; * **Delete/Backspace:** Removes Problem
 BackSpace::
 Delete::PatternHotKey(".->UpdateProblemsRemove")
+
+;; * Done with 'Enter' or 'End' or Window-Space
 \::
 #Space::
 !Space::
@@ -445,7 +524,8 @@ Enter::
 Gosub, UpdateProblemsOK
 return
 
-; Control Locations are relative for width/height
+;; * Right-click problem to remove. Right click removed problem to change back.
+
 RButton::
 MouseGetPos, xpos, ypos
 ; Problems
@@ -472,10 +552,15 @@ return
 
 
 #IfWinActive, Update Medications - ;###########################################################
+;; ## Update Medications Hotkeys
+;; 
+
 #n::
 F2::
 Send !n
 return
+
+;; * **Arrows:** Moves items up/down (single). Top/Bottom (double)
 Up::PatternHotKey(".->UpdateMedsUp","_->UpdateMedsTop","..->UpdateMedsTop")
 Down::PatternHotKey(".->UpdateMedsDown","_->UpdateMedsBottom","..->UpdateMedsBottom")
 UpdateMedsUp:
@@ -497,22 +582,27 @@ Right::
 Click, 827, 171
 return
 
+;; * Done with 'Enter' or Window-Space
 #Space::
 !Space::
 Enter::
 click 559, 566
 return
+
 ; Sends (intead of saves)
 #s::
 Send !p
 citrixsleep()
 Click, 559, 566
 return
+
+;; * **Delete/Backspace:** Removes Medication
 BackSpace::
 Delete::
 Gosub, UpdateMedicationsRemoveMedication
 return
 
+;; * Right-click medication to remove. Right click removed meds to change back.
 RButton::
 MouseGetPos, xpos, ypos
 if ( 19 < xpos AND xpos < 790 AND 94 < ypos AND ypos < 285)
@@ -542,7 +632,10 @@ WinWaitNotActive
 return
 
 #ifWinActive, Update Orders - ;###########################################################
+;; ## Update Medications Hotkeys
+;; 
 
+;; * **Window-space:** Signs Orders, Done. 
 #Space::
 !Space::
 Click 561, 656
@@ -550,18 +643,20 @@ Citrixsleep()
 Click 679, 656
 gosub, OrdersFixBug
 return
+
 #s::
 CLick 561, 656
 gosub, OrdersFixBug
 return
 
+;; * **/:** Search Orders 
 /::
 Click, 253, 287
 CitrixSleep()
 Click 412, 337
 return
 
-; Order Details
+;; * **Window-D:** Order Details 
 #d::
 Click, 341, 290
 return
@@ -657,6 +752,12 @@ return
 
 
 #ifWinActive, Customize Letter ;###########################################################
+;; ## Customize Letter Hotkeys
+;; 
+
+
+;; * **Window-Space:** Print and Save Letter
+
 #Space::
 Send !p
 WinWaitNotActive, Customize Letter
@@ -673,6 +774,10 @@ Soundplay, %A_ScriptDir%/files/done.wav, Wait
 return
 
 #ifWinActive, Care Alert Warning ;###########################################################
+;; ## Customize Letter Hotkeys
+;; 
+;; * Space, Window-Space, Enter, 'End': All close the warning
+
 Space::
 #Space::
 !Space::
@@ -682,11 +787,14 @@ Send !c
 return
 
 #ifWinActive, New Medication ;###########################################################
+;; ## Customize Letter Hotkeys
+;; 
 
 F3::
 Click, 153, 573
 return
 
+;; **Associating Diagnosis**, Will Force Association. Can use 'Enter' key to proceed without association.
 LButton::
 MouseGetPos, xpos, ypos
 ; If Done, did diagnosis get associated?
@@ -724,7 +832,10 @@ else
 return
 
 #IfWinActive, Route Document - ;###########################################################
+;; ## Route Document Hotkeys
+;; 
 
+;; * **'End' \:** Route document 
 \::
 Send !R
 return
@@ -733,7 +844,7 @@ return
 Send !n
 return
 
-
+;; * **Right-Click:** in recipients to remove routing, Right Click 'Route' to route and go back to Chart Desktop.
 RButton::
 MouseGetPos, xpos, ypos
 ; remove routing name
@@ -772,8 +883,6 @@ return
 
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
-
-
 
 ; Quit All Windows
 #+q::
