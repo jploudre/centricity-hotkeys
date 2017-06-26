@@ -115,7 +115,7 @@ F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
 ;; * **F8:** Go to ROS form (single), Go t ROS-2 form (double) 
 F8::PatternHotKey(".->ROS", "..->ROS2")
 
-;; * **F9:** Go to PE form (single) 
+;; * **F9:** Go to PE form (single), Basic CV Exam, Adults Only (Double), URI Exam, Adults Only (Triple), Psych Exam, Adults Only (Long Hold)
 #x::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
 F9::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
 
@@ -1201,44 +1201,130 @@ CitrixSleep()
 Click, 351, 80
 return
 
-; ###################### Broken PE second search
+; Special Case, Needs to Search for Peds if it doesn't work. 
 PE:
-FindTemplate("PE-CCC")
-if (ErrorLevel = 1)
-{
-FindTemplate("Pediatric-PE-Age-Specific-CCC")
-}
-Click, 522, 203
+FindPETemplate()
+
 return
 
 PE-XU:
-FindTemplate("PE-CCC")
-if (ErrorLevel = 1)
-{
-FindTemplate("Pediatric-PE-Age-Specific-CCC")
-}
-Click, 522, 203
-Send xu{return}
+FindPETemplate()
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 136
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 321
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 408
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 500
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 586
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+    Click, 397, 80
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+Click, 401, 110
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 337
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 509
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+    Click, 656, 80
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+Click, 401, 298
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 531
 return
 
 PE-XC:
-FindTemplate("PE-CCC")
-if (ErrorLevel = 1)
-{
-FindTemplate("Pediatric-PE-Age-Specific-CCC")
-}
-Click, 522, 203
-Send xc{return}
+FindPETemplate()
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 136
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+    Click, 397, 80
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+Click, 401, 110
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 337
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 509
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+    Click, 656, 80
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+Click, 401, 531
 return
 
 PE-XP:
-FindTemplate("PE-CCC")
-if (ErrorLevel = 1)
-{
-FindTemplate("Pediatric-PE-Age-Specific-CCC")
-}
-Click, 522, 203
-Send xp{return}
+FindPETemplate()
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+Click, 401, 136
+CitrixSleep()
+CitrixSleep()
+CitrixSleep()
+    Click, 656, 80
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+    CitrixSleep()
+Click, 401, 531
 return
 
 CPOE:
@@ -1293,6 +1379,39 @@ if (ErrorLevel >= 1) {
 }
 }
 return
+
+FindPETemplate() {
+ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/PE-CCC.png
+if (ErrorLevel = 0) {
+	MouseMove, %FoundX%, %FoundY%
+	Click 2
+	CitrixSleep()
+	CitrixSleep()
+	CitrixSleep()
+    Click 2
+    MouseMove, 500, 0, 0, R
+}
+; if template not found, is it already selected?
+if (ErrorLevel = 1) {
+	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/Pediatric-PE-Age-Specific-CCC.png
+    if (ErrorLevel = 0) {
+        MouseMove, %FoundX%, %FoundY%
+        Click 2
+        CitrixSleep()
+        CitrixSleep()
+        CitrixSleep()
+        Click 2
+    MouseMove, 500, 0, 0, R
+    Exit
+}
+}
+if (ErrorLevel >= 1) {
+	; Template Not Found So skip rest of hotkey that called this. 
+	Exit
+}
+}
+return
+
 
 DownDocumentViewer:
 WinGetPos,,,winwidth, winheight,A
