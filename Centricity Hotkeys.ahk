@@ -6,7 +6,7 @@ ClinicalAssistantName = %Buddy%
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
-SetTimer, CloseOutlook, 5000 
+;SetTimer, CloseOutlook, 5000 
 SetTimer, Focus, 100
 SetTimer, AdjustMouse, 480000
 SendMode Input
