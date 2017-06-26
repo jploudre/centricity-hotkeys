@@ -33,8 +33,10 @@ MsgBox, 32, Issues?,
 Would you mind sending me an e-mail?
     
 
-   - jploudre@gmail.com
-   - (Not my work e-mail, thanks!
+   jploudre@gmail.com
+   (Not my work e-mail, thanks!)
+   
+                -- Jonathan
 
 
 )
