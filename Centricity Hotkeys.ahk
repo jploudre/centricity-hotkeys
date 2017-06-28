@@ -1025,10 +1025,14 @@ return
 
 EndUpdate:
 Send ^e
-WinWaitActive, End Update, , 2
-; Sometimes Fails
+WinWaitActive, End Update, , 3
+; Sometimes Fails, Try a few times?
 if (ErrorLevel = 1) {
     Send ^e
+    WinWaitActive, End Update, , 3
+    if (ErrorLevel = 1) {
+    Send ^e
+    }
 }
 CitrixSleep()
 return
