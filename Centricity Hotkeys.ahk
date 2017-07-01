@@ -3,6 +3,8 @@
 FirstRun()
 IniRead, Buddy, Settings.ini, Preferences, Buddy
 ClinicalAssistantName = %Buddy%
+IniRead, VisitSummaryType, Settings.ini, Preferences, CPOE-Summaries
+VisitSummaryType = %VisitSummaryType%
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
@@ -93,13 +95,27 @@ Typically this might be your CAs last name...
 ), , 300, , , , , , 
 if (Errorlevel= 0) {
 IniWrite, %BuddyName%, Settings.ini, Preferences, Buddy
+MsgBox, 36, Visit Summaries,
+(
+Do you prefer Visit Summaries with CPOE:
+    
+
+   - Yes will print Handout with CPOE
+   - No will do plain visit summaries
+
+
+)
+IfMsgBox, Yes
+    IniWrite, "CPOE", Settings.ini, Preferences, CPOE-Summaries
+IfMsgBox, No
+    IniWrite, "No-CPOE", Settings.ini, Preferences, CPOE-Summaries
 MsgBox, 64, Thanks,
 (
 If this is your first time:
     
 
-   - Want keyboard stickers?
-   - Print the help cheatsheet?
+   - Get some stickers for your keyboard
+   - Maybe print the Help file?
 
 
 )
@@ -1416,9 +1432,15 @@ Click, 594, 341
 return
 
 PrintVisitSummary:
+If (VisitSummaryType = "No-CPOE")
+{
 FindTemplate("Patient-Instructions-CCC")
 Click, 891, 130
-Click, 
+}
+if (VisitSummaryType = "CPOE")
+{
+    Msgbox, Need to print with CPOE
+}
 return
 
 Prescriptions:
