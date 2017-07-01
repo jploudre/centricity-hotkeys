@@ -25,19 +25,34 @@ Reload
 Return
 
 SendEmailToJKP:
-IfExist, Files\Microsoft Office\Office12\outlook.exe
+IfExist, C:\Program Files\Microsoft Office\Office12\outlook.exe
 {
 run, C:\Program Files\Microsoft Office\Office12\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
 Exit
 }
-IfExist, Files\Microsoft Office\Office11\outlook.exe
+IfExist, C:\Program Files\Microsoft Office\Office11\outlook.exe
 {
 run, C:\Program Files\Microsoft Office\Office11\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
 Exit
 }
-IfExist, Files\Microsoft Office\Office15\outlook.exe
+IfExist, C:\Program Files\Microsoft Office\Office15\outlook.exe
 {
 run, C:\Program Files\Microsoft Office\Office15\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
+Exit
+}
+IfExist, C:\Program Files (x86)\Microsoft Office\Office12\outlook.exe
+{
+run, C:\Program Files (x86)\Microsoft Office\Office12\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
+Exit
+}
+IfExist, C:\Program Files (x86)\Microsoft Office\Office11\outlook.exe
+{
+run, C:\Program Files (x86)\Microsoft Office\Office11\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
+Exit
+}
+IfExist, C:\Program Files (x86)\Microsoft Office\Office15\outlook.exe
+{
+run, C:\Program Files (x86)\Microsoft Office\Office15\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
 Exit
 }
 MsgBox, 32, Issues?,
