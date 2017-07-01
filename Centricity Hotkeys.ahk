@@ -828,15 +828,21 @@ return
 Send !p
 WinWaitNotActive, Customize Letter, , 10
 if (ErrorLevel = 0) {
-    WinWaitActive, Customize Letter
-    Citrixsleep()
-    Send !s
-    WinWaitActive, Route Document
-    Citrixsleep()
-    Send !s
-    WinWaitActive, Print
-    Citrixsleep()
-    Click 568, 355
+    WinWaitActive, Customize Letter, , 30
+    if (ErrorLevel = 0) {
+        Citrixsleep()
+        Send !s
+        WinWaitActive, Route Document, , 30
+        if (ErrorLevel = 0) {
+            Citrixsleep()
+            Send !s
+            WinWaitActive, Print, , 30
+            if (ErrorLevel = 0) {
+                Citrixsleep()
+                Click 568, 355
+            }
+        }
+    }
 }
 return
 
