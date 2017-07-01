@@ -1502,6 +1502,11 @@ CloseDocumentViewerandSave:
 Send !{F4}
 WinWaitNotActive
 Citrixsleep()
+IfWinExist, Chart Desktop -
+    WinActivate, Chart Desktop -
+IfWinExist, Chart -
+    WinActivate, Chart -
+Citrixsleep()
 Focusblue()
 Send ^s
 return
