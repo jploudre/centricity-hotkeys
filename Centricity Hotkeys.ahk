@@ -1464,7 +1464,7 @@ return
 
 SendPrescriptions:
 FindTemplate("Prescriptions")
-Click, 946. 563
+Click, 946, 563
 return
 
 FindTemplate(template) {
