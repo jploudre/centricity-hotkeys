@@ -1,5 +1,0 @@
-# TXM Processing
-
-* Process Lines Containing "[" --> Copy
-* Grep Replace: ^\[(.+?)\].*$ --> Non-greedy Replace \1
-* Grep Replace: ^(.+?)$ --> Non-greedy Replace "\1 " (Space afterwards so quicktext fires)
