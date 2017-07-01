@@ -1058,16 +1058,17 @@ SendToClinicalAssistant:
 ; Assumes End Update
 IfWinActive, End Update
 {
-	Click, 316, 351
-	WinWaitActive, New Routing Information
     CitrixSleep()
-	SendInput %ClinicalAssistantName%{Enter}
+	ClicktoNewWindow(316, 351,New Routing Information)
+    CitrixSleep()
+	Clip(ClinicalAssistantName)
+    Send {Enter}
 	CitrixSleep()
-	Click, 240, 345
-	WinWaitActive, End Update
+	ClicktoNewWindow(240, 345,End Update)
 	CitrixSleep()
 	Send !o
     WinWaitNotActive
+    CitrixSleep()
     gosub, GoChartDesktop
 }
 else
@@ -1075,6 +1076,24 @@ else
 return	
 }
 return
+
+ClicktoNewWindow(x,y,WinTitle){
+    Loop, 4
+    {
+        Click, %x%, %y%
+        WinWaitActive, %WinTitle%, , 2
+        if (ErrorLevel= 0) {
+        return  
+        }
+        if (ErrorLevel=1){
+        continue
+        }
+    }
+    if (%A_Index%= 4) {
+        Exit
+    }
+    return
+}
 
 FancyOpen:
 WinGetPos,,,winwidth,winheight,A
