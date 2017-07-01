@@ -381,12 +381,8 @@ return
 
 ;; * **Window-J:** Append document (makes this consistent between Chart, Chart Desktop.)
 #j::
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/append.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
+If (ImageMouseMove("append"))
     Click
-}
 return
 
 ;; * **Window-Shift-P:** Preventative Append
@@ -425,10 +421,7 @@ return
 Space::PatternHotKey(".->FancyOpen")
 
 +Space::
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 0, 0, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/open.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
+If (ImageMouseMove("open")) {
     Click
     WinWaitNotActive, Chart Desktop
 }
@@ -973,24 +966,23 @@ Sleep, 150
 }
 return
 
-; Exits if image not found
-ImageClick(imagename){
+; Returns Boolean & Moves Mouse if Found
+ImageMouseMove(imagename){
     CoordMode, Pixel, Screen
     CoordMode, Mouse, Screen
     ImagePathandName := A_ScriptDir . "\files\" . imagename . ".PNG"
     ImageSearch, FoundX, FoundY, -2000, -2000, %A_ScreenWidth%, %A_ScreenHeight%, *n10 %ImagePathandName%
     if (ErrorLevel = 0) {
-        Click, %FoundX%, %FoundY%
+        MouseMove, %FoundX%, %FoundY%
         CoordMode, Pixel, Window
         CoordMode, Mouse, Window
-        return
+        return 1
     }
-    
     CoordMode, Pixel, Window
     CoordMode, Mouse, Window
     ; If image is not found, do not continue Hotkey that called. 
     if (ErrorLevel = 1) {
-    exit
+    return 0
     }
 }
 
@@ -999,18 +991,14 @@ OpenAppendType(searchtext){
     SetTimer, Focus, Off
     ifWinActive, Chart Desktop -
     {
-    Send ^j
+        Send ^j
     }
     ifWinActive, Chart -
     {
-    WinGetPos,,,winwidth,winheight,A
-    ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/append.png
-    if (ErrorLevel = 0) {
-        MouseMove, %FoundX%, %FoundY%
-        Click
+        if (ImageMouseMove("append"))
+            Click
     }
     }
-    ; Sometimes fails, use 3 second timeout
     WinWaitActive, Append to, , 3
     if (ErrorLevel = 0) {
         CitrixSleep()
@@ -1243,7 +1231,8 @@ return
 
 GoChartDesktop:
 CitrixSleep()
-imageclick("chart-desktop")
+If (ImageMouseMove("chart-desktop"))
+    Click
 return
 
 HPI:
