@@ -294,7 +294,7 @@ if ( 28 < xpos AND xpos < 515 AND 250 < ypos AND ypos < 331) { ; Routing Names a
 ; I'm Done
 if ( 354 < xpos AND xpos < 444 AND 499 < ypos AND ypos < 520) { ; 'Route' button, right click
     Mouseclick, Left, %xpos%, %ypos%
-    WinWaitNotActive, , , 5
+    WinWaitActive, Chart - , , 10
     If (ErrorLevel = 0) {
         Gosub, GoChartDesktop
     }
@@ -424,9 +424,9 @@ Space::PatternHotKey(".->FancyOpen")
 +Space::
 If (ImageMouseMove("open")) {
     Click
-    WinWaitNotActive, Chart Desktop, , 2
+    WinWaitActive, Chart -, , 5
     if (ErrorLevel > 0) {
-        Exit
+        return
     }
 }
 return
@@ -934,7 +934,7 @@ if ( 28 < xpos AND xpos < 515 AND 171 < ypos AND ypos < 255) { ; Routing Names a
 ; I'm Done
 if ( 373 < xpos AND xpos < 445 AND 310 < ypos AND ypos < 331) { ; 'Route' button, right click
     Mouseclick, Left, %xpos%, %ypos%
-    WinWaitNotActive, , , 5
+    WinWaitActive, Chart - , , 5
     If (ErrorLevel = 0) {
         GoSub, GoChartDesktop
     }
@@ -949,12 +949,13 @@ return
 #Space::
 !Space::
 Click, 239, 352
-WinWaitNotActive, , , 5
+WinWaitNotActive, , , 10
+CitrixSleep()
+CitrixSleep()
 if (ErrorLevel = 0) {
-    CitrixSleep()
     If WinActive("End Update") {
         Send !o
-        WinWaitNotActive, , , 5
+        WinWaitActive, Chart - , , 10
         if (ErrorLevel = 0) {
             gosub, GoChartDesktop
             return
@@ -1070,7 +1071,7 @@ return
 
 SignUpdate:
 Send !s
-WinWaitNotActive, End Update, , 5
+WinWaitActive, Chart -, , 10
 if (ErrorLevel = 0) {
     gosub, GoChartDesktop
     WinWaitActive, Chart Desktop -, , 10,
