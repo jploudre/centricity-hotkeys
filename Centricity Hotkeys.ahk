@@ -8,7 +8,6 @@ VisitSummaryType = %VisitSummaryType%
 CoordMode, Mouse, Window
 #Persistent
 SetKeyDelay, 30
-;SetTimer, CloseOutlook, 5000 
 SetTimer, Focus, 100
 SetTimer, AdjustMouse, 480000
 SendMode Input
@@ -1802,18 +1801,6 @@ clip(text)
 return
 ; Changes ";;" into "-->" to quickly type an arrow
 ::`;`;::-->
-
-; Excel name switcher
-^Insert::
-Send ^+{Right}
-Send ^x
-Send ^{Right 3}
-Send %A_Space%^v{Enter}
-return
-
-CloseOutlook: 
-WinClose, Inbox - jkploudre 
-Return
 
 Focus:
 if WinActive("Append to Document") or WinActive("Assessments Due") or WinActive("Customize Letter") or WinActive("End Update") or WinActive("Care Alert Warning -") or WinActive("Find Medication") or WinActive("Change Medication") or WinActive("New Problem") or WinActive("Find Problem")  or WinActive("Edit Problem")   or WinActive("Edit Routing")   or WinActive("New Routing")  or WinActive("Centricity Practice Solution Browser") or WinActive("Route Document")
