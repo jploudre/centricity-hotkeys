@@ -1775,6 +1775,9 @@ MouseClick, WU
 }
 return
 
+;; ## Typing Aids (Quicktexts that work everywhere -- not just where CPS allows)
+;; 
+
 ::ujkp::
 text := "Upcoming Appointment. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
@@ -1782,6 +1785,7 @@ CitrixSleep()
 CitrixSleep()
 Send !s
 return
+
 ::sljkp::
 text := "Send Letter with Results. ............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
@@ -1789,17 +1793,17 @@ CitrixSleep()
 CitrixSleep()
 Send !s
 return
-::cdn::
-Send Call Doctor Note:{Enter 2}SITUATION:{Enter 3}BACKGROUND:{Enter 3}ASSESSMENT:{Enter 3}RECOMENDATION:{Enter 2}{Up 10}
-return
+;; * **SBAR** a template for call notes
+
 :r:sbar::
 Send SITUATION:{Enter 3}BACKGROUND:{Enter 3}ASSESSMENT:{Enter 3}RECOMENDATION:{Enter 2}{Up 10}
 return
+
 ::sdjkp::
 text := "............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
 return
-; Changes ";;" into "-->" to quickly type an arrow
+;; * Changes ";;" into "-->" to quickly type an arrow
 ::`;`;::-->
 
 Focus:
