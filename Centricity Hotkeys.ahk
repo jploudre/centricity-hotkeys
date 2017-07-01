@@ -882,9 +882,8 @@ if ( 649 < xpos AND xpos < 712 AND 643 < ypos AND ypos < 669)
     DiagnosisControlX := WinX + 18
     DiagnosisControlY := WinY + 351
     ; Check if Diagnosis is Highlighted. If Not, Error.
-    ImageSearch,,, 18, 351, 188, 531, *n10 %A_ScriptDir%/files/blue-little.png
-    if (ErrorLevel = 0) {
-        Click %xpos%, %ypos%
+    If (ImageMouseMove("blue-little", 18, 351, 188, 531)) {
+        Click
         WinWaitActive, Update -, , 5
         if (ErrorLevel = 0) {
             CitrixSleep()
@@ -991,11 +990,15 @@ Sleep, 150
 return
 
 ; Returns Boolean & Moves Mouse if Found
-ImageMouseMove(imagename){
+ImageMouseMove(imagename, x1:=-2000, y1:=-2000, x2:=0, y2:=0){
     CoordMode, Pixel, Screen
     CoordMode, Mouse, Screen
     ImagePathandName := A_ScriptDir . "\files\" . imagename . ".PNG"
-    ImageSearch, FoundX, FoundY, -2000, -2000, %A_ScreenWidth%, %A_ScreenHeight%, *n10 %ImagePathandName%
+    if (x1 = -2000 AND y1 = -2000 AND x2 = 0 AND y2 = 0) {
+    ImageSearch, FoundX, FoundY, x1, y1, %A_ScreenWidth%, %A_ScreenHeight%, *n10 %ImagePathandName%
+    } else {
+    ImageSearch, FoundX, FoundY, x1, y1, x2, y2, *n10 %ImagePathandName%
+    }
     if (ErrorLevel = 0) {
         MouseMove, %FoundX%, %FoundY%
         CoordMode, Pixel, Window
@@ -1048,9 +1051,8 @@ return
 
 FocusBlue(){
 WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, %A_ScriptDir%/files/blue.png
-    if (ErrorLevel = 0) {
-        Click, %FoundX%, %FoundY%
+If (ImageMouseMove("blue", 200, 50, %winwidth%, %winheight%)) {
+        Click
     }
 return
 }
