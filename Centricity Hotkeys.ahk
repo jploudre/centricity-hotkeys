@@ -1107,7 +1107,7 @@ IfWinActive, End Update
 	ClicktoNewWindow(240, 345,End Update)
 	CitrixSleep()
 	Send !o
-    WinWaitNotActive, , , 5
+    WinWaitActive, Chart -, , 15
     if (ErrorLevel = 0) {
         CitrixSleep()
         gosub, GoChartDesktop
