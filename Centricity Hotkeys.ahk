@@ -295,8 +295,10 @@ if ( 28 < xpos AND xpos < 515 AND 250 < ypos AND ypos < 331) { ; Routing Names a
 ; I'm Done
 if ( 354 < xpos AND xpos < 444 AND 499 < ypos AND ypos < 520) { ; 'Route' button, right click
     Mouseclick, Left, %xpos%, %ypos%
-    WinWaitNotActive
-    Gosub, GoChartDesktop
+    WinWaitNotActive, , , 5
+    If (ErrorLevel = 0) {
+        Gosub, GoChartDesktop
+    }
 }
 else {
     Click right
@@ -423,7 +425,10 @@ Space::PatternHotKey(".->FancyOpen")
 +Space::
 If (ImageMouseMove("open")) {
     Click
-    WinWaitNotActive, Chart Desktop
+    WinWaitNotActive, Chart Desktop, , 2
+    if (ErrorLevel > 0) {
+        Exit
+    }
 }
 return
 
@@ -685,10 +690,11 @@ return
 
 UpdateMedicationsRemoveMedication:
 Send !r
-WinWaitActive, Remove Medication
-CitrixSleep()
-Send {Enter}
-WinWaitNotActive
+WinWaitActive, Remove Medication, , 3
+if (ErrorLevel = 0) {
+    CitrixSleep()
+    Send {Enter}
+}
 return
 
 #ifWinActive, Update Orders - ;###########################################################
@@ -820,17 +826,18 @@ return
 
 #Space::
 Send !p
-WinWaitNotActive, Customize Letter
-WinWaitActive, Customize Letter
-Citrixsleep()
-Send !s
-WinWaitActive, Route Document
-Citrixsleep()
-Send !s
-WinWaitActive, Print
-Citrixsleep()
-Click 568, 355
-Soundplay, %A_ScriptDir%/files/done.wav, Wait
+WinWaitNotActive, Customize Letter, , 10
+if (ErrorLevel = 0) {
+    WinWaitActive, Customize Letter
+    Citrixsleep()
+    Send !s
+    WinWaitActive, Route Document
+    Citrixsleep()
+    Send !s
+    WinWaitActive, Print
+    Citrixsleep()
+    Click 568, 355
+}
 return
 
 #ifWinActive, Care Alert Warning ;###########################################################
@@ -867,10 +874,12 @@ if ( 649 < xpos AND xpos < 712 AND 643 < ypos AND ypos < 669)
     ImageSearch,,, 18, 351, 188, 531, *n10 %A_ScriptDir%/files/blue-little.png
     if (ErrorLevel = 0) {
         Click %xpos%, %ypos%
-        WinWaitActive, Update -
-        CitrixSleep()
-        Gosub, Prescriptions
+        WinWaitActive, Update -, , 5
+        if (ErrorLevel = 0) {
+            CitrixSleep()
+            Gosub, Prescriptions
         }
+    }
     if (ErrorLevel > 0) { 
         Gui,5: +LastFound -Caption +ToolWindow +E0x20 +AlwaysOnTop
         Gui,5: Color,008080 
@@ -916,8 +925,10 @@ if ( 28 < xpos AND xpos < 515 AND 171 < ypos AND ypos < 255) { ; Routing Names a
 ; I'm Done
 if ( 373 < xpos AND xpos < 445 AND 310 < ypos AND ypos < 331) { ; 'Route' button, right click
     Mouseclick, Left, %xpos%, %ypos%
-    WinWaitNotActive
-    GoSub, GoChartDesktop
+    WinWaitNotActive, , , 5
+    If (ErrorLevel = 0) {
+        GoSub, GoChartDesktop
+    }
 }
 else {
     Click right
@@ -929,16 +940,18 @@ return
 #Space::
 !Space::
 Click, 239, 352
-WinWaitNotActive
-CitrixSleep()
-If WinActive("End Update")
-    {
-    Send !o
-    gosub, GoChartDesktop
-    return
+WinWaitNotActive, , , 5
+if (ErrorLevel = 0) {
+    CitrixSleep()
+    If WinActive("End Update") {
+        Send !o
+        WinWaitNotActive, , , 5
+        if (ErrorLevel = 0) {
+            gosub, GoChartDesktop
+            return
+        }
     }
-
-
+}
 return
 
 ; End of Window Specific Hotkeys.  #########################################
@@ -998,17 +1011,16 @@ OpenAppendType(searchtext){
         if (ImageMouseMove("append"))
             Click
     }
-    }
     WinWaitActive, Append to, , 3
     if (ErrorLevel = 0) {
         CitrixSleep()
         Send !F
-        WinWaitActive, Append Document ; no timeout needed
+        WinWaitActive, Append Document, , 5
         if (ErrorLevel = 0) {
             CitrixSleep()
             clip(searchtext)
             Send {Enter}
-            WinWaitActive, Update ; no timeout needed
+            WinWaitActive, Update, , 5
             if (ErrorLevel = 0) {
             CitrixSleep()
             Send +{F8}
@@ -1046,11 +1058,10 @@ return
 
 SignUpdate:
 Send !s
-WinWaitNotActive, End Update
-gosub, GoChartDesktop
-WinWaitActive, Chart Desktop -,,5, ; Up to 5 seconds to complete
+WinWaitNotActive, End Update, , 5
 if (ErrorLevel = 0) {
-    Soundplay, %A_ScriptDir%/files/done.wav, WAIT
+    gosub, GoChartDesktop
+    WinWaitActive, Chart Desktop -, , 10,
 }
 return
 
@@ -1086,9 +1097,11 @@ IfWinActive, End Update
 	ClicktoNewWindow(240, 345,End Update)
 	CitrixSleep()
 	Send !o
-    WinWaitNotActive
-    CitrixSleep()
-    gosub, GoChartDesktop
+    WinWaitNotActive, , , 5
+    if (ErrorLevel = 0) {
+        CitrixSleep()
+        gosub, GoChartDesktop
+    }
 }
 else
 {
@@ -1122,7 +1135,7 @@ if (ErrorLevel = 0) {
     if (ErrorLevel = 0) {
     MouseMove, %FoundX%, %FoundY%
     Click
-    WinWaitNotActive, Chart,, 3
+    WinWaitNotActive, Chart, , 3
     if (ErrorLevel= 0) {
     Sleep, 1500
     IfWinActive, Centricity Practice Solution
@@ -1160,7 +1173,7 @@ if (ErrorLevel = 0) {
         if (ErrorLevel = 0) {
             MouseMove, %FoundX%, %FoundY%
             Click
-        WinWaitNotActive, Chart,, 3
+        WinWaitNotActive, Chart, , 3
         if (ErrorLevel= 0) {
         Sleep, 1500
         IfWinActive, Centricity Practice Solution
@@ -1195,7 +1208,7 @@ return
 
 OrderSearch:
 Click, 254, 38
-WinWaitActive, Update Orders, , 3 ; Timeout
+WinWaitActive, Update Orders, , 3
 if (ErrorLevel = 0) {
     CitrixSleep()
     Click, 253, 287
@@ -1209,10 +1222,11 @@ return
 
 MedSearch:
 Click, 524, 38
-WinWaitActive, New Medication, , 3 ; Timeout
+WinWaitActive, New Medication, , 3
 if (ErrorLevel = 0) {
 	CitrixSleep()
 	Click, 718, 81
+	WinWaitActive, Find Medication, , 5
 }
 return
 
@@ -1232,6 +1246,7 @@ GoChartDesktop:
 CitrixSleep()
 If (ImageMouseMove("chart-desktop"))
     Click
+WinWaitActive, Chart Desktop -, , 10
 return
 
 HPI:
@@ -1510,7 +1525,7 @@ return
 
 CloseDocumentViewerandSave:
 Send !{F4}
-WinWaitNotActive
+Citrixsleep()
 Citrixsleep()
 IfWinExist, Chart Desktop -
     WinActivate, Chart Desktop -
@@ -1547,9 +1562,11 @@ ClickFromRightBottom(212, 27)
 return
 UpdateProblemsRemove:
 Click, 508, 572
-WinWaitNotActive
-CitrixSleep()
-Send {Enter}
+WinWaitActive, Remove Problem -, , 5
+if (ErrorLevel = 0) {
+    CitrixSleep()
+    Send {Enter}
+}
 return
 
 ; For Buttons Positioned on Window Size
