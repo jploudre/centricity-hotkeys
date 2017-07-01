@@ -804,6 +804,10 @@ Send !s
 return
 
 #IfWinActive, Assessments Due ;###########################################################
+;; ## Assessments Due Hotkeys
+;; 
+
+;; * You can use many keys to do 'OK' like Enter, Esc, Window-Space
 #s::
 ^s::
 #Space::
