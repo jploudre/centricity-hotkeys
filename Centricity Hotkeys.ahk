@@ -1445,14 +1445,15 @@ Click, 594, 341
 return
 
 PrintVisitSummary:
-If (VisitSummaryType = "No-CPOE")
-{
-FindTemplate("Patient-Instructions-CCC")
-Click, 891, 130
+If (VisitSummaryType = "No-CPOE") {
+    FindTemplate("Patient-Instructions-CCC")
+    Click, 891, 130
 }
-if (VisitSummaryType = "CPOE")
-{
-    Msgbox, Need to print with CPOE
+if (VisitSummaryType = "CPOE") {
+    FindTemplate("CPOE-A&P-CCC")
+    ClicktoNewWindow(933, 346,Print Patient)
+    Clip("Clinical Visit Summary with CPOE Assessments")
+    Send {Enter 2}
 }
 return
 
