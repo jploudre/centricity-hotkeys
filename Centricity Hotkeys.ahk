@@ -440,11 +440,12 @@ return
 `::
 IfWinExist, Update
 WinActivate, Update
-IfWinNotExist, Update
+IfWinNotExist, Update 
 {
-    WinGetPos,,,,winheight,A
-    ypos := winheight - 182
-    Click, 13, %ypos%
+    CitrixSleep()
+    If (ImageMouseMove("chart"))
+    Click
+    WinWaitActive, Chart -, , 10
 }
 return
 
