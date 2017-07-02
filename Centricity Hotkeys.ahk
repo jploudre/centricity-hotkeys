@@ -1441,16 +1441,16 @@ If (VisitSummaryType = "No-CPOE") {
 if (VisitSummaryType = "CPOE") {
     FindTemplate("CPOE-A&P-CCC")
     ClicktoNewWindow(933, 346, Print Patient)
+    Sleep, 1500
     Clip("Clinical Visit Summary with CPOE Assessments")
     Send {Enter}
-    CitrixSleep()
-    CitrixSleep()
+    Sleep, 3000
     Send !p
-    CitrixSleep()
-    CitrixSleep()
+    Sleep, 1000
     Send !{F4}
 }
 return
+
 
 Prescriptions:
 FindTemplate("Prescriptions")
