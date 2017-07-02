@@ -408,13 +408,8 @@ return
 Space::PatternHotKey(".->FancyOpen")
 
 +Space::
-If (ImageMouseMove("open")) {
+If (ImageMouseMove("open"))
     Click
-    WinWaitActive, Chart -, , 5
-    if (ErrorLevel > 0) {
-        return
-    }
-}
 return
 
 #o::
@@ -427,10 +422,8 @@ IfWinExist, Update
 WinActivate, Update
 IfWinNotExist, Update 
 {
-    CitrixSleep()
     If (ImageMouseMove("chart"))
-    Click
-    WinWaitActive, Chart -, , 10
+        Click
 }
 return
 
@@ -729,8 +722,9 @@ return
 OrdersFixBug:
 WinWaitActive, Chart, , 4
 if (ErrorLevel = 0) {
-IfWinExist, Update
-WinActivate, Update
+    CitrixSleep()
+    IfWinExist, Update
+        WinActivate, Update
 }
 return
 
@@ -818,6 +812,7 @@ return
 Send !p
 WinWaitNotActive, Customize Letter, , 10
 if (ErrorLevel = 0) {
+    CitrixSleep()
     WinWaitActive, Customize Letter, , 30
     if (ErrorLevel = 0) {
         Citrixsleep()
@@ -1066,11 +1061,11 @@ return
 
 EndUpdate:
 Send ^e
-WinWaitActive, End Update, , 3
+WinWaitActive, End Update, , 2
 ; Sometimes Fails, Try a few times?
 if (ErrorLevel = 1) {
     Send ^e
-    WinWaitActive, End Update, , 3
+    WinWaitActive, End Update, , 1
     if (ErrorLevel = 1) {
     Send ^e
     }
@@ -1114,6 +1109,7 @@ ClicktoNewWindow(x,y,WinTitle){
         Click, %x%, %y%
         WinWaitActive, %WinTitle%, , 2
         if (ErrorLevel= 0) {
+        CitrixSleep()
         return  
         }
         if (ErrorLevel=1){
@@ -1225,7 +1221,6 @@ WinWaitActive, New Medication, , 3
 if (ErrorLevel = 0) {
 	CitrixSleep()
 	Click, 718, 81
-	WinWaitActive, Find Medication, , 5
 }
 return
 
@@ -1245,7 +1240,6 @@ GoChartDesktop:
 CitrixSleep()
 If (ImageMouseMove("chart-desktop"))
     Click
-WinWaitActive, Chart Desktop -, , 10
 return
 
 HPI:
