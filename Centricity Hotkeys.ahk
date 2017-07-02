@@ -289,7 +289,6 @@ return
 
 ;; * **Window-Shift-R:** Reply to a patient blank letter
 +#R Up::
-{
 Send ^p
 WinWaitActive, Print, , 5
 if (ErrorLevel = 0) {
@@ -469,7 +468,7 @@ return
 Send !{F4}
 WinWaitActive, Chart, , 10
 If (ErrorLevel = 0) {
-    CitrixSleep
+    CitrixSleep()
     focusblue()
     OpenAppendType("Clinical List Pr")
 }
