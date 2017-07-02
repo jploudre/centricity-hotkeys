@@ -115,7 +115,7 @@ return
 ;; 
 
 ;; * **`:** go back to chart (single), Swap between Text and Form views.
-`::PatternHotKey(".->GotoChart","..->SwapTextView")
+`::PatternHotKey(".->GotoChart","..->SwapTextView"  )
 return
 
 ;; * **[:** go to previous form
@@ -128,11 +128,6 @@ return
 Send ^{PgDn}
 return
 
-
-
-!Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
-#Space::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
-
 ;; * **'End' \:** End Update (single), *End to your CA* (double) 
 ;; 
 ;; ---
@@ -140,52 +135,39 @@ return
 \::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
 
 ;; * **F1:** Order Search (single), Sign Orders (double)
-#o::PatternHotKey(".->OrderSearch", "..->SignOrders")
 F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
 
 ;; * **F2:** New Medication Search (single), Update Med List (double) 
-#m::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
 
 ;; * **F3:** New Problem Search (single), Update Problem List (double) 
-
-#p::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
 F3::PatternHotKey(".->ProblemSearch", "..->UpdateProblems")
 
 ;; * **F5:** Go to HPI form 
-#h::PatternHotKey(".->HPI")
 F5::PatternHotKey(".->HPI")
 
 ;; * **F6:** Go to Preventive form (single), Commit Preventive Flowsheet (double) 
-#q::PatternHotKey(".->Preventive", "..->CommittoFlowsheet")
 F6::PatternHotKey(".->Preventive", "..->CommittoFlowsheet", "...->CommittoFlowsheetandSign")
 
 ;; * **F7:** Go to Medical Hx form (single), Insert Medical Hx into Note (double) 
-#z::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
 F7::PatternHotKey(".->PMH-SH-CCC", "..->InserttoNote")
 
 ;; * **F8:** Go to ROS form (single), Go t ROS-2 form (double) 
 F8::PatternHotKey(".->ROS", "..->ROS2")
 
 ;; * **F9:** Go to PE form (single), Basic CV Exam, Adults Only (Double), URI Exam, Adults Only (Triple), Psych Exam, Adults Only (Long Hold)
-#x::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
 F9::PatternHotKey(".->PE", "..->PE-XC", "...->PE-XU", "_->PE-XP")
 
 ;; * **F10:** Go to CPEO form (single), Go CPOE, 'Assessments Due' (double) 
-#c::PatternHotKey(".->CPOE", "..->AssessmentsDue")
 F10::PatternHotKey(".->CPOE", "..->AssessmentsDue")
 
 ;; * **F11:** Go to Patient Instructions form (single), Print the Visit Summary(double) 
-#v::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
 F11::PatternHotKey(".->PatientInstructions", "..->PrintVisitSummary")
 
 ;; * **F12:** Go to Prescriptions form (single), Send Prescriptions(double) 
 ;; 
 ;; ---
 ;; 
-
-
-#r::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 
 ;; * **Window-Shift-S:** Ends update, Signs, (No Routing to anyone) and back to Chart Desktop.
@@ -194,10 +176,6 @@ SetTimer, Focus, Off ; prevent strobing.
 Gosub, EndUpdate
 Gosub, SignUpdate
 SetTimer, Focus, On
-return
-
-#+p::
-gosub, CommittoFlowsheetandSign
 return
 
 ;; * **Window-/:** Go to Chart, Documents Section (to, say, review a scan, test result, consultation.)
@@ -223,12 +201,9 @@ Send ^x
 ClipWait  
 Clipboard := RegExReplace(Clipboard, "; ", "`r`n") 
 Clipboard := RegExReplace(Clipboard, ";", "`r`n") 
-
-; Any whitespace at beginning of lines?
 Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
-
 Clipboard := RegexReplace(Clipboard, "m)^Cancer History:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Dermatology:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Endocrine:(.*)$","$1")
@@ -247,13 +222,9 @@ Clipboard := RegexReplace(Clipboard, "m)^GI:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Gastrointestinal:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Allergy/Immunology:(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^Procedures:(.*)$","$1")
-
-; Remove Current Medical Providers -- I have not been maintaining for years. 
 Clipboard := RegexReplace(Clipboard, "m)^CURRENT MEDICAL PROVIDERS:(.*)$","")
-
 Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
 Clipboard := RegexReplace(Clipboard, "m)^\s(.*)$","$1")
-
 ; Remove Blank Lines
 Loop
 {
@@ -264,20 +235,18 @@ Loop
 Send ^v
 return
 
-
 #IfWinActive, End Update ;###########################################################
 ;; ## End Update Hotkeys
 ;; 
 
+;; * Right click in routing to remove. Right click "OK" to go back to Chart Desktop
 RButton::
 MouseGetPos, xpos, ypos
-; remove routing name
 if ( 28 < xpos AND xpos < 515 AND 250 < ypos AND ypos < 331) { ; Routing Names area, right click
     Mouseclick, Left, %xpos%, %ypos%
     Citrixsleep()
     Send !m
 }
-; I'm Done
 if ( 354 < xpos AND xpos < 444 AND 499 < ypos AND ypos < 520) { ; 'Route' button, right click
     Mouseclick, Left, %xpos%, %ypos%
     WinWaitActive, Chart - , , 10
@@ -313,10 +282,6 @@ return
 ;; * **Space:** Opens item (Single), Signs Document (Double).
 Space::PatternHotKey(".->FancyOpen", "..->ChartDocumentSign")
 
-#o::
-Gosub, FancyOpen
-return
-
 ;; * **Window-R:** Reply to a patient with a Web Append.
 #r::
 OpenAppendType("Web")
@@ -351,9 +316,9 @@ return
 ;; * **`:** Swap between Chart/Chart Desktop/Update
 `::
 IfWinExist, Update
-WinActivate, Update
+    WinActivate, Update
 IfWinNotExist, Update
-gosub, GoChartDesktop
+    gosub, GoChartDesktop
 return
 
 ; Sign a chart document
@@ -399,7 +364,6 @@ if (ErrorLevel = 0) {
 }
 return
 
-
 #IfWinActive, Chart Desktop - ;###########################################################
 ;; ## Chart Desktop Hotkeys
 ;; 
@@ -407,13 +371,10 @@ return
 ;; * **Space:** Open Item
 Space::PatternHotKey(".->FancyOpen")
 
+;; * **Shift-Space:** Open Patient Chart (not the item)
 +Space::
 If (ImageMouseMove("open"))
     Click
-return
-
-#o::
-Gosub, FancyOpen
 return
 
 ;; * **`:** Swap between Chart/Chart Desktop/Update
@@ -432,7 +393,8 @@ return
 Send ^j
 return
 
-;; * **Window-S:** Signs Docuemnt
+;; * **Window-S/Window-Shift-S:** Signs Document
+#+s::
 #s::
 Send ^s
 return
@@ -494,7 +456,8 @@ down::
 gosub, DownDocumentViewer
 return
 
-;; * **Window-S:** Close Document, Sign
+;; * **Window-S/Window-Shift-S:** Close Document, Sign
+#+s::
 #s::
 Gosub, CloseDocumentViewerandSave
 return
@@ -502,8 +465,12 @@ return
 ;; * **Window-Shift-P:** Close Document, Preventative Append
 #+p::
 Send !{F4}
-Sleep, 1000
-OpenAppendType("Clinical List Pr")
+WinWaitActive, Chart, , 10
+If (ErrorLevel = 0) {
+    CitrixSleep
+    focusblue()
+    OpenAppendType("Clinical List Pr")
+}
 return
 
 
@@ -523,6 +490,8 @@ if (ErrorLevel = 0) {
 }
 return
 
+;; * **Enter:** Selects
+
 Enter::
 Send \
 return
@@ -532,14 +501,12 @@ return
 ;; 
 
 ;; * **Window-Space:** Done
-#Enter::
 #Space::
 Click, 434, 532
 return
 
 ;; * **F3:** Make 30 day Problem, Done.
 F3::
-#3::
 Click, 135, 403
 CitrixSleep()
 Send 30
@@ -569,7 +536,6 @@ Gosub, UpdateProblemsOK
 return
 
 ;; * Right-click problem to remove. Right click removed problem to change back.
-
 RButton::
 MouseGetPos, xpos, ypos
 ; Problems
@@ -599,7 +565,7 @@ return
 ;; ## Update Medications Hotkeys
 ;; 
 
-#n::
+;; * **F2:** New Medication
 F2::
 Send !n
 return
@@ -631,13 +597,6 @@ return
 !Space::
 Enter::
 click 559, 566
-return
-
-; Sends (intead of saves)
-#s::
-Send !p
-citrixsleep()
-Click, 559, 566
 return
 
 ;; * **Delete/Backspace:** Removes Medication
@@ -689,11 +648,6 @@ Click 679, 656
 gosub, OrdersFixBug
 return
 
-#s::
-CLick 561, 656
-gosub, OrdersFixBug
-return
-
 ;; * **/:** Search Orders 
 /::
 Click, 253, 287
@@ -706,7 +660,9 @@ return
 Click, 341, 290
 return
 
+;; * **F1:** Signs Orders (Double). 
 F1::PatternHotKey("..->SignOrders")
+;; * **F3:** New Problem (Single) Edit Problem (Double).
 F3::PatternHotKey(".->OrdersNewProblem","..->OrdersEditProblem")
 
 SignOrders:
@@ -740,6 +696,7 @@ OrdersDeleteOrder:
 Click 51, 261
 return
 
+;; * Left Click OK always signs first. (Prevents unsigned orders for x-rays, labs)
 LButton::
 MouseGetPos, xpos, ypos
 if ( 638 < xpos AND xpos < 709 AND 647 < ypos AND ypos < 667)
@@ -756,16 +713,10 @@ else
     }
 return
 
+;; * Right click Order to delete
 RButton::
 MouseGetPos, xpos, ypos
-if ( 619 < xpos AND xpos < 771 AND 81 < ypos AND ypos < 238)
-    {
-    ; Click then Edit
-    Click %xpos%, %ypos%
-    Citrixsleep()
-    GoSub, OrdersEditProblem
-    }
-else if ( 16 < xpos AND xpos < 587 AND 117 < ypos AND ypos < 239)
+if ( 16 < xpos AND xpos < 587 AND 117 < ypos AND ypos < 239)
     {
     Click %xpos%, %ypos%
     Citrixsleep()
@@ -807,7 +758,6 @@ return
 
 
 ;; * **Window-Space:** Print and Save Letter
-
 #Space::
 Send !p
 WinWaitNotActive, Customize Letter, , 10
@@ -845,14 +795,15 @@ Send !c
 return
 
 #ifWinActive, New Medication ;###########################################################
-;; ## Customize Letter Hotkeys
+;; ## New Medication Hotkeys
 ;; 
 
+;; * **F3:** New Problem 
 F3::
 Click, 153, 573
 return
 
-;; **Associating Diagnosis**, Will Force Association. Can use 'Enter' key to proceed without association.
+;; **Associating Diagnosis:** Will Force Association. Can use 'Enter' key to proceed without association.
 LButton::
 MouseGetPos, xpos, ypos
 ; If Done, did diagnosis get associated?
@@ -926,7 +877,10 @@ else {
 return
 
 #IfWinActive, New Routing Information - ;###########################################################
+;; ## New Routing Hotkeys
+;; 
 
+;; * **Window-Space:** OK, Hold Document, Go back to Chart Desktop
 #Space::
 !Space::
 Click, 239, 352
@@ -948,7 +902,10 @@ return
 ; End of Window Specific Hotkeys.  #########################################
 #IfWinActive
 
-; Quit All Windows
+;; ## Generic Hotkeys
+;; 
+
+;; * **Window-Shift-Q:** Quit All Windows, Log Out -- (End of day) 
 #+q::
 WinGet, id, list,,, Program Manager
 Loop, %id%
