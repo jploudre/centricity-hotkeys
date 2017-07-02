@@ -637,7 +637,7 @@ if (ErrorLevel = 0) {
 return
 
 #ifWinActive, Update Orders - ;###########################################################
-;; ## Update Medications Hotkeys
+;; ## Update Orders Hotkeys
 ;; 
 
 ;; * **Window-space:** Signs Orders, Done. 
