@@ -26,35 +26,20 @@ Reload
 Return
 
 SendEmailToJKP:
-IfExist, C:\Program Files\Microsoft Office\Office12\outlook.exe
+OfficeVersion := 7
+Loop, 10
 {
-run, C:\Program Files\Microsoft Office\Office12\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
-Exit
-}
-IfExist, C:\Program Files\Microsoft Office\Office11\outlook.exe
-{
-run, C:\Program Files\Microsoft Office\Office11\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
-Exit
-}
-IfExist, C:\Program Files\Microsoft Office\Office15\outlook.exe
-{
-run, C:\Program Files\Microsoft Office\Office15\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
-Exit
-}
-IfExist, C:\Program Files (x86)\Microsoft Office\Office12\outlook.exe
-{
-run, C:\Program Files (x86)\Microsoft Office\Office12\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
-Exit
-}
-IfExist, C:\Program Files (x86)\Microsoft Office\Office11\outlook.exe
-{
-run, C:\Program Files (x86)\Microsoft Office\Office11\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
-Exit
-}
-IfExist, C:\Program Files (x86)\Microsoft Office\Office15\outlook.exe
-{
-run, C:\Program Files (x86)\Microsoft Office\Office15\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
-Exit
+	IfExist, C:\Program Files\Microsoft Office\Office%OfficeVersion%\outlook.exe
+	{
+	run, C:\Program Files\Microsoft Office\Office%OfficeVersion%\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
+	Exit
+	}
+	IfExist, C:\Program Files (x86)\Microsoft Office\Office%OfficeVersion%\outlook.exe
+	{
+	run, C:\Program Files (x86)\Microsoft Office\Office%OfficeVersion%\outlook.exe /c ipm.note /m jploudre@gmail.com&subject=Centricity`%20Hotkeys&body=Heres`%20an`%20issue:
+	Exit
+	}
+	OfficeVersion++
 }
 MsgBox, 32, Issues?,
 (
@@ -69,6 +54,7 @@ Would you mind sending me an e-mail?
 
 )
 return
+
  
 <#Esc::run taskmgr.exe
 <#Up::Send {PgUp}
