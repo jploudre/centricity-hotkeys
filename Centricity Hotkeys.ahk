@@ -1020,11 +1020,11 @@ return
 
 EndUpdate:
 Send ^e
-WinWaitActive, End Update, , 2
+WinWaitActive, End Update, , 3
 ; Sometimes Fails, Try a few times?
 if (ErrorLevel = 1) {
     Send ^e
-    WinWaitActive, End Update, , 1
+    WinWaitActive, End Update, , 2
     if (ErrorLevel = 1) {
     Send ^e
     }
