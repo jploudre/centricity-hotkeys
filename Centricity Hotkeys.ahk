@@ -291,20 +291,22 @@ return
 +#R Up::
 {
 Send ^p
-CitrixSleep()
-Send l
-CitrixSleep()
-Send {Down 2}
-CitrixSleep()
-Send {Right 2}
-CitrixSleep()
-Send l
-CitrixSleep()
-Send {Down 2}
-Click, 241, 59
-Send B
-CitrixSleep()
-Click, 392, 351
+WinWaitActive, Print, , 5
+if (ErrorLevel = 0) {
+    CitrixSleep()
+    Send l
+    CitrixSleep()
+    Send {Down 2}
+    CitrixSleep()
+    Send {Right 2}
+    CitrixSleep()
+    Send l
+    CitrixSleep()
+    Send {Down 2}
+    Click, 241, 59
+    Send B
+    CitrixSleep()
+    Click, 392, 351
 }
 return
 
