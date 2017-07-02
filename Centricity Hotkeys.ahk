@@ -1420,8 +1420,6 @@ ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%templa
 if (ErrorLevel = 0) {
 	MouseMove, %FoundX%, %FoundY%
 	Click 2
-	CitrixSleep()
-    Click 2
 }
 ; if template not found, is it already selected?
 if (ErrorLevel = 1) {
