@@ -990,8 +990,9 @@ return
 
 FocusBlue(){
 WinGetPos,,,winwidth,winheight,A
-If (ImageMouseMove("blue", 200, 50, %winwidth%, %winheight%)) {
+If (ImageMouseMove("blue", 412, 180, %winwidth%, %winheight%)) {
         Click
+        CitrixSleep()
     }
 return
 }
