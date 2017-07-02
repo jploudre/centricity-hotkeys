@@ -474,29 +474,6 @@ If (ErrorLevel = 0) {
 }
 return
 
-
-#IfWinActive, Blackbird Content ;###########################################################
-;; ## Blackbird Hotkeys
-;; 
-
-;; * **Window-Space:** Done
-#Space::
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/Blackbird-OK.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
-    Click
-    Sleep, 500
-    Send !{F4}
-}
-return
-
-;; * **Enter:** Selects
-
-Enter::
-Send \
-return
-
 #IfWinActive, New Problem - ;###########################################################
 ;; ## New Problem Hotkeys
 ;; 
