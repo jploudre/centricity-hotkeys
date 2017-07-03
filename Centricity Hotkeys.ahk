@@ -922,7 +922,7 @@ ImageMouseMove(imagename, x1:=-2000, y1:=-2000, x2:=0, y2:=0){
     CoordMode, Mouse, Window
     ; If image is not found, do not continue Hotkey that called. 
     if (ErrorLevel = 1) {
-    return 0
+        return 0
     }
 }
 
@@ -945,13 +945,14 @@ OpenAppendType(searchtext){
         WinWaitActive, Append Document, , 5
         if (ErrorLevel = 0) {
             CitrixSleep()
+            CitrixSleep()
             clip(searchtext)
             Send {Enter}
             WinWaitActive, Update, , 5
             if (ErrorLevel = 0) {
-            CitrixSleep()
-            Send +{F8}
-            CitrixSleep()
+                CitrixSleep()
+                Send +{F8}
+                CitrixSleep()
             }
         }
     }
