@@ -181,9 +181,6 @@ return
 ;; * **Window-/:** Go to Chart, Documents Section (to, say, review a scan, test result, consultation.)
 #/::
 GoSub, GotoChart
-citrixsleep()
-citrixsleep()
-citrixsleep()
 WinGetPos,,,winwidth,winheight,A
 ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
 if (ErrorLevel = 0) {
@@ -976,6 +973,10 @@ return
 
 GotoChart:
 WinActivate, Chart
+WinWaitActive, Chart -, , 10
+if (ErrorLevel = 0) {
+    Citrixsleep()
+}
 return
 
 SwapTextView:
