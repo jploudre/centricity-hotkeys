@@ -1397,16 +1397,24 @@ ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%templa
 if (ErrorLevel = 0) {
 	MouseMove, %FoundX%, %FoundY%
 	Click 2
-}
-; if template not found, is it already selected?
-if (ErrorLevel = 1) {
-	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%-highlighted.png
-	; If found, errorlevel is now 0
-}
-if (ErrorLevel >= 1) {
-	; Template Not Found So skip rest of hotkey that called this. 
-	Exit
-}
+    }
+    if (ErrorLevel = 1) {
+        ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%-highlighted.png
+        if (ErrorLevel = 1) {
+            ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%-aero.png
+            if (ErrorLevel = 0) {
+                MouseMove, %FoundX%, %FoundY%
+                Click 2
+            }
+            if (ErrorLevel = 1) {
+                ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%-aero-highlighted.png
+            }  
+        }
+    }
+    if (ErrorLevel >= 1) {
+        ; Template Not Found So skip rest of hotkey that called this. 
+        Exit
+    }
 }
 return
 
@@ -1415,25 +1423,27 @@ ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/PE-CCC.
 if (ErrorLevel = 0) {
 	MouseMove, %FoundX%, %FoundY%
 	Click 2
-	CitrixSleep()
-	CitrixSleep()
-	CitrixSleep()
-    Click 2
-    MouseMove, 500, 0, 0, R
 }
-; if template not found, is it already selected?
 if (ErrorLevel = 1) {
 	ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/Pediatric-PE-Age-Specific-CCC.png
     if (ErrorLevel = 0) {
         MouseMove, %FoundX%, %FoundY%
         Click 2
-        CitrixSleep()
-        CitrixSleep()
-        CitrixSleep()
-        Click 2
-    MouseMove, 500, 0, 0, R
-    Exit
-}
+    }
+    if (ErrorLevel = 1) {
+        ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/PE-CCC-aero.png
+        if (ErrorLevel = 0) {
+            MouseMove, %FoundX%, %FoundY%
+            Click 2
+        }
+        if (ErrorLevel = 1) {
+            ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/Pediatric-PE-Age-Specific-CCC-aero.png
+            if (ErrorLevel = 0) {
+                MouseMove, %FoundX%, %FoundY%
+                Click 2
+            }
+        }
+    }
 }
 if (ErrorLevel >= 1) {
 	; Template Not Found So skip rest of hotkey that called this. 
