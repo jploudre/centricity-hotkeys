@@ -651,7 +651,7 @@ return
 
 ; After 'Ok' CPS goes to 'Chart' not back to 'Update'
 OrdersFixBug:
-WinWaitActive, Chart, , 4
+WinWaitActive, Chart, , 10
 if (ErrorLevel = 0) {
     CitrixSleep()
     IfWinExist, Update
