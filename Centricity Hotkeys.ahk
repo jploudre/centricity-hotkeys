@@ -1399,9 +1399,10 @@ ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%templa
 if (ErrorLevel = 0) {
 	MouseMove, %FoundX%, %FoundY%
 	Click 2
-    CitrixSleep()
-    CitrixSleep()
-    CitrixSleep()
+    	CitrixSleep()
+    	CitrixSleep()
+    	CitrixSleep()
+    	Click 2
     }
     if (ErrorLevel = 1) {
         ImageSearch, FoundX, FoundY, 20, 170, 203, 536, *n10 %A_ScriptDir%/files/%template%-highlighted.png
