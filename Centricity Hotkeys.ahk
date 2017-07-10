@@ -1743,6 +1743,10 @@ return
 ;; * Changes ";;" into "-->" to quickly type an arrow
 ::`;`;::-->
 
+::srld::
+clip("Send OB Records to L&D. Thanks! --JKP")
+return
+
 Focus:
 if WinActive("Append to Document") or WinActive("Assessments Due") or WinActive("Customize Letter") or WinActive("End Update") or WinActive("Care Alert Warning -") or WinActive("Find Medication") or WinActive("Change Medication") or WinActive("New Problem") or WinActive("Find Problem")  or WinActive("Edit Problem")   or WinActive("Edit Routing")   or WinActive("New Routing")  or WinActive("Centricity Practice Solution Browser") or WinActive("Route Document")
 {
