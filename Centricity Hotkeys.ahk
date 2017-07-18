@@ -1023,6 +1023,7 @@ IfWinActive, End Update
     CitrixSleep()
 	ClicktoNewWindow(316, 351,New Routing Information)
     CitrixSleep()
+    CitrixSleep()
 	Clip(ClinicalAssistantName)
     Send {Enter}
 	CitrixSleep()
