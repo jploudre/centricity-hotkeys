@@ -1032,12 +1032,6 @@ if (ErrorLevel = 0) {
     if (ErrorLevel = 0) {
     MouseMove, %FoundX%, %FoundY%
     Click
-    WinWaitNotActive, Chart, , 3
-    if (ErrorLevel= 0) {
-    Sleep, 1500
-    IfWinActive, Centricity Practice Solution
-    return
-    }
     } ; end Paperclip
 }
 ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
@@ -1058,12 +1052,6 @@ if (ErrorLevel = 0) {
         if (ErrorLevel = 0) {
             MouseMove, %FoundX%, %FoundY%
             Click
-        WinWaitNotActive, Chart, , 3
-        if (ErrorLevel= 0) {
-        Sleep, 1500
-        IfWinActive, Centricity Practice Solution
-        return
-        }
         } ; End open.png
 }
 }
