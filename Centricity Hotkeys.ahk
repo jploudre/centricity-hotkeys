@@ -778,44 +778,6 @@ F3::
 Click, 153, 573
 return
 
-;; **Associating Diagnosis:** Will Force Association. Can use 'Enter' key to proceed without association.
-LButton::
-MouseGetPos, xpos, ypos
-; If Done, did diagnosis get associated?
-if ( 649 < xpos AND xpos < 712 AND 643 < ypos AND ypos < 669)
-    {
-    WinGetPos,WinX,WinY,,,A
-    DiagnosisControlX := WinX + 18
-    DiagnosisControlY := WinY + 351
-    ; Check if Diagnosis is Highlighted. If Not, Error.
-    If (ImageMouseMove("blue-little", 18, 351, 188, 531)) {
-        Click
-        WinWaitActive, Update -, , 5
-        if (ErrorLevel = 0) {
-            CitrixSleep()
-            Gosub, Prescriptions
-        }
-    }
-    if (ErrorLevel > 0) { 
-        Gui,5: +LastFound -Caption +ToolWindow +E0x20 +AlwaysOnTop
-        Gui,5: Color,008080 
-        Gui,5: Show, noactivate x%DiagnosisControlX% y%DiagnosisControlY% w188 h180, AssociateMeds
-        WinGet,windowID1,ID
-        WinSet, Transparent, 150, ahk_id %windowID1%
-        CitrixSleep()
-        Gui,5: Hide
-        CitrixSleep()
-        Gui,5: Show, noactivate x%DiagnosisControlX% y%DiagnosisControlY% w188 h180, AssociateMeds
-        CitrixSleep()
-        Gui,5: Destroy
-        }
-    }
-else 
-{
-    Click
-}
-return
-
 #IfWinActive, Route Document - ;###########################################################
 ;; ## Route Document Hotkeys
 ;; 
