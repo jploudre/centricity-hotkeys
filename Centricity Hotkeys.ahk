@@ -1025,7 +1025,8 @@ IfWinActive, End Update
     CitrixSleep()
     CitrixSleep()
 	Clip(ClinicalAssistantName)
-    Send {Enter}
+	CitrixSleep()
+    	Send {Enter}
 	CitrixSleep()
 	ClicktoNewWindow(240, 345,End Update)
 	CitrixSleep()
