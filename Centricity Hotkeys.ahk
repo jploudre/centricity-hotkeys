@@ -1073,18 +1073,6 @@ if (ErrorLevel = 0) {
     if (ErrorLevel= 0) {
     Sleep, 1500
     IfWinActive, Centricity Practice Solution
-        {
-        Click, 508, 10, 2   ; Minimizes
-        Sleep, 500
-        WinGetPos, xpos, ypos, winwidth, winheight, A
-        CoordMode, mouse, screen
-        MouseClickDrag, Left, xpos + 200, ypos + 1, xpos + 200, 20
-        CoordMode, mouse, relative
-        
-        WinGetPos, xpos, ypos, winwidth, winheight, A
-        ychange := A_ScreenHeight - (winheight + 50)
-        MouseClickDrag, Left, 200, ypos + winheight  - 20, 200, ypos + winheight - 20 + ychange
-        }
     return
     }
     } ; end Paperclip
@@ -1111,18 +1099,6 @@ if (ErrorLevel = 0) {
         if (ErrorLevel= 0) {
         Sleep, 1500
         IfWinActive, Centricity Practice Solution
-            {
-            Click, 508, 10, 2   ; Minimizes
-            Sleep, 500
-            WinGetPos, xpos, ypos, winwidth, winheight, A
-            CoordMode, mouse, screen
-            MouseClickDrag, Left, xpos + 200, ypos + 1, xpos + 200, 20
-            CoordMode, mouse, relative
-        
-            WinGetPos, xpos, ypos, winwidth, winheight, A
-            ychange := A_ScreenHeight - (winheight + 50)
-            MouseClickDrag, Left, 200, ypos + winheight  - 20, 200, ypos + winheight - 20 + ychange
-            }
         return
         }
         } ; End open.png
