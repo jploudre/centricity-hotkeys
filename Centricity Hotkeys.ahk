@@ -939,6 +939,7 @@ WinActivate, Chart
 WinWaitActive, Chart -, , 10
 if (ErrorLevel = 0) {
     Citrixsleep()
+    Citrixsleep()
 }
 return
 
@@ -1087,6 +1088,10 @@ WinWaitActive, New Medication, , 3
 if (ErrorLevel = 0) {
 	CitrixSleep()
 	Click, 718, 81
+	WinWaitActive, Find Medication, , 5
+	If (ErrorLevel = 1) {
+	exit
+	}
 }
 return
 
@@ -1103,6 +1108,7 @@ Click, 428, 38
 return
 
 GoChartDesktop:
+CitrixSleep()
 CitrixSleep()
 If (ImageMouseMove("chart-desktop"))
     Click
@@ -1311,7 +1317,6 @@ if (VisitSummaryType = "CPOE") {
 }
 return
 
-
 Prescriptions:
 FindTemplate("Prescriptions")
 MouseMove, 946, 563
@@ -1388,7 +1393,6 @@ if (ErrorLevel >= 1) {
 }
 }
 return
-
 
 DownDocumentViewer:
 WinGetPos,,,winwidth, winheight,A
