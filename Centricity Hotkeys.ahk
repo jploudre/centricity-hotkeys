@@ -181,14 +181,11 @@ return
 ;; * **Window-/:** Go to Chart, Documents Section (to, say, review a scan, test result, consultation.)
 #/::
 GoSub, GotoChart
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
+if (ImageMouseMove("documents")) {
     Click
     citrixsleep()
     Click, 255, 212
-}
+    }
 return
 
 ;Process Clipboard, Paste back
@@ -352,14 +349,11 @@ return
 
 ;; * **Window-/:** Go to Documents Section 
 #/::
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
+if (ImageMouseMove("documents", 0, 112, 200, 1000)) {
     Click
     citrixsleep()
     Click, 255, 212
-}
+    } 
 return
 
 #IfWinActive, Chart Desktop - ;###########################################################
@@ -422,12 +416,9 @@ return
 
 ;; * **Window-/:** Go to Documents Section 
 #/::
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 0, 112, %winwidth%, %winheight%, *n50 %A_ScriptDir%/files/documents.png
-if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
+If (ImageMouseMove("documents", 0, 112, 200, 1000))
     Click
-}
+
 return
 
 #IfWinActive, Centricity Practice Solution Browser: ;###########################################################
