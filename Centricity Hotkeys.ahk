@@ -1017,43 +1017,25 @@ ClicktoNewWindow(x,y,WinTitle){
 }
 
 FancyOpen:
-WinGetPos,,,winwidth,winheight,A
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/attach.png
-if (ErrorLevel = 0) {
-    ImageSearch, FoundX1, FoundY1, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/paperclip.png
-    if (ErrorLevel = 0) {
-    MouseMove, %FoundX%, %FoundY%
+If (ImageMouseMove("pencil")) {
     Click
-    } ; end Paperclip
-}
-ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/open.png
-if (ErrorLevel = 0) {
-    ; if over 200 pixels y, we're in Chart Summary, might need to open attachment.
-    MouseMove, %FoundX%, %FoundY%
-    Click
-    Sleep, 1000
-    IfWinActive, Care Alert Warning - 
-    {
-    Send !c
-    }
-    Sleep, 500
-    WinGetPos,,,winwidth,winheight,A
-    ImageSearch, FoundX, FoundY, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/attach.png
-    if (ErrorLevel = 0) {
-        ImageSearch, FoundX1, FoundY1, 200, 50, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/paperclip.png
-        if (ErrorLevel = 0) {
-            MouseMove, %FoundX%, %FoundY%
+    CitrixSleep()
+    If (ImageMouseMove("paperclip")) { 
+        If (ImageMouseMove("attach")) {
             Click
-        } ; End open.png
+            Return
+        }
+    } else if (ImageMouseMove("open")) {
+        Click
+        Return
+    } else if (ImageMouseMove("edit")) {
+        Click
+        return
+    } else {
+        return
+    }
 }
-}
-ImageSearch, , , 0, 0, %winwidth%, %winheight%, *n10 %A_ScriptDir%/files/pencil.png
-if (ErrorLevel = 0) {
-    xpos := winwidth -30
-    ypos := winheight -76
-    MouseMove, %xpos%, %ypos%
-    Click
-}
+
 return
 
 ; Centricity Update Hotkey Functions
@@ -1405,7 +1387,9 @@ IfWinExist, Chart Desktop -
 IfWinExist, Chart -
     WinActivate, Chart -
 Citrixsleep()
-Focusblue()
+If (ImageMouseMove("pencil")) {
+    Click
+}
 Send ^s
 return
 
