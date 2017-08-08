@@ -980,9 +980,10 @@ IfWinActive, End Update
     CitrixSleep()
 	Clip(ClinicalAssistantName)
 	CitrixSleep()
-    	Send {Enter}
+    Send {Enter}
 	CitrixSleep()
-	ClicktoNewWindow(240, 345,End Update)
+	Click, 240, 345
+    CitrixSleep()
 	CitrixSleep()
 	Send !o
     WinWaitActive, Chart -, , 15
