@@ -171,10 +171,8 @@ F12::PatternHotKey(".->Prescriptions", "..->SendPrescriptions")
 
 ;; * **Window-Shift-S:** Ends update, Signs, (No Routing to anyone) and back to Chart Desktop.
 #+s::
-SetTimer, Focus, Off ; prevent strobing.
 Gosub, EndUpdate
 Gosub, SignUpdate
-SetTimer, Focus, On
 return
 
 ;; * **Window-/:** Go to Chart, Documents Section (to, say, review a scan, test result, consultation.)
@@ -880,7 +878,6 @@ ImageMouseMove(imagename, x1:=-2000, y1:=-2000, x2:=0, y2:=0){
 
 
 OpenAppendType(searchtext){
-    SetTimer, Focus, Off
     ifWinActive, Chart Desktop -
     {
         Send ^j
@@ -908,7 +905,6 @@ OpenAppendType(searchtext){
             }
         }
     }
-    SetTimer, Focus, On
 }
 return
 
@@ -1102,14 +1098,12 @@ Click, 599, 113
 return
 
 CommittoFlowsheetandSign:
-SetTimer, Focus, Off ; prevent strobing.
 Gosub, CommittoFlowsheet
 CitrixSleep()
 Gosub, EndUpdate
 CitrixSleep()
 Gosub, SignUpdate
 CitrixSleep()
-SetTimer, Focus, On
 return
 
 PMH-SH-CCC:
@@ -1637,8 +1631,8 @@ CitrixSleep()
 CitrixSleep()
 Send !s
 return
-;; * **SBAR** a template for call notes
 
+;; * **SBAR** a template for call notes
 :r:sbar::
 Send SITUATION:{Enter 3}BACKGROUND:{Enter 3}ASSESSMENT:{Enter 3}RECOMENDATION:{Enter 2}{Up 10}
 return
@@ -1647,6 +1641,7 @@ return
 text := "............................ Jonathan Ploudre, MD. " . A_MMM . " " . A_DD . ", " A_YYYY
 clip(text)
 return
+
 ;; * Changes ";;" into "-->" to quickly type an arrow
 ::`;`;::-->
 
