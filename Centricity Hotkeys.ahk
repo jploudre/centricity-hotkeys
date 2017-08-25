@@ -262,6 +262,7 @@ return
 Gosub, SignUpdate
 return
 
+;; * **Window-N:** New Recipient
 #n::
 Send !n
 return
@@ -775,6 +776,7 @@ return
 Send !R
 return
 
+;; * **Window-N:** New Recipient 
 #n::
 Send !n
 return
@@ -829,6 +831,11 @@ return
 
 ;; ## Generic Hotkeys
 ;; 
+
+;; * **Backtick `:** Goes back to Update or Chart/Desktop
+`::
+
+return
 
 ;; * **Window-Shift-Q:** Quit All Windows, Log Out -- (End of day) 
 #+q::
