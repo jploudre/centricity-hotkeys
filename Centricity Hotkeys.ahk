@@ -134,7 +134,7 @@ return
 \::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
 
 ;; * **F1:** Order Search (single), Sign Orders (double)
-F1::PatternHotKey(".->OrderSearch", "..->SignOrders")
+F1::PatternHotKey(".->OrderSearch")
 
 ;; * **F2:** New Medication Search (single), Update Med List (double) 
 F2::PatternHotKey(".->MedSearch", "..->UpdateMeds")
@@ -624,19 +624,8 @@ return
 Click, 341, 290
 return
 
-;; * **F1:** Signs Orders (Double). 
-F1::PatternHotKey("..->SignOrders")
 ;; * **F3:** New Problem (Single) Edit Problem (Double).
 F3::PatternHotKey(".->OrdersNewProblem","..->OrdersEditProblem")
-
-SignOrders:
-Click, 254, 38
-WinWaitActive, Update Orders, , 3 ; Timeout
-if (ErrorLevel = 0) {
-	CitrixSleep()
-	Click, 561, 653
-}
-return
 
 ; After 'Ok' CPS goes to 'Chart' not back to 'Update'
 OrdersFixBug:
