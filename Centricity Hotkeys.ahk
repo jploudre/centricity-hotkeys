@@ -113,10 +113,6 @@ return
 ;; ## Update Hotkeys
 ;; 
 
-;; * **`:** go back to chart (single), Swap between Text and Form views.
-`::PatternHotKey(".->GotoChart","..->SwapTextView"  )
-return
-
 ;; * **[:** go to previous form
 [::
 Send ^{PgUp}
@@ -126,12 +122,6 @@ return
 ]::
 Send ^{PgDn}
 return
-
-;; * **'End' \:** End Update (single), *End to your CA* (double) 
-;; 
-;; ---
-;; 
-\::PatternHotKey(".->EndUpdate", "..->EndUpdateToClinicalAssistant")
 
 ;; * **F1:** Order Search (single), Sign Orders (double)
 F1::PatternHotKey(".->OrderSearch")
@@ -253,7 +243,6 @@ return
 ;; * **'End' \:** Hold Update (single), *End to your CA* (double) 
 !Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 #Space::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
-\::PatternHotKey(".->HoldUpdate", "..->SendToClinicalAssistant")
 return
 
 ;; * **Window-Shift-S:** Signs, (No Routing to anyone) and back to Chart Desktop.
@@ -304,14 +293,6 @@ return
 ;; * **Window-C:** CPOE Append.
 #c::
 OpenAppendType("CPOE")
-return
-
-;; * **`:** Swap between Chart/Chart Desktop/Update
-`::
-IfWinExist, Update
-    WinActivate, Update
-IfWinNotExist, Update
-    gosub, GoChartDesktop
 return
 
 ; Sign a chart document
@@ -367,17 +348,6 @@ If (ImageMouseMove("open"))
     Click
 return
 
-;; * **`:** Swap between Chart/Chart Desktop/Update
-`::
-IfWinExist, Update
-WinActivate, Update
-IfWinNotExist, Update 
-{
-    If (ImageMouseMove("chart"))
-        Click
-}
-return
-
 ;; * **Window-J:** Append document (makes this consistent between Chart, Chart Desktop.)
 #j::
 Send ^j
@@ -425,12 +395,6 @@ return
 
 ;; * **Space:** Page Down (Single), Close Document, Sign (Double)
 Space::PatternHotKey(".->DownDocumentViewer", "..->CloseDocumentViewerandSave")
-
-;; * **End \:** Close Document
-#Space::
-\::
-gosub, CloseDocumentViewer
-return
 
 ;; * **Up/Down Arrows:** Page Up and Down
 up::
@@ -492,7 +456,6 @@ BackSpace::
 Delete::PatternHotKey(".->UpdateProblemsRemove")
 
 ;; * Done with 'Enter' or 'End' or Window-Space
-\::
 #Space::
 !Space::
 Enter::
@@ -743,7 +706,6 @@ Space::
 #Space::
 !Space::
 Enter::
-\::
 Send !c
 return
 
@@ -759,11 +721,6 @@ return
 #IfWinActive, Route Document - ;###########################################################
 ;; ## Route Document Hotkeys
 ;; 
-
-;; * **'End' \:** Route document 
-\::
-Send !R
-return
 
 ;; * **Window-N:** New Recipient 
 #n::
@@ -820,11 +777,6 @@ return
 
 ;; ## Generic Hotkeys
 ;; 
-
-;; * **Backtick `:** Goes back to Update or Chart/Desktop
-`::
-
-return
 
 ;; * **Window-Shift-Q:** Quit All Windows, Log Out -- (End of day) 
 #+q::
